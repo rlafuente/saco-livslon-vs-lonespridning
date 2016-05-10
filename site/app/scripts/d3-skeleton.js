@@ -1,5 +1,3 @@
-var datafile = "data/wage_distribution.csv";
-
 
 Chart = (function() {
     function Chart(selector, data, opts) {
@@ -54,22 +52,6 @@ Chart = (function() {
         self.chart = self.svg.append('g')
             .attr('transform', 'translate(' + m.left + ', ' + m.top + ')');
 
-        // Populate the treemap
-        d3.csv(datafile, function (error, data) {
-          var node = div.datum(data).selectAll(".node")
-                .data(treemap.nodes)
-              .enter().append("div")
-                .attr("class", "node")
-                .attr("data-toggle", "modal")
-                .attr("data-target", function(d) { return "#modal-" + d.id; })
-                .call(position)
-                .style("background", function(d) { return d.color; });
-
-
-
-
-
-
         // Send resize signal to parent page
         if (self.opts.isIframe) {
             pymChild.sendHeight();
@@ -92,4 +74,3 @@ Chart = (function() {
     }
     return Chart;
 })();
-
