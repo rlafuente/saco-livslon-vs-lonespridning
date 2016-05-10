@@ -1,15 +1,26 @@
 $icon-font-path: '../fonts/';
 
+/* Typography
+*/
+
+@font-face {
+  font-family: 'Noto Serif';
+  font-weight: 400;
+  font-style: normal;
+  src: local('Noto Serif'), url('../fonts/Noto_Serif/NotoSerif-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Route159';
+  font-weight: 300;
+  font-style: normal;
+  src: local('Route159 Light'), url('../fonts/Route159/Route159-Light.ttf') format('truetype');
+}
+
+
 // bower:scss
 @import "bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
 // endbower
-
-.browserupgrade {
-  margin: 0.2em 0;
-  background: #ccc;
-  color: #000;
-  padding: 0.2em 0;
-}
 
 /* Space out content a bit */
 body {
