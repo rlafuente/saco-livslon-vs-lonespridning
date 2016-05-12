@@ -56,14 +56,16 @@ Chart = (function() {
 
         // Populate the treemap
         d3.csv(datafile, function (error, data) {
-          var node = div.datum(data).selectAll(".node")
-                .data(treemap.nodes)
-              .enter().append("div")
-                .attr("class", "node")
-                .attr("data-toggle", "modal")
-                .attr("data-target", function(d) { return "#modal-" + d.id; })
-                .call(position)
-                .style("background", function(d) { return d.color; });
+          var x = d3.scale.linear()
+            .domain([0, d3.max(data)])
+            .range([0, self.width]);
+
+          //var bar = self.chart.data(data).selectAll("g")
+          var bar = self.chart.append("rect")
+              .attr("width", 20)
+              .attr("height", function(d) { return x(d.value); });
+        });
+
 
 
 
