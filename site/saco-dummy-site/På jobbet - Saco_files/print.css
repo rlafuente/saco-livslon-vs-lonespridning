@@ -1,0 +1,7 @@
+﻿p{page-break-inside:avoid;}
+p a{display:none;}
+.js .Faq-panel {max-height:none; page-break-inside:auto;}
+.Calendar-head{margin-bottom:10px !important;margin-top:10px;}
+
+/*HIDE ELEMENTS!!*/
+.cc-cookies, .Recomend,.Drawer .column.large-9.medium-12, .Unions, .Meny, .Pagination, .Global,.Banner-panel, .Navigation,iframe,.Article-related,#CommentList,.RecomendIntrest, footer .u-pullRight,.NewsRelated, #epi-quickNavigator, .Propaganda{display:none !important;}
