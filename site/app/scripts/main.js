@@ -3,3 +3,7 @@ $(document).ready(function() {
   var chart_two = new ChartTwo('#chart-two', 'data/wage_distribution.csv');
   var chart_three = new ChartThree('#chart-three', 'data/life_salary.csv');
 });
+
+// pym.js
+
+var pymChild = new pym.Child();
