@@ -15,7 +15,7 @@ ChartOne = (function() {
             .attr("class", "chart-container");
 
         // Render charts
-        self.drawChartOne();
+        self.drawChart();
 
         // Do transitions
         self.update(data);
@@ -26,9 +26,12 @@ ChartOne = (function() {
         });
     }
     // Draw DOM elements
-    ChartOne.prototype.drawChartOne = function() {
+    ChartOne.prototype.drawChart = function() {
         var self = this;
         var containerWidth = self.container[0][0].offsetWidth;
+
+        // clear container
+        self.chartContainer.html("");
 
         // Setup sizing
         self.margins = m = {
@@ -55,10 +58,10 @@ ChartOne = (function() {
               .range([self.height, 0]);
 
         d3.csv(self.data, function (error, data) {
+          data = data.sort(function(a, b){ return d3.ascending(a.value, b.value);});
+
           x.domain(data.map(function(d) { return d.name; }));
           y.domain([0, d3.max(data, function(d) { return parseInt(d.value); })]);
-
-          data = data.sort(function(a, b){ return parseInt(b.value) - parseInt(a.value)});
 
           var bar = self.chart.selectAll("g")
               .data(data)
@@ -67,8 +70,10 @@ ChartOne = (function() {
               .attr("transform", function(d) { return "translate(" + x(d.name) + ",0)"; });
 
           bar.append("rect")
+              .attr("class", function(d) { return "element " + d.group; })
               .attr("y", function(d) { return y(parseInt(d.value)); })
               .attr("height", function(d) { return self.height - y(parseInt(d.value)); })
+              .attr("fill", "lightgrey")
               .attr("width", x.rangeBand());
 
         });
@@ -87,7 +92,7 @@ ChartOne = (function() {
     ChartOne.prototype.resize = function() {
         var self = this;
         self.svg.remove();
-        self.drawChartOne();
+        self.drawChart();
         self.update(self.data);
     }
     return ChartOne;
@@ -115,7 +120,7 @@ ChartTwo = (function() {
             .attr("class", "chart-container");
 
         // Render charts
-        self.drawChartTwo();
+        self.drawChart();
 
         // Do transitions
         self.update(data);
@@ -126,9 +131,12 @@ ChartTwo = (function() {
         });
     }
     // Draw DOM elements
-    ChartTwo.prototype.drawChartTwo = function() {
+    ChartTwo.prototype.drawChart = function() {
         var self = this;
         var containerWidth = self.container[0][0].offsetWidth;
+
+        // clear container
+        self.chartContainer.html("");
 
         // Setup sizing
         self.margins = m = {
@@ -156,10 +164,11 @@ ChartTwo = (function() {
 
         d3.csv(self.data, function (error, data) {
           data = data.sort(function(a, b){ return d3.ascending(parseInt(a.median), parseInt(b.median)); });
-          console.log(data);
 
           x.domain(data.map(function(d) { return +d.median; }));
-          y.domain([0, d3.max(data, function(d) { return parseInt(d.median); })]);
+          y.domain([0, d3.max(data, function(d) { return parseInt(d.p90); })]);
+          //y.domain([0, d3.max(data, function(d) { return parseInt(d.median); })]);
+          //y.domain([d3.min(data, function(d) { return parseInt(d.p10)}), d3.max(data, function(d) { return parseInt(d.p90); })]);
 
           var bar = self.chart.selectAll("g")
               .data(data)
@@ -168,6 +177,7 @@ ChartTwo = (function() {
               .attr("transform", function(d) { return "translate(" + x(+d.median) + ",0)"; });
 
           bar.append("rect")
+              .attr("class", function(d) { return "edges " + d.group; })
               .attr("y", function(d) { return y(d.p90); })
               .attr("height", function(d) { return self.height - y(parseInt(d.p90 - d.p10)); })
               .attr("width", x.rangeBand())
@@ -177,6 +187,7 @@ ChartTwo = (function() {
 
           // quartiles
           bar.append("rect")
+              .attr("class", function(d) { return "quartiles " + d.group; })
               .attr("y", function(d) { return y(d.q3); })
               .attr("height", function(d) { return self.height - y(parseInt(d.q3 - d.q1)); })
               .attr("width", x.rangeBand())
@@ -186,8 +197,9 @@ ChartTwo = (function() {
           
           // median
           bar.append("circle")
+              .attr("class", function(d) { console.log(d.group); return "median " + d.group; })
               .attr("cy", function(d) { return y(d.median); })
-              .attr("r", function(d) { return 3; })
+              .attr("r", function(d) { return 1; })
               .attr("cx", x.rangeBand() / 2)
               .attr("fill", "#F8F0DE")
               .attr("id", function(d) { return d.name });
@@ -208,7 +220,7 @@ ChartTwo = (function() {
     ChartTwo.prototype.resize = function() {
         var self = this;
         self.svg.remove();
-        self.drawChartTwo();
+        self.drawChart();
         self.update(self.data);
     }
     return ChartTwo;
@@ -235,7 +247,7 @@ ChartThree = (function() {
             .attr("class", "chart-container");
 
         // Render charts
-        self.drawChartThree();
+        self.drawChart();
 
         // Do transitions
         self.update(data);
@@ -246,9 +258,12 @@ ChartThree = (function() {
         });
     }
     // Draw DOM elements
-    ChartThree.prototype.drawChartThree = function() {
+    ChartThree.prototype.drawChart = function() {
         var self = this;
         var containerWidth = self.container[0][0].offsetWidth;
+
+        // clear container
+        self.chartContainer.html("");
 
         // Setup sizing
         self.margins = m = {
@@ -269,28 +284,26 @@ ChartThree = (function() {
         self.chart = self.svg.append('g')
             .attr('transform', 'translate(' + m.left + ', ' + m.top + ')');
 
-        var x = d3.scale.ordinal()
-              .rangeRoundBands([0, self.width], .1);
+        var x = d3.scale.linear()
+              .range([0, self.width]);
         var y = d3.scale.linear()
               .range([self.height, 0]);
 
         d3.csv(self.data, function (error, data) {
-          x.domain(data.map(function(d) { return d.name; }));
-          y.domain([0, d3.max(data, function(d) { return parseInt(d.value); })]);
+          x.domain([d3.min(data, function(d) { return parseInt(d.lifesalary); }), d3.max(data, function(d) { return parseInt(d.lifesalary); })]);
+          y.domain([d3.min(data, function(d) { return parseInt(d.median); }), d3.max(data, function(d) { return parseInt(d.median); })]);
 
-          data = data.sort(function(a, b){ return parseInt(b.value) - parseInt(a.value)});
-
-          var bar = self.chart.selectAll("g")
+          var dot = self.chart.selectAll("g")
               .data(data)
-            .enter().append("g")
-              .attr("width", 20)
-              .attr("transform", function(d) { return "translate(" + x(d.name) + ",0)"; });
+            .enter().append("g");
 
-          bar.append("rect")
-              .attr("y", function(d) { return y(parseInt(d.value)); })
-              .attr("height", function(d) { return self.height - y(parseInt(d.value)); })
-              .attr("width", x.rangeBand());
-
+          dot.append("circle")
+              .attr("class", function(d) { return "element " + d.group; })
+              .attr("cx", function(d) { return x(parseInt(d.lifesalary)); })
+              .attr("cy", function(d) { return y(parseInt(d.median)); })
+              .attr("r", 5)
+              .attr("fill", "red")
+              .attr("opacity", 0.5);
         });
 
         // Send resize signal to parent page
@@ -307,7 +320,7 @@ ChartThree = (function() {
     ChartThree.prototype.resize = function() {
         var self = this;
         self.svg.remove();
-        self.drawChartThree();
+        self.drawChart();
         self.update(self.data);
     }
     return ChartThree;

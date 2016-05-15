@@ -1,0 +1,38 @@
+profession_name,lifesalary,median,group
+Agronom,15854009,30100,
+Akademiker totalt,16223818,29591,
+Apotekare,19554438,36660,
+Arbetsterapeut,12762398,25200,
+Arkitekt,15711297,33659,
+Bibliotekarie och informationsvetare,12712786,25943,
+Biolog,13844452,26358,
+Biomedicinsk analytiker,13403030,26114,
+Civilingenjör,20137201,40410,
+Datavetare,16793941,34500,
+Ekonom,19989488,36541,
+Geovetare,14667154,29750,
+Humanist,13793172,27090,humanities
+Högskoleingenjör,16328057,31900,
+Högstadie- och gymnasielärare,13605697,27100,education
+Journalist,15669509,27400,
+Jurist,19973281,38500,
+Kemist,14789428,30545,
+Konstvetare,12529832,26800,humanities
+Låg- och mellanstadielärare,13000689,25708,education
+Läkare,22673471,56754,
+Lärare i praktiskt-estetiskt ämne,13193533,27393,education
+Matematiker och statistiker,16386927,32580,
+Organisation administration & förvaltning,17640690,,
+Psykolog,15401912,32091,
+Receptarie,14095327,27776,
+Samhälls- och beteendevetare,15884309,29650,
+Sjukgymnast,13188139,25785,healthcare
+Sjuksköterska,14117263,28000,healthcare
+Social omsorg ,13507947,26864,social
+Socionom,13979118,27250,social
+Systemvetare,17296908,35099,
+Tandhygienist,12657274,25450,
+Tandläkare,17797157,39400,
+Teolog,14438842,30675,humanities
+Veterinär,16323231,34000,
+Yrkeslärare,13661118,29000,education
