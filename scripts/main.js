@@ -197,7 +197,7 @@ ChartTwo = (function() {
           
           // median
           bar.append("circle")
-              .attr("class", function(d) { console.log(d.group); return "median " + d.group; })
+              .attr("class", function(d) { return "median " + d.group; })
               .attr("cy", function(d) { return y(d.median); })
               .attr("r", function(d) { return 1; })
               .attr("cx", x.rangeBand() / 2)
@@ -342,6 +342,7 @@ function getUrlVars()
 } 
 
 function setChartHighlight(group) {
+  console.log('Setting highlight: ' + group);
   $("#chart-one .element").attr("fill", "#ECDAB5"); 
   $("#chart-one ." + group).attr("fill", "#c13d8c"); 
 
@@ -356,21 +357,32 @@ function setChartHighlight(group) {
   $("#chart-three ." + group).attr("stroke", "#c13d8c");  
 }
 
-
-$(document).ready(function() {    
+function loadCharts() {
   var is_iframe = (getUrlVars().iframe === 'true');
-  console.log(is_iframe);
-
   var chart_one = new ChartOne('#chart-one', 'data/life_salary.csv', {isIframe: is_iframe});
   var chart_two = new ChartTwo('#chart-two', 'data/wage_distribution.csv', {isIframe: is_iframe});
   var chart_three = new ChartThree('#chart-three', 'data/lifesalary_vs_median.csv', {isIframe: is_iframe});
+  return 'ready';
+}
 
-  setChartHighlight('education');
-
+$(document).ready(function() {    
+  
+  var chart_ready = loadCharts();
+  function isChartReady() {
+    if (chart_ready === 'ready') {
+      console.log('Chart ready, highlighting');
+      setChartHighlight('education');
+    }
+  }
+  setTimeout(isChartReady, 1000);
+  
   $(".form-control").change(function(el) {
     var group = $(this)[0].value;
     setChartHighlight(group);
   });
+
+  
+
 });
 
 // pym.js
