@@ -357,6 +357,22 @@ function setChartHighlight(group) {
   $("#chart-three ." + group).attr("stroke", "#c13d8c");  
 }
 
+function setTextBlocks(group) {
+  $.ajax({
+    type: "GET",
+    url: 'data/text-copy.csv',
+    dataType: "text",
+    success: function(data) {
+      // dropdown options
+      csv = $.csv.toObjects(data);
+      console.log(csv);
+    },
+    error: function(xhr, ajaxOptions, thrownError) {
+      alert("Status: " + xhr.status + "     Error: " + thrownError);
+    }
+  });
+};
+
 function loadCharts() {
   var is_iframe = (getUrlVars().iframe === 'true');
   var chart_one = new ChartOne('#chart-one', 'data/life_salary.csv', {isIframe: is_iframe});
@@ -366,6 +382,7 @@ function loadCharts() {
 }
 
 $(document).ready(function() {    
+  setTextBlocks('education');
   
   var chart_ready = loadCharts();
   function isChartReady() {
@@ -379,6 +396,7 @@ $(document).ready(function() {
   $(".form-control").change(function(el) {
     var group = $(this)[0].value;
     setChartHighlight(group);
+    setTextBlocks(group);
   });
 
   
