@@ -302,8 +302,9 @@ ChartThree = (function() {
               .attr("cx", function(d) { return x(parseInt(d.lifesalary)); })
               .attr("cy", function(d) { return y(parseInt(d.median)); })
               .attr("r", 5)
-              .attr("fill", "red")
-              .attr("opacity", 0.5);
+              .attr("fill", "#F8F0DE")
+              .attr("stroke", "#ECDAB5")
+              .attr("fill-opacity", 0.6);
         });
 
         // Send resize signal to parent page

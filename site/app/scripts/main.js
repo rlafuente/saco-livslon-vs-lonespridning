@@ -24,7 +24,7 @@ $(document).ready(function() {
   $(".form-control").change(function(el) {
     var group = $(this)[0].value;
 
-    $("#chart-one .element").attr("fill", "lightgrey"); 
+    $("#chart-one .element").attr("fill", "#ECDAB5"); 
     $("#chart-one ." + group).attr("fill", "#c13d8c"); 
 
     $("#chart-two .median").attr("fill", "#F8F0DE"); 
@@ -34,6 +34,8 @@ $(document).ready(function() {
     $("#chart-two .quartiles." + group).attr("fill", "#c13d8c"); 
     $("#chart-two .edges." + group).attr("fill", "#d67db2"); 
 
+    $("#chart-three .element").attr("stroke", "#ECDAB5"); 
+    $("#chart-three ." + group).attr("stroke", "#c13d8c"); 
   });
 });
 
