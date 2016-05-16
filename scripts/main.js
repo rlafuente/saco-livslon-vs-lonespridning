@@ -342,7 +342,6 @@ function getUrlVars()
 } 
 
 function setChartHighlight(group) {
-  console.log('Setting highlight: ' + group);
   $("#chart-one .element").attr("fill", "#ECDAB5"); 
   $("#chart-one ." + group).attr("fill", "#c13d8c"); 
 
@@ -358,14 +357,21 @@ function setChartHighlight(group) {
 }
 
 function setTextBlocks(group) {
+  console.log("Setting text blocks");
   $.ajax({
     type: "GET",
-    url: 'data/text-copy.csv',
+    url: 'data/text_copy.csv',
     dataType: "text",
     success: function(data) {
       // dropdown options
       csv = $.csv.toObjects(data);
-      console.log(csv);
+      var title = csv[0][group];
+      var text1 = csv[1][group];
+      var text2 = csv[2][group];
+      var text3 = csv[3][group];
+      $("#text-block-1").html(text1);
+      $("#text-block-2").html(text2);
+      $("#text-block-3").html(text3);
     },
     error: function(xhr, ajaxOptions, thrownError) {
       alert("Status: " + xhr.status + "     Error: " + thrownError);
@@ -387,7 +393,6 @@ $(document).ready(function() {
   var chart_ready = loadCharts();
   function isChartReady() {
     if (chart_ready === 'ready') {
-      console.log('Chart ready, highlighting');
       setChartHighlight('education');
     }
   }
