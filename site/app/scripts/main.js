@@ -13,7 +13,6 @@ function getUrlVars()
 } 
 
 function setChartHighlight(group) {
-  console.log('Setting highlight: ' + group);
   $("#chart-one .element").attr("fill", "#ECDAB5"); 
   $("#chart-one ." + group).attr("fill", "#c13d8c"); 
 
@@ -28,6 +27,29 @@ function setChartHighlight(group) {
   $("#chart-three ." + group).attr("stroke", "#c13d8c");  
 }
 
+function setTextBlocks(group) {
+  console.log("Setting text blocks");
+  $.ajax({
+    type: "GET",
+    url: 'data/text_copy.csv',
+    dataType: "text",
+    success: function(data) {
+      // dropdown options
+      csv = $.csv.toObjects(data);
+      var title = csv[0][group];
+      var text1 = csv[1][group];
+      var text2 = csv[2][group];
+      var text3 = csv[3][group];
+      $("#text-block-1").html(text1);
+      $("#text-block-2").html(text2);
+      $("#text-block-3").html(text3);
+    },
+    error: function(xhr, ajaxOptions, thrownError) {
+      alert("Status: " + xhr.status + "     Error: " + thrownError);
+    }
+  });
+};
+
 function loadCharts() {
   var is_iframe = (getUrlVars().iframe === 'true');
   var chart_one = new ChartOne('#chart-one', 'data/life_salary.csv', {isIframe: is_iframe});
@@ -37,6 +59,7 @@ function loadCharts() {
 }
 
 $(document).ready(function() {    
+  setTextBlocks('education');
   
   var chart_ready = loadCharts();
   function isChartReady() {
@@ -49,6 +72,7 @@ $(document).ready(function() {
   $(".form-control").change(function(el) {
     var group = $(this)[0].value;
     setChartHighlight(group);
+    setTextBlocks(group);
   });
 
   
