@@ -197,7 +197,7 @@ ChartTwo = (function() {
           
           // median
           bar.append("circle")
-              .attr("class", function(d) { console.log(d.group); return "median " + d.group; })
+              .attr("class", function(d) { return "median " + d.group; })
               .attr("cy", function(d) { return y(d.median); })
               .attr("r", function(d) { return 1; })
               .attr("cx", x.rangeBand() / 2)

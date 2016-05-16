@@ -12,31 +12,47 @@ function getUrlVars()
   return vars;
 } 
 
-$(document).ready(function() {    
+function setChartHighlight(group) {
+  console.log('Setting highlight: ' + group);
+  $("#chart-one .element").attr("fill", "#ECDAB5"); 
+  $("#chart-one ." + group).attr("fill", "#c13d8c"); 
+
+  $("#chart-two .median").attr("fill", "#F8F0DE"); 
+  $("#chart-two .quartiles").attr("fill", "#BDA164"); 
+  $("#chart-two .edges").attr("fill", "#ECDAB5"); 
+  $("#chart-two .median." + group).attr("fill", "#eecae0"); 
+  $("#chart-two .quartiles." + group).attr("fill", "#c13d8c"); 
+  $("#chart-two .edges." + group).attr("fill", "#d67db2"); 
+
+  $("#chart-three .element").attr("stroke", "#ECDAB5"); 
+  $("#chart-three ." + group).attr("stroke", "#c13d8c");  
+}
+
+function loadCharts() {
   var is_iframe = (getUrlVars().iframe === 'true');
-  console.log(is_iframe);
-
-
   var chart_one = new ChartOne('#chart-one', 'data/life_salary.csv', {isIframe: is_iframe});
   var chart_two = new ChartTwo('#chart-two', 'data/wage_distribution.csv', {isIframe: is_iframe});
   var chart_three = new ChartThree('#chart-three', 'data/lifesalary_vs_median.csv', {isIframe: is_iframe});
+  return 'ready';
+}
 
+$(document).ready(function() {    
+  
+  var chart_ready = loadCharts();
+  function isChartReady() {
+    if (chart_ready === 'ready') {
+      setChartHighlight('education');
+    }
+  }
+  setTimeout(isChartReady, 1000);
+  
   $(".form-control").change(function(el) {
     var group = $(this)[0].value;
-
-    $("#chart-one .element").attr("fill", "#ECDAB5"); 
-    $("#chart-one ." + group).attr("fill", "#c13d8c"); 
-
-    $("#chart-two .median").attr("fill", "#F8F0DE"); 
-    $("#chart-two .quartiles").attr("fill", "#BDA164"); 
-    $("#chart-two .edges").attr("fill", "#ECDAB5"); 
-    $("#chart-two .median." + group).attr("fill", "#eecae0"); 
-    $("#chart-two .quartiles." + group).attr("fill", "#c13d8c"); 
-    $("#chart-two .edges." + group).attr("fill", "#d67db2"); 
-
-    $("#chart-three .element").attr("stroke", "#ECDAB5"); 
-    $("#chart-three ." + group).attr("stroke", "#c13d8c"); 
+    setChartHighlight(group);
   });
+
+  
+
 });
 
 // pym.js
