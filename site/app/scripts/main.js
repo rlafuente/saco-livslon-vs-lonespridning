@@ -1,14 +1,3 @@
-// Activate bootstrap tooltips
-
-$(function () {
-  $('[data-toggle="tooltip"]').tooltip({placement: auto});
-});
-
-$('body').tooltip({
-  selector: '.has-tooltip',
-  placement: 'auto',
-  html: true,
-});
 
 
 // Read a page's GET URL variables and return them as an associative array.
@@ -71,6 +60,15 @@ function loadCharts() {
   return 'ready';
 }
 
+function applyTooltips() {
+  $('[data-toggle="tooltip"]').tooltip({placement: 'auto'});
+  $('body').tooltip({
+    selector: '.has-tooltip',
+    placement: 'auto',
+    html: true,
+  });
+}
+
 $(document).ready(function() {    
   setTextBlocks('education');
   
@@ -78,6 +76,7 @@ $(document).ready(function() {
   function isChartReady() {
     if (chart_ready === 'ready') {
       setChartHighlight('education');
+      applyTooltips();
     }
   }
   setTimeout(isChartReady, 1000);
@@ -86,6 +85,7 @@ $(document).ready(function() {
     var group = $(this)[0].value;
     setChartHighlight(group);
     setTextBlocks(group);
+    applyTooltips();
   });
 
   

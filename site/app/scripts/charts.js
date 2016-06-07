@@ -67,7 +67,9 @@ ChartOne = (function() {
               .data(data)
             .enter().append("g")
               .attr("width", 20)
-              .attr("transform", function(d) { return "translate(" + x(d.name) + ",0)"; });
+              .attr("transform", function(d) { return "translate(" + x(d.name) + ",0)"; })
+              .attr("class", "has-tooltip")
+              .attr("title", function(d) { return "<h4>" + d.name + "</h4><p>" + d.value + "</p>"; });
 
           bar.append("rect")
               .attr("class", function(d) { return "element " + d.group; })
