@@ -56,6 +56,14 @@ ChartOne = (function() {
               .rangeRoundBands([0, self.width], .1);
         var y = d3.scale.linear()
               .range([self.height, 0]);
+              
+        // Initialize tooltip
+        /*var tip = d3.tip()
+            .attr('class', 'd3-tip')
+            .offset([-10, 0])
+            .html(function(d) {
+                return "<h4>" + d.name + "</h4><p>" + d.value + "</p>";
+            })*/
 
         d3.csv(self.data, function (error, data) {
           data = data.sort(function(a, b){ return d3.ascending(a.value, b.value);});
@@ -67,9 +75,9 @@ ChartOne = (function() {
               .data(data)
             .enter().append("g")
               .attr("width", 20)
-              .attr("transform", function(d) { return "translate(" + x(d.name) + ",0)"; })
-              .attr("class", "has-tooltip")
-              .attr("title", function(d) { return "<h4>" + d.name + "</h4><p>" + d.value + "</p>"; });
+              .attr("transform", function(d) { return "translate(" + x(d.name) + ",0)"; });
+              //.attr("class", "d3-tip")
+              //.attr("title", function(d) { return "<h4>" + d.name + "</h4><p>" + d.value + "</p>"; });
 
           bar.append("rect")
               .attr("class", function(d) { return "element " + d.group; })

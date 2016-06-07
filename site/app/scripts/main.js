@@ -60,14 +60,16 @@ function loadCharts() {
   return 'ready';
 }
 
+/*
 function applyTooltips() {
   $('[data-toggle="tooltip"]').tooltip({placement: 'auto'});
-  $('body').tooltip({
+  $('.chart-container').tooltip({
     selector: '.has-tooltip',
     placement: 'auto',
     html: true,
   });
 }
+*/
 
 $(document).ready(function() {    
   setTextBlocks('education');
