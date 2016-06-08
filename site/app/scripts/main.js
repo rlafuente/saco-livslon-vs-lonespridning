@@ -60,25 +60,14 @@ function loadCharts() {
   return 'ready';
 }
 
-/*
-function applyTooltips() {
-  $('[data-toggle="tooltip"]').tooltip({placement: 'auto'});
-  $('.chart-container').tooltip({
-    selector: '.has-tooltip',
-    placement: 'auto',
-    html: true,
-  });
-}
-*/
-
 $(document).ready(function() {    
   setTextBlocks('education');
   
   var chart_ready = loadCharts();
   function isChartReady() {
     if (chart_ready === 'ready') {
+      console.log('chart ready');
       setChartHighlight('education');
-      applyTooltips();
     }
   }
   setTimeout(isChartReady, 1000);
@@ -87,10 +76,7 @@ $(document).ready(function() {
     var group = $(this)[0].value;
     setChartHighlight(group);
     setTextBlocks(group);
-    applyTooltips();
   });
-
-  
 
 });
 
