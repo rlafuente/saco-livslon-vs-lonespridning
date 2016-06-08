@@ -56,7 +56,8 @@ ChartOne = (function() {
               .rangeRoundBands([0, self.width], .1);
         var y = d3.scale.linear()
               .range([self.height, 0]);
-
+              
+        
         d3.csv(self.data, function (error, data) {
           data = data.sort(function(a, b){ return d3.ascending(a.value, b.value);});
 
@@ -68,14 +69,25 @@ ChartOne = (function() {
             .enter().append("g")
               .attr("width", 20)
               .attr("transform", function(d) { return "translate(" + x(d.name) + ",0)"; });
+          
+          // Initialize tooltip
+          var tip = d3.tip()
+            .attr('class', 'd3-tip')
+            .offset([-10, 0])
+            .html(function(d) {
+              return "<h4>" + d.name + "</h4><p>" + d.value + "</p>";
+            })
+          self.chart.call(tip);
 
           bar.append("rect")
-              .attr("class", function(d) { return "element " + d.group; })
+              .attr("class", function(d) { return "element d3-tip " + d.group; })
               .attr("y", function(d) { return y(parseInt(d.value)); })
               .attr("height", function(d) { return self.height - y(parseInt(d.value)); })
               .attr("fill", "lightgrey")
-              .attr("width", x.rangeBand());
-
+              .attr("width", x.rangeBand())
+              .attr("title", function(d) { return "<h4>" + d.name + "</h4><p>" + d.value + "</p>"; })
+              .on('mouseover', tip.show)
+              .on('mouseout', tip.hide);
         });
 
         // Send resize signal to parent page
@@ -169,6 +181,15 @@ ChartTwo = (function() {
           y.domain([0, d3.max(data, function(d) { return parseInt(d.p90); })]);
           //y.domain([0, d3.max(data, function(d) { return parseInt(d.median); })]);
           //y.domain([d3.min(data, function(d) { return parseInt(d.p10)}), d3.max(data, function(d) { return parseInt(d.p90); })]);
+          
+          // Initialize tooltip
+          var tip = d3.tip()
+            .attr('class', 'd3-tip')
+            .offset([-10, 0])
+            .html(function(d) {
+              return "<h4>" + d.name + "</h4><p>" + d.p90 + "</p><p>" + d.median + "</p>";
+            })
+          self.chart.call(tip);
 
           var bar = self.chart.selectAll("g")
               .data(data)
@@ -177,13 +198,15 @@ ChartTwo = (function() {
               .attr("transform", function(d) { return "translate(" + x(+d.median) + ",0)"; });
 
           bar.append("rect")
-              .attr("class", function(d) { return "edges " + d.group; })
+              .attr("class", function(d) { return "edges d3-tip " + d.group; })
               .attr("y", function(d) { return y(d.p90); })
               .attr("height", function(d) { return self.height - y(parseInt(d.p90 - d.p10)); })
               .attr("width", x.rangeBand())
               .attr("rx", 3)
               .attr("ry", 3)
-              .attr("fill", "#ECDAB5");
+              .attr("fill", "#ECDAB5")
+              .on('mouseover', tip.show)
+              .on('mouseout', tip.hide);
 
           // quartiles
           bar.append("rect")
@@ -292,19 +315,30 @@ ChartThree = (function() {
         d3.csv(self.data, function (error, data) {
           x.domain([d3.min(data, function(d) { return parseInt(d.lifesalary); }), d3.max(data, function(d) { return parseInt(d.lifesalary); })]);
           y.domain([d3.min(data, function(d) { return parseInt(d.median); }), d3.max(data, function(d) { return parseInt(d.median); })]);
+ 
+          // Initialize tooltip
+          var tip = d3.tip()
+            .attr('class', 'd3-tip')
+            .offset([-10, 0])
+            .html(function(d) {
+              return "<h4>" + d.profession_name + "</h4><p>" + d.lifesalary + "</p><p>" + d.median + "</p>";
+            })
+          self.chart.call(tip);
 
           var dot = self.chart.selectAll("g")
               .data(data)
             .enter().append("g");
 
           dot.append("circle")
-              .attr("class", function(d) { return "element " + d.group; })
+              .attr("class", function(d) { return "element d3-tip" + d.group; })
               .attr("cx", function(d) { return x(parseInt(d.lifesalary)); })
               .attr("cy", function(d) { return y(parseInt(d.median)); })
               .attr("r", 5)
               .attr("fill", "#F8F0DE")
               .attr("stroke", "#ECDAB5")
-              .attr("fill-opacity", 0.6);
+              .attr("fill-opacity", 0.6)
+              .on('mouseover', tip.show)
+              .on('mouseout', tip.hide);
         });
 
         // Send resize signal to parent page
@@ -327,17 +361,6 @@ ChartThree = (function() {
     return ChartThree;
 })();
 
-// Activate bootstrap tooltips
-
-$(function () {
-  $('[data-toggle="tooltip"]').tooltip({placement: auto});
-});
-
-$('body').tooltip({
-  selector: '.has-tooltip',
-  placement: 'auto',
-  html: true,
-});
 
 
 // Read a page's GET URL variables and return them as an associative array.
@@ -406,6 +429,7 @@ $(document).ready(function() {
   var chart_ready = loadCharts();
   function isChartReady() {
     if (chart_ready === 'ready') {
+      console.log('chart ready');
       setChartHighlight('education');
     }
   }
@@ -416,8 +440,6 @@ $(document).ready(function() {
     setChartHighlight(group);
     setTextBlocks(group);
   });
-
-  
 
 });
 
