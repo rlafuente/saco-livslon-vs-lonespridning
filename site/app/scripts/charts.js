@@ -50,7 +50,7 @@ ChartOne = (function() {
             // .attr('width', w + m.left + m.right)
             // .attr('height', h + m.top + m.bottom);
             .attr("preserveAspectRatio", "xMinYMin meet")
-            .attr("viewBox", "0 0 1000 500")
+            .attr("viewBox", "0 0 1100 500")
             .classed("svg-content-responsive", true); 
         self.chart = self.svg.append('g');
             //.attr('transform', 'translate(' + m.left + ', ' + m.top + ')');
@@ -172,7 +172,7 @@ ChartTwo = (function() {
             // .attr('width', w + m.left + m.right)
             // .attr('height', h + m.top + m.bottom);
             .attr("preserveAspectRatio", "xMinYMin meet")
-            .attr("viewBox", "0 0 1000 500")
+            .attr("viewBox", "0 0 1100 500")
             .classed("svg-content-responsive", true); 
         self.chart = self.svg.append('g');
             //.attr('transform', 'translate(' + m.left + ', ' + m.top + ')');
@@ -325,7 +325,7 @@ ChartThree = (function() {
             // .attr('width', w + m.left + m.right)
             // .attr('height', h + m.top + m.bottom);
             .attr("preserveAspectRatio", "xMinYMin meet")
-            .attr("viewBox", "0 0 1000 500")
+            .attr("viewBox", "0 0 1150 500")
             .classed("svg-content-responsive", true); 
         self.chart = self.svg.append('g');
             // .attr('transform', 'translate(' + m.left + ', ' + m.top + ')');
