@@ -52,6 +52,24 @@ body {
 
 strong { font-weight: 700; }
 
+/* Charts
+*/
+
+#chart-one::before, #chart-one::after,
+#chart-two::before, #chart-two::after,
+#chart-three::before, #chart-three::after {
+    content: " ";
+    display: table;
+}
+
+
+#chart-one,
+#chart-two,
+#chart-three {
+    margin-bottom: 20px;
+}
+
+
 /* Tooltips
 */
 

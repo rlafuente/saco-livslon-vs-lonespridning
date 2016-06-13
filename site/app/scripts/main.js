@@ -61,7 +61,8 @@ function loadCharts() {
   return 'ready';
 }
 
-$(document).ready(function() {    
+$(document).ready(function() {
+
   setTextBlocks('education');
   
   var chart_ready = loadCharts();
@@ -73,7 +74,7 @@ $(document).ready(function() {
   }
   setTimeout(isChartReady, 1000);
   
-  $(".form-control").change(function(el) {
+  $(".selectpicker").change(function(el) {
     var group = $(this)[0].value;
     setChartHighlight(group);
     setTextBlocks(group);
