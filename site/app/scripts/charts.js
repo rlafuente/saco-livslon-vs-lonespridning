@@ -59,33 +59,34 @@ ChartOne = (function() {
               
         
         d3.csv(self.data, function (error, data) {
-          data = data.sort(function(a, b){ return d3.ascending(a.value, b.value);});
+          data = data.sort(function(a, b){ return d3.ascending(a.lifesalary, b.lifesalary);});
 
-          x.domain(data.map(function(d) { return d.name; }));
-          y.domain([0, d3.max(data, function(d) { return parseInt(d.value); })]);
+          x.domain(data.map(function(d) { return d.profession_name; }));
+          y.domain([0, d3.max(data, function(d) { return parseInt(d.lifesalary); })]);
 
           var bar = self.chart.selectAll("g")
               .data(data)
             .enter().append("g")
               .attr("width", 20)
-              .attr("transform", function(d) { return "translate(" + x(d.name) + ",0)"; });
+              .attr("transform", function(d) { return "translate(" + x(d.profession_name) + ",0)"; });
           
           // Initialize tooltip
           var tip = d3.tip()
             .attr('class', 'd3-tip')
             .offset([-10, 0])
             .html(function(d) {
-              return "<h4>" + d.name + "</h4><p>" + d.value + "</p>";
+              return "<h4>" + d.profession_name + "</h4><p>" + d.lifesalary + "</p>";
             })
           self.chart.call(tip);
 
           bar.append("rect")
               .attr("class", function(d) { return "element d3-tip " + d.group; })
-              .attr("y", function(d) { return y(parseInt(d.value)); })
-              .attr("height", function(d) { return self.height - y(parseInt(d.value)); })
+              .attr("y", function(d) { return y(parseInt(d.lifesalary)); })
+              .attr("height", function(d) { return self.height - y(parseInt(d.lifesalary)); })
               .attr("fill", "lightgrey")
               .attr("width", x.rangeBand())
-              .attr("title", function(d) { return "<h4>" + d.name + "</h4><p>" + d.value + "</p>"; })
+              // FIXME: is this line necessary? we define the tip above
+              .attr("title", function(d) { return "<h4>" + d.profession_name + "</h4><p>" + d.lifesalary + "</p>"; })
               .on('mouseover', tip.show)
               .on('mouseout', tip.hide);
         });
@@ -178,16 +179,16 @@ ChartTwo = (function() {
           data = data.sort(function(a, b){ return d3.ascending(parseInt(a.median), parseInt(b.median)); });
 
           x.domain(data.map(function(d) { return +d.median; }));
-          y.domain([0, d3.max(data, function(d) { return parseInt(d.p90); })]);
+          y.domain([0, d3.max(data, function(d) { return parseInt(d.P90); })]);
           //y.domain([0, d3.max(data, function(d) { return parseInt(d.median); })]);
-          //y.domain([d3.min(data, function(d) { return parseInt(d.p10)}), d3.max(data, function(d) { return parseInt(d.p90); })]);
+          //y.domain([d3.min(data, function(d) { return parseInt(d.P10)}), d3.max(data, function(d) { return parseInt(d.P90); })]);
           
           // Initialize tooltip
           var tip = d3.tip()
             .attr('class', 'd3-tip')
             .offset([-10, 0])
             .html(function(d) {
-              return "<h4>" + d.name + "</h4><p>" + d.p90 + "</p><p>" + d.median + "</p>";
+              return "<h4>" + d.profession_name + "</h4><p>" + d.P90 + "</p><p>" + d.median + "</p>";
             })
           self.chart.call(tip);
 
@@ -199,8 +200,8 @@ ChartTwo = (function() {
 
           bar.append("rect")
               .attr("class", function(d) { return "edges d3-tip " + d.group; })
-              .attr("y", function(d) { return y(d.p90); })
-              .attr("height", function(d) { return self.height - y(parseInt(d.p90 - d.p10)); })
+              .attr("y", function(d) { return y(d.P90); })
+              .attr("height", function(d) { return self.height - y(parseInt(d.P90 - d.P10)); })
               .attr("width", x.rangeBand())
               .attr("rx", 3)
               .attr("ry", 3)
@@ -211,8 +212,8 @@ ChartTwo = (function() {
           // quartiles
           bar.append("rect")
               .attr("class", function(d) { return "quartiles " + d.group; })
-              .attr("y", function(d) { return y(d.q3); })
-              .attr("height", function(d) { return self.height - y(parseInt(d.q3 - d.q1)); })
+              .attr("y", function(d) { return y(d._Q3); })
+              .attr("height", function(d) { return self.height - y(parseInt(d._Q3 - d._Q1)); })
               .attr("width", x.rangeBand())
               .attr("rx", 3)
               .attr("ry", 3)
@@ -225,7 +226,7 @@ ChartTwo = (function() {
               .attr("r", function(d) { return 1; })
               .attr("cx", x.rangeBand() / 2)
               .attr("fill", "#F8F0DE")
-              .attr("id", function(d) { return d.name });
+              .attr("id", function(d) { return d.profession_name });
           
         });
 

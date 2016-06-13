@@ -33,7 +33,7 @@ function setTextBlocks(group) {
   console.log("Setting text blocks");
   $.ajax({
     type: "GET",
-    url: 'data/text_copy.csv',
+    url: 'data/old/text_copy.csv',
     dataType: "text",
     success: function(data) {
       // dropdown options
@@ -54,9 +54,10 @@ function setTextBlocks(group) {
 
 function loadCharts() {
   var is_iframe = (getUrlVars().iframe === 'true');
-  var chart_one = new ChartOne('#chart-one', 'data/life_salary.csv', {isIframe: is_iframe});
-  var chart_two = new ChartTwo('#chart-two', 'data/wage_distribution.csv', {isIframe: is_iframe});
-  var chart_three = new ChartThree('#chart-three', 'data/lifesalary_vs_median.csv', {isIframe: is_iframe});
+  var csvfile = 'data/development_data.csv';
+  var chart_one = new ChartOne('#chart-one', csvfile, {isIframe: is_iframe});
+  var chart_two = new ChartTwo('#chart-two', csvfile, {isIframe: is_iframe});
+  var chart_three = new ChartThree('#chart-three', csvfile, {isIframe: is_iframe});
   return 'ready';
 }
 
