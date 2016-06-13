@@ -33,7 +33,7 @@ function setTextBlocks(group) {
   console.log("Setting text blocks");
   $.ajax({
     type: "GET",
-    url: 'data/old/text_copy.csv',
+    url: 'data/copy-stories.csv',
     dataType: "text",
     success: function(data) {
       // dropdown options

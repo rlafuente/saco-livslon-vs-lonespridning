@@ -75,7 +75,8 @@ ChartOne = (function() {
             .attr('class', 'd3-tip')
             .offset([-10, 0])
             .html(function(d) {
-              return "<h4>" + d.profession_name + "</h4><p>" + d.lifesalary + "</p>";
+              return "<p><strong>Yrke</strong>: " + d.profession_name + "</p>" + 
+                     "<p><strong>Livslön</strong>: " + Number((d.lifesalary/1000000).toFixed(1)) + " milj. kronor</p>";
             })
           self.chart.call(tip);
 
@@ -188,7 +189,9 @@ ChartTwo = (function() {
             .attr('class', 'd3-tip')
             .offset([-10, 0])
             .html(function(d) {
-              return "<h4>" + d.profession_name + "</h4><p>" + d.P90 + "</p><p>" + d.median + "</p>";
+              return "<p><strong>Yrke</strong>: " + d.profession_name + "</p>" + 
+                     "<p><strong>Månadslön, lägst 10%</strong>: " + d.P10 + " kronor</p>" +
+                     "<p><strong>Månadslön, högsta 10%</strong>: " + d.P90 + " kronor</p>";
             })
           self.chart.call(tip);
 
@@ -332,7 +335,9 @@ ChartThree = (function() {
             .attr('class', 'd3-tip')
             .offset([-10, 0])
             .html(function(d) {
-              return "<h4>" + d.profession_name + "</h4><p>" + d.lifesalary + "</p><p>" + d.median + "</p>";
+              return "<p><strong>Yrke</strong>: " + d.profession_name + "</p>" + 
+                     "<p><strong>Lönespridning (P90/P10)</strong>: " + Number(parseFloat(d.income_range).toFixed(2)) + "</p>" +
+                     "<p><strong>Livslön jämfört med gymnasieutbildad</strong>: " + Number(parseFloat(d.lifesalary_vs_baseline).toFixed(2)) + " procent</p>";
             })
           self.chart.call(tip);
 
