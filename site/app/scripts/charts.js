@@ -86,8 +86,8 @@ ChartOne = (function() {
               .attr("height", function(d) { return self.height - y(parseInt(d.lifesalary)); })
               .attr("fill", "lightgrey")
               .attr("width", x.rangeBand())
-              // FIXME: is this line necessary? we define the tip above
-              .attr("title", function(d) { return "<h4>" + d.profession_name + "</h4><p>" + d.lifesalary + "</p>"; })
+              // FIXME: is this line necessary? No. The tip is defined above
+              //.attr("title", function(d) { return "<h4>" + d.profession_name + "</h4><p>" + d.lifesalary + "</p>"; })
               .on('mouseover', tip.show)
               .on('mouseout', tip.hide);
         });
