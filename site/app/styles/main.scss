@@ -17,8 +17,16 @@ $icon-font-path: "../fonts/";
   src: local("Raleway Regular"), url("../fonts/Raleway/Raleway-Regular.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: "Raleway";
+  font-weight: 700;
+  font-style: normal;
+  src: local("Raleway Bold"), url("../fonts/Raleway/Raleway-Bold.ttf") format("truetype");
+}
+
 /* Overwritting bootstrap variables
 */
+
 $font-family-sans-serif:  "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 $font-family-serif:       "Unna", Georgia, "Times New Roman", Times, serif !default;
 $font-size-base:          18px !default;
@@ -36,13 +44,51 @@ $text-color:              #212424;
 @import "bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
 // endbower
 
-
-
 /* Space out content a bit */
 body {
   padding-top: 20px;
   padding-bottom: 20px;
 }
+
+strong { font-weight: 700; }
+
+/* Tooltips
+*/
+
+.d3-tip {
+  font-family: 'Raleway', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1 !important;
+  padding: 10px 16px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 4px;
+}
+
+.d3-tip p {
+    margin-bottom: 0;
+    margin-top: 5px;
+}
+
+.d3-tip:after {  /* tip of the tooltips */
+  box-sizing: border-box;
+  display: inline;
+  font-size: 12px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+.d3-tip.n:after { /* northward tooltips */
+  margin: -4px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+
+
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
