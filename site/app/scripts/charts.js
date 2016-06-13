@@ -199,15 +199,13 @@ ChartTwo = (function() {
               .attr("transform", function(d) { return "translate(" + x(+d.median) + ",0)"; });
 
           bar.append("rect")
-              .attr("class", function(d) { return "edges d3-tip " + d.group; })
+              .attr("class", function(d) { return "edges " + d.group; })
               .attr("y", function(d) { return y(d.P90); })
               .attr("height", function(d) { return self.height - y(parseInt(d.P90 - d.P10)); })
               .attr("width", x.rangeBand())
               .attr("rx", 3)
               .attr("ry", 3)
               .attr("fill", "#ECDAB5")
-              .on('mouseover', tip.show)
-              .on('mouseout', tip.hide);
 
           // quartiles
           bar.append("rect")
@@ -227,6 +225,18 @@ ChartTwo = (function() {
               .attr("cx", x.rangeBand() / 2)
               .attr("fill", "#F8F0DE")
               .attr("id", function(d) { return d.profession_name });
+
+          // transparent overlay for tooltips
+          bar.append("rect")
+              .attr("class", function(d) { return "tip-overlay d3-tip " + d.group; })
+              .attr("y", function(d) { return y(d.P90); })
+              .attr("height", function(d) { return self.height - y(parseInt(d.P90 - d.P10)); })
+              .attr("width", x.rangeBand())
+              .style("opacity", "0")
+              .attr("rx", 3)
+              .attr("ry", 3)
+              .on('mouseover', tip.show)
+              .on('mouseout', tip.hide);
           
         });
 
