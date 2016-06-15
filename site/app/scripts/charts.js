@@ -53,23 +53,23 @@ ChartOne = (function() {
             .attr("preserveAspectRatio", "xMinYMin meet");
         self.chart = self.svg.append('g');
 
-        var x = d3.scale.ordinal()
-              .rangeRoundBands([0, self.width], .1);
-        var y = d3.scale.linear()
-              .range([self.height, 0]);
+        var x = d3.scale.linear()
+              .range([self.width, 0]);
+        var y = d3.scale.ordinal()
+              .rangeRoundBands([0, self.height], .1);
               
         
         d3.csv(self.data, function (error, data) {
           data = data.sort(function(a, b){ return d3.ascending(a.lifesalary, b.lifesalary);});
 
-          x.domain(data.map(function(d) { return d.profession_name; }));
-          y.domain([0, d3.max(data, function(d) { return parseInt(d.lifesalary); })]);
+          x.domain([0, d3.max(data, function(d) { return parseInt(d.lifesalary); })]);
+          y.domain(data.map(function(d) { return d.profession_name; }));
 
           var bar = self.chart.selectAll("g")
               .data(data)
             .enter().append("g")
-              .attr("width", 20)
-              .attr("transform", function(d) { return "translate(" + x(d.profession_name) + ",0)"; });
+              .attr("height", 20)
+              .attr("transform", function(d) { return "translate(0," + y(d.profession_name) + ")"; });
           
           // Initialize tooltip
           var tip = d3.tip()
@@ -83,10 +83,10 @@ ChartOne = (function() {
 
           bar.append("rect")
               .attr("class", function(d) { return "element d3-tip " + d.group; })
-              .attr("y", function(d) { return y(parseInt(d.lifesalary)); })
-              .attr("height", function(d) { return self.height - y(parseInt(d.lifesalary)); })
+              .attr("x", function(d) { return x(parseInt(d.lifesalary)); })
+              .attr("width", function(d) { return self.width - x(parseInt(d.lifesalary)); })
               .attr("fill", "lightgrey")
-              .attr("width", x.rangeBand())
+              .attr("height", y.rangeBand())
               // FIXME: is this line necessary? No. The tip is defined above
               //.attr("title", function(d) { return "<h4>" + d.profession_name + "</h4><p>" + d.lifesalary + "</p>"; })
               .on('mouseover', tip.show)
