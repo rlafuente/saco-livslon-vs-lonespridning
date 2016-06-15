@@ -47,13 +47,11 @@ ChartOne = (function() {
 
         // Create SVG container
         self.svg = self.chartContainer.append('svg')
-            // .attr('width', w + m.left + m.right)
-            // .attr('height', h + m.top + m.bottom);
-            .attr("preserveAspectRatio", "xMinYMin meet")
-            .attr("viewBox", "0 0 1100 500")
-            .classed("svg-content-responsive", true); 
+            .attr('width', '100%')
+            .attr('height', '100%')
+            .attr('viewBox','0 0 '+self.width+' '+self.height)
+            .attr("preserveAspectRatio", "xMinYMin meet");
         self.chart = self.svg.append('g');
-            //.attr('transform', 'translate(' + m.left + ', ' + m.top + ')');
 
         var x = d3.scale.ordinal()
               .rangeRoundBands([0, self.width], .1);
@@ -169,13 +167,11 @@ ChartTwo = (function() {
 
         // Create SVG container
         self.svg = self.chartContainer.append('svg')
-            // .attr('width', w + m.left + m.right)
-            // .attr('height', h + m.top + m.bottom);
-            .attr("preserveAspectRatio", "xMinYMin meet")
-            .attr("viewBox", "0 0 1100 500")
-            .classed("svg-content-responsive", true); 
+            .attr('width', '100%')
+            .attr('height', '100%')
+            .attr('viewBox','0 0 ' + self.width +' '+ self.height)
+            .attr("preserveAspectRatio", "xMinYMin meet");
         self.chart = self.svg.append('g');
-            //.attr('transform', 'translate(' + m.left + ', ' + m.top + ')');
 
         var x = d3.scale.ordinal()
               .rangeRoundBands([0, self.width], .1);
@@ -322,13 +318,11 @@ ChartThree = (function() {
 
         // Create SVG container
         self.svg = self.chartContainer.append('svg')
-            // .attr('width', w + m.left + m.right)
-            // .attr('height', h + m.top + m.bottom);
-            .attr("preserveAspectRatio", "xMinYMin meet")
-            .attr("viewBox", "0 0 1150 500")
-            .classed("svg-content-responsive", true); 
+            .attr('width', '100%')
+            .attr('height', '100%')
+            .attr('viewBox','0 0 ' + self.width +' '+ self.height)
+            .attr("preserveAspectRatio", "xMinYMin meet");
         self.chart = self.svg.append('g');
-            // .attr('transform', 'translate(' + m.left + ', ' + m.top + ')');
 
         var x = d3.scale.linear()
               .range([0, self.width]);
