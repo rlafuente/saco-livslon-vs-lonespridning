@@ -47,10 +47,13 @@ ChartOne = (function() {
 
         // Create SVG container
         self.svg = self.chartContainer.append('svg')
-            .attr('width', w + m.left + m.right)
-            .attr('height', h + m.top + m.bottom);
-        self.chart = self.svg.append('g')
-            .attr('transform', 'translate(' + m.left + ', ' + m.top + ')');
+            // .attr('width', w + m.left + m.right)
+            // .attr('height', h + m.top + m.bottom);
+            .attr("preserveAspectRatio", "xMinYMin meet")
+            .attr("viewBox", "0 0 1100 500")
+            .classed("svg-content-responsive", true); 
+        self.chart = self.svg.append('g');
+            //.attr('transform', 'translate(' + m.left + ', ' + m.top + ')');
 
         var x = d3.scale.ordinal()
               .rangeRoundBands([0, self.width], .1);
@@ -59,33 +62,35 @@ ChartOne = (function() {
               
         
         d3.csv(self.data, function (error, data) {
-          data = data.sort(function(a, b){ return d3.ascending(a.value, b.value);});
+          data = data.sort(function(a, b){ return d3.ascending(a.lifesalary, b.lifesalary);});
 
-          x.domain(data.map(function(d) { return d.name; }));
-          y.domain([0, d3.max(data, function(d) { return parseInt(d.value); })]);
+          x.domain(data.map(function(d) { return d.profession_name; }));
+          y.domain([0, d3.max(data, function(d) { return parseInt(d.lifesalary); })]);
 
           var bar = self.chart.selectAll("g")
               .data(data)
             .enter().append("g")
               .attr("width", 20)
-              .attr("transform", function(d) { return "translate(" + x(d.name) + ",0)"; });
+              .attr("transform", function(d) { return "translate(" + x(d.profession_name) + ",0)"; });
           
           // Initialize tooltip
           var tip = d3.tip()
             .attr('class', 'd3-tip')
             .offset([-10, 0])
             .html(function(d) {
-              return "<h4>" + d.name + "</h4><p>" + d.value + "</p>";
+              return "<p><strong>Yrke</strong>: " + d.profession_name + "</p>" + 
+                     "<p><strong>Livslön</strong>: " + Number((d.lifesalary/1000000).toFixed(1)) + " milj. kronor</p>";
             })
           self.chart.call(tip);
 
           bar.append("rect")
               .attr("class", function(d) { return "element d3-tip " + d.group; })
-              .attr("y", function(d) { return y(parseInt(d.value)); })
-              .attr("height", function(d) { return self.height - y(parseInt(d.value)); })
+              .attr("y", function(d) { return y(parseInt(d.lifesalary)); })
+              .attr("height", function(d) { return self.height - y(parseInt(d.lifesalary)); })
               .attr("fill", "lightgrey")
               .attr("width", x.rangeBand())
-              .attr("title", function(d) { return "<h4>" + d.name + "</h4><p>" + d.value + "</p>"; })
+              // FIXME: is this line necessary? No. The tip is defined above
+              //.attr("title", function(d) { return "<h4>" + d.profession_name + "</h4><p>" + d.lifesalary + "</p>"; })
               .on('mouseover', tip.show)
               .on('mouseout', tip.hide);
         });
@@ -164,10 +169,13 @@ ChartTwo = (function() {
 
         // Create SVG container
         self.svg = self.chartContainer.append('svg')
-            .attr('width', w + m.left + m.right)
-            .attr('height', h + m.top + m.bottom);
-        self.chart = self.svg.append('g')
-            .attr('transform', 'translate(' + m.left + ', ' + m.top + ')');
+            // .attr('width', w + m.left + m.right)
+            // .attr('height', h + m.top + m.bottom);
+            .attr("preserveAspectRatio", "xMinYMin meet")
+            .attr("viewBox", "0 0 1100 500")
+            .classed("svg-content-responsive", true); 
+        self.chart = self.svg.append('g');
+            //.attr('transform', 'translate(' + m.left + ', ' + m.top + ')');
 
         var x = d3.scale.ordinal()
               .rangeRoundBands([0, self.width], .1);
@@ -178,16 +186,18 @@ ChartTwo = (function() {
           data = data.sort(function(a, b){ return d3.ascending(parseInt(a.median), parseInt(b.median)); });
 
           x.domain(data.map(function(d) { return +d.median; }));
-          y.domain([0, d3.max(data, function(d) { return parseInt(d.p90); })]);
+          y.domain([0, d3.max(data, function(d) { return parseInt(d.P90); })]);
           //y.domain([0, d3.max(data, function(d) { return parseInt(d.median); })]);
-          //y.domain([d3.min(data, function(d) { return parseInt(d.p10)}), d3.max(data, function(d) { return parseInt(d.p90); })]);
+          //y.domain([d3.min(data, function(d) { return parseInt(d.P10)}), d3.max(data, function(d) { return parseInt(d.P90); })]);
           
           // Initialize tooltip
           var tip = d3.tip()
             .attr('class', 'd3-tip')
             .offset([-10, 0])
             .html(function(d) {
-              return "<h4>" + d.name + "</h4><p>" + d.p90 + "</p><p>" + d.median + "</p>";
+              return "<p><strong>Yrke</strong>: " + d.profession_name + "</p>" + 
+                     "<p><strong>Månadslön, lägst 10%</strong>: " + d.P10 + " kronor</p>" +
+                     "<p><strong>Månadslön, högsta 10%</strong>: " + d.P90 + " kronor</p>";
             })
           self.chart.call(tip);
 
@@ -198,21 +208,19 @@ ChartTwo = (function() {
               .attr("transform", function(d) { return "translate(" + x(+d.median) + ",0)"; });
 
           bar.append("rect")
-              .attr("class", function(d) { return "edges d3-tip " + d.group; })
-              .attr("y", function(d) { return y(d.p90); })
-              .attr("height", function(d) { return self.height - y(parseInt(d.p90 - d.p10)); })
+              .attr("class", function(d) { return "edges " + d.group; })
+              .attr("y", function(d) { return y(d.P90); })
+              .attr("height", function(d) { return self.height - y(parseInt(d.P90 - d.P10)); })
               .attr("width", x.rangeBand())
               .attr("rx", 3)
               .attr("ry", 3)
               .attr("fill", "#ECDAB5")
-              .on('mouseover', tip.show)
-              .on('mouseout', tip.hide);
 
           // quartiles
           bar.append("rect")
               .attr("class", function(d) { return "quartiles " + d.group; })
-              .attr("y", function(d) { return y(d.q3); })
-              .attr("height", function(d) { return self.height - y(parseInt(d.q3 - d.q1)); })
+              .attr("y", function(d) { return y(d._Q3); })
+              .attr("height", function(d) { return self.height - y(parseInt(d._Q3 - d._Q1)); })
               .attr("width", x.rangeBand())
               .attr("rx", 3)
               .attr("ry", 3)
@@ -225,7 +233,19 @@ ChartTwo = (function() {
               .attr("r", function(d) { return 1; })
               .attr("cx", x.rangeBand() / 2)
               .attr("fill", "#F8F0DE")
-              .attr("id", function(d) { return d.name });
+              .attr("id", function(d) { return d.profession_name });
+
+          // transparent overlay for tooltips
+          bar.append("rect")
+              .attr("class", function(d) { return "tip-overlay d3-tip " + d.group; })
+              .attr("y", function(d) { return y(d.P90); })
+              .attr("height", function(d) { return self.height - y(parseInt(d.P90 - d.P10)); })
+              .attr("width", x.rangeBand())
+              .style("opacity", "0")
+              .attr("rx", 3)
+              .attr("ry", 3)
+              .on('mouseover', tip.show)
+              .on('mouseout', tip.hide);
           
         });
 
@@ -302,10 +322,13 @@ ChartThree = (function() {
 
         // Create SVG container
         self.svg = self.chartContainer.append('svg')
-            .attr('width', w + m.left + m.right)
-            .attr('height', h + m.top + m.bottom);
-        self.chart = self.svg.append('g')
-            .attr('transform', 'translate(' + m.left + ', ' + m.top + ')');
+            // .attr('width', w + m.left + m.right)
+            // .attr('height', h + m.top + m.bottom);
+            .attr("preserveAspectRatio", "xMinYMin meet")
+            .attr("viewBox", "0 0 1150 500")
+            .classed("svg-content-responsive", true); 
+        self.chart = self.svg.append('g');
+            // .attr('transform', 'translate(' + m.left + ', ' + m.top + ')');
 
         var x = d3.scale.linear()
               .range([0, self.width]);
@@ -321,7 +344,9 @@ ChartThree = (function() {
             .attr('class', 'd3-tip')
             .offset([-10, 0])
             .html(function(d) {
-              return "<h4>" + d.profession_name + "</h4><p>" + d.lifesalary + "</p><p>" + d.median + "</p>";
+              return "<p><strong>Yrke</strong>: " + d.profession_name + "</p>" + 
+                     "<p><strong>Lönespridning (P90/P10)</strong>: " + Number(parseFloat(d.income_range).toFixed(2)) + "</p>" +
+                     "<p><strong>Livslön jämfört med gymnasieutbildad</strong>: " + Number(parseFloat(d.lifesalary_vs_baseline).toFixed(2)) + " procent</p>";
             })
           self.chart.call(tip);
 
@@ -396,7 +421,7 @@ function setTextBlocks(group) {
   console.log("Setting text blocks");
   $.ajax({
     type: "GET",
-    url: 'data/text_copy.csv',
+    url: 'data/copy-stories.csv',
     dataType: "text",
     success: function(data) {
       // dropdown options
@@ -417,13 +442,15 @@ function setTextBlocks(group) {
 
 function loadCharts() {
   var is_iframe = (getUrlVars().iframe === 'true');
-  var chart_one = new ChartOne('#chart-one', 'data/life_salary.csv', {isIframe: is_iframe});
-  var chart_two = new ChartTwo('#chart-two', 'data/wage_distribution.csv', {isIframe: is_iframe});
-  var chart_three = new ChartThree('#chart-three', 'data/lifesalary_vs_median.csv', {isIframe: is_iframe});
+  var csvfile = 'data/development_data.csv';
+  var chart_one = new ChartOne('#chart-one', csvfile, {isIframe: is_iframe});
+  var chart_two = new ChartTwo('#chart-two', csvfile, {isIframe: is_iframe});
+  var chart_three = new ChartThree('#chart-three', csvfile, {isIframe: is_iframe});
   return 'ready';
 }
 
-$(document).ready(function() {    
+$(document).ready(function() {
+
   setTextBlocks('education');
   
   var chart_ready = loadCharts();
@@ -435,7 +462,7 @@ $(document).ready(function() {
   }
   setTimeout(isChartReady, 1000);
   
-  $(".form-control").change(function(el) {
+  $(".selectpicker").change(function(el) {
     var group = $(this)[0].value;
     setChartHighlight(group);
     setTextBlocks(group);
