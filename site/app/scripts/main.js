@@ -17,6 +17,7 @@ function getUrlVars()
 function setChartHighlight(group) {
   $("#chart-one .element").attr("fill", "#ECDAB5"); 
   $("#chart-one ." + group).attr("fill", "#c13d8c"); 
+  $("#chart-one .bartext").attr("opacity", "0"); 
   $("#chart-one .bartext." + group).attr("opacity", "1"); 
 
   $("#chart-two .median").attr("fill", "#F8F0DE"); 
