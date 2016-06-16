@@ -94,27 +94,32 @@ ChartOne = (function() {
 
 	  var yTextPadding = 0;
 
-
-          self.chart.selectAll("text")
-              .data(data)
-            .enter().append("text")
-	  .attr("class", function(d) { return "bartext " + d.group; })
-	  // .attr("transform", function(d) { return "rotate(10)"; })
-	  // .attr("text-anchor", "middle")
-	  // .attr("text-align", "center")
-          .style("z-index", 100)
-	  .attr("fill", "red")
-	  .attr("opacity", "0")
-	  .attr("x", function(d,i) {
-	      // return x(d.profession_name)+x.rangeBand()/2;
-	      return x(d.profession_name);
-	  })
-	  .attr("y", function(d,i) {
-	      return y(parseInt(d.lifesalary));
-	  })
-	  .text(function(d){
-	       return d.profession_name;
-	  });
+      self.chart.selectAll("text")
+          .data(data)
+          .enter().append("text")
+	      .attr("class", function(d) { return "bartext " + d.group; })
+	      // transform="translate(30) rotate(45 50 50)"
+	      .attr("transform", function(d) { 
+	        var tx = x(d.profession_name);
+	        var ty = y(parseInt(d.lifesalary));
+	        return "translate(10,-10)rotate(-45 " + tx + " " + ty + ")"; 
+	      })
+	      // .attr("transform", function(d) { return "rotate(10)"; })
+	      // .attr("text-anchor", "middle")
+	      // .attr("text-align", "center")
+              .style("z-index", 100)
+	      .attr("fill", "red")
+	      .attr("opacity", "0")
+	      .attr("x", function(d,i) {
+	          // return x(d.profession_name)+x.rangeBand()/2;
+	          return x(d.profession_name);
+	      })
+	      .attr("y", function(d,i) {
+	          return y(parseInt(d.lifesalary));
+	      })
+	      .text(function(d){
+	           return d.profession_name;
+	      });
 
         });
 
