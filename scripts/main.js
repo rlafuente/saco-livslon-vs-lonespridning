@@ -53,23 +53,23 @@ ChartOne = (function() {
             .attr("preserveAspectRatio", "xMinYMin meet");
         self.chart = self.svg.append('g');
 
-        var x = d3.scale.linear()
-              .range([self.width, 0]);
-        var y = d3.scale.ordinal()
-              .rangeRoundBands([0, self.height], .1);
+        var x = d3.scale.ordinal()
+              .rangeRoundBands([0, self.width], .1);
+        var y = d3.scale.linear()
+              .range([self.height, 0]);
               
         
         d3.csv(self.data, function (error, data) {
           data = data.sort(function(a, b){ return d3.ascending(a.lifesalary, b.lifesalary);});
 
-          x.domain([0, d3.max(data, function(d) { return parseInt(d.lifesalary); })]);
-          y.domain(data.map(function(d) { return d.profession_name; }));
+          x.domain(data.map(function(d) { return d.profession_name; }));
+          y.domain([0, d3.max(data, function(d) { return parseInt(d.lifesalary); })]);
 
           var bar = self.chart.selectAll("g")
               .data(data)
             .enter().append("g")
-              .attr("height", 20)
-              .attr("transform", function(d) { return "translate(0," + y(d.profession_name) + ")"; });
+              .attr("width", 20)
+              .attr("transform", function(d) { return "translate(" + x(d.profession_name) + ",0)"; });
           
           // Initialize tooltip
           var tip = d3.tip()
@@ -83,14 +83,44 @@ ChartOne = (function() {
 
           bar.append("rect")
               .attr("class", function(d) { return "element d3-tip " + d.group; })
-              .attr("x", function(d) { return x(parseInt(d.lifesalary)); })
-              .attr("width", function(d) { return self.width - x(parseInt(d.lifesalary)); })
+              .attr("y", function(d) { return y(parseInt(d.lifesalary)); })
+              .attr("height", function(d) { return self.height - y(parseInt(d.lifesalary)); })
               .attr("fill", "lightgrey")
-              .attr("height", y.rangeBand())
+              .attr("width", x.rangeBand())
               // FIXME: is this line necessary? No. The tip is defined above
               //.attr("title", function(d) { return "<h4>" + d.profession_name + "</h4><p>" + d.lifesalary + "</p>"; })
               .on('mouseover', tip.show)
               .on('mouseout', tip.hide);
+
+	  var yTextPadding = 0;
+
+      self.chart.selectAll("text")
+          .data(data)
+          .enter().append("text")
+	      .attr("class", function(d) { return "bartext " + d.group; })
+	      // transform="translate(30) rotate(45 50 50)"
+	      .attr("transform", function(d) { 
+	        var tx = x(d.profession_name);
+	        var ty = y(parseInt(d.lifesalary));
+	        return "translate(10,-10)rotate(-45 " + tx + " " + ty + ")"; 
+	      })
+	      // .attr("transform", function(d) { return "rotate(10)"; })
+	      // .attr("text-anchor", "middle")
+	      // .attr("text-align", "center")
+              .style("z-index", 100)
+	      .attr("fill", "red")
+	      .attr("opacity", "0")
+	      .attr("x", function(d,i) {
+	          // return x(d.profession_name)+x.rangeBand()/2;
+	          return x(d.profession_name);
+	      })
+	      .attr("y", function(d,i) {
+	          return y(parseInt(d.lifesalary));
+	      })
+	      .text(function(d){
+	           return d.profession_name;
+	      });
+
         });
 
         // Send resize signal to parent page
@@ -399,6 +429,8 @@ function getUrlVars()
 function setChartHighlight(group) {
   $("#chart-one .element").attr("fill", "#ECDAB5"); 
   $("#chart-one ." + group).attr("fill", "#c13d8c"); 
+  $("#chart-one .bartext").attr("opacity", "0"); 
+  $("#chart-one .bartext." + group).attr("opacity", "1"); 
 
   $("#chart-two .median").attr("fill", "#F8F0DE"); 
   $("#chart-two .quartiles").attr("fill", "#BDA164"); 
@@ -406,6 +438,7 @@ function setChartHighlight(group) {
   $("#chart-two .median." + group).attr("fill", "#eecae0"); 
   $("#chart-two .quartiles." + group).attr("fill", "#c13d8c"); 
   $("#chart-two .edges." + group).attr("fill", "#d67db2"); 
+  $("#chart-two .bartext." + group).attr("opacity", "1"); 
 
   $("#chart-three .element").attr("stroke", "#ECDAB5"); 
   $("#chart-three ." + group).attr("stroke", "#c13d8c");  
