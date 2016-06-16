@@ -282,7 +282,7 @@ ChartTwo = (function() {
               .on('mouseout', function(d) {
                 $('#chart-two-title').text("Title");
                 $('#chart-two-subtitle-1').html("Subtitle");
-                $('#chart-two-subtitle-1').html("Subtitle");
+                $('#chart-two-subtitle-2').html("&nbsp;");
               });
           
         });
