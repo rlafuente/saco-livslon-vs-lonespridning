@@ -89,8 +89,14 @@ ChartOne = (function() {
               .attr("width", x.rangeBand())
               // FIXME: is this line necessary? No. The tip is defined above
               //.attr("title", function(d) { return "<h4>" + d.profession_name + "</h4><p>" + d.lifesalary + "</p>"; })
-              .on('mouseover', tip.show)
-              .on('mouseout', tip.hide);
+              .on('mouseover', function(d) {
+                $('#chart-one-title').text(d.profession_name);
+                $('#chart-one-subtitle').html("<strong>Livslön</strong>: " + Number((d.lifesalary/1000000).toFixed(1)) + " milj. kronor</p>");
+              })
+              .on('mouseout', function(d) {
+                $('#chart-one-title').text("Title");
+                $('#chart-one-subtitle').html("Subtitle");
+              });
 
 	  var yTextPadding = 0;
 
@@ -98,13 +104,11 @@ ChartOne = (function() {
           .data(data)
           .enter().append("text")
 	      .attr("class", function(d) { return "bartext " + d.group; })
-	      // transform="translate(30) rotate(45 50 50)"
 	      .attr("transform", function(d) { 
 	        var tx = x(d.profession_name);
 	        var ty = y(parseInt(d.lifesalary));
-	        return "translate(10,-10)rotate(-45 " + tx + " " + ty + ")"; 
+	        return "translate(10,-5)rotate(-30 " + tx + " " + ty + ")"; 
 	      })
-	      // .attr("transform", function(d) { return "rotate(10)"; })
 	      // .attr("text-anchor", "middle")
 	      // .attr("text-align", "center")
               .style("z-index", 100)
@@ -270,8 +274,16 @@ ChartTwo = (function() {
               .style("opacity", "0")
               .attr("rx", 3)
               .attr("ry", 3)
-              .on('mouseover', tip.show)
-              .on('mouseout', tip.hide);
+              .on('mouseover', function(d) {
+                $('#chart-two-title').text(d.profession_name);
+                $('#chart-two-subtitle-1').html("<strong>Månadslön, lägst 10%</strong>: " + d.P10 + " kronor");
+                $('#chart-two-subtitle-2').html("<strong>Månadslön, högsta 10%</strong>: " + d.P90 + " kronor");
+              })
+              .on('mouseout', function(d) {
+                $('#chart-two-title').text("Title");
+                $('#chart-two-subtitle-1').html("Subtitle");
+                $('#chart-two-subtitle-1').html("Subtitle");
+              });
           
         });
 
@@ -491,8 +503,11 @@ $(document).ready(function() {
   
   $(".selectpicker").change(function(el) {
     var group = $(this)[0].value;
-    setChartHighlight(group);
-    setTextBlocks(group);
+    $(".content").animate({opacity: 0}, 300, function() { 
+      setTextBlocks(group); 
+      setChartHighlight(group); 
+    });
+    $(".content").animate({opacity: 1});
   });
 
 });
