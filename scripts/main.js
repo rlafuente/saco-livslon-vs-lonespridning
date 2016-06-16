@@ -91,7 +91,7 @@ ChartOne = (function() {
               //.attr("title", function(d) { return "<h4>" + d.profession_name + "</h4><p>" + d.lifesalary + "</p>"; })
               .on('mouseover', function(d) {
                 $('#chart-one-title').text(d.profession_name);
-                $('#chart-one-subtitle').html("<strong>Livslön</strong>: " + Number((d.lifesalary/1000000).toFixed(1)) + " milj. kronor</p>");
+                $('#chart-one-subtitle').html("<strong>Livslön</strong>: " + Number((d.lifesalary/1000000).toFixed(1)) + " milj. kronor");
               })
               .on('mouseout', function(d) {
                 $('#chart-one-title').text("Title");
@@ -282,7 +282,7 @@ ChartTwo = (function() {
               .on('mouseout', function(d) {
                 $('#chart-two-title').text("Title");
                 $('#chart-two-subtitle-1').html("Subtitle");
-                $('#chart-two-subtitle-1').html("Subtitle");
+                $('#chart-two-subtitle-2').html("&nbsp;");
               });
           
         });
