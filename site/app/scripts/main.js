@@ -17,6 +17,7 @@ function getUrlVars()
 function setChartHighlight(group) {
   $("#chart-one .element").attr("fill", "#ECDAB5"); 
   $("#chart-one ." + group).attr("fill", "#c13d8c"); 
+  $("#chart-one .bartext." + group).attr("opacity", "1"); 
 
   $("#chart-two .median").attr("fill", "#F8F0DE"); 
   $("#chart-two .quartiles").attr("fill", "#BDA164"); 
@@ -24,6 +25,7 @@ function setChartHighlight(group) {
   $("#chart-two .median." + group).attr("fill", "#eecae0"); 
   $("#chart-two .quartiles." + group).attr("fill", "#c13d8c"); 
   $("#chart-two .edges." + group).attr("fill", "#d67db2"); 
+  $("#chart-two .bartext." + group).attr("opacity", "1"); 
 
   $("#chart-three .element").attr("stroke", "#ECDAB5"); 
   $("#chart-three ." + group).attr("stroke", "#c13d8c");  
