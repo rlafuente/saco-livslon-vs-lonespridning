@@ -79,8 +79,11 @@ $(document).ready(function() {
   
   $(".selectpicker").change(function(el) {
     var group = $(this)[0].value;
-    setChartHighlight(group);
-    setTextBlocks(group);
+    $(".content").animate({opacity: 0}, 300, function() { 
+      setTextBlocks(group); 
+      setChartHighlight(group); 
+    });
+    $(".content").animate({opacity: 1});
   });
 
 });

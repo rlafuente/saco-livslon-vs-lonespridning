@@ -274,8 +274,16 @@ ChartTwo = (function() {
               .style("opacity", "0")
               .attr("rx", 3)
               .attr("ry", 3)
-              .on('mouseover', tip.show)
-              .on('mouseout', tip.hide);
+              .on('mouseover', function(d) {
+                $('#chart-two-title').text(d.profession_name);
+                $('#chart-two-subtitle-1').html("<strong>Månadslön, lägst 10%</strong>: " + d.P10 + " kronor");
+                $('#chart-two-subtitle-2').html("<strong>Månadslön, högsta 10%</strong>: " + d.P90 + " kronor");
+              })
+              .on('mouseout', function(d) {
+                $('#chart-two-title').text("Title");
+                $('#chart-two-subtitle-1').html("Subtitle");
+                $('#chart-two-subtitle-1').html("Subtitle");
+              });
           
         });
 
