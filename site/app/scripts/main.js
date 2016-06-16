@@ -28,8 +28,8 @@ function setChartHighlight(group) {
   $("#chart-two .edges." + group).attr("fill", "#d67db2"); 
   $("#chart-two .bartext." + group).attr("opacity", "1"); 
 
-  $("#chart-three .element").attr("stroke", "#ECDAB5"); 
-  $("#chart-three ." + group).attr("stroke", "#c13d8c");  
+  $("#chart-three .element").attr("fill", "#ECDAB5"); 
+  $("#chart-three ." + group).attr("fill", "#c13d8c");  
 }
 
 function setTextBlocks(group) {
