@@ -89,8 +89,14 @@ ChartOne = (function() {
               .attr("width", x.rangeBand())
               // FIXME: is this line necessary? No. The tip is defined above
               //.attr("title", function(d) { return "<h4>" + d.profession_name + "</h4><p>" + d.lifesalary + "</p>"; })
-              .on('mouseover', tip.show)
-              .on('mouseout', tip.hide);
+              .on('mouseover', function(d) {
+                $('#chart-one-title').text(d.profession_name);
+                $('#chart-one-subtitle').html("<strong>Livslön</strong>: " + Number((d.lifesalary/1000000).toFixed(1)) + " milj. kronor</p>");
+              })
+              .on('mouseout', function(d) {
+                $('#chart-one-title').text("Title");
+                $('#chart-one-subtitle').html("Subtitle");
+              });
 
 	  var yTextPadding = 0;
 
