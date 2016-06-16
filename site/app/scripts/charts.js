@@ -98,13 +98,11 @@ ChartOne = (function() {
           .data(data)
           .enter().append("text")
 	      .attr("class", function(d) { return "bartext " + d.group; })
-	      // transform="translate(30) rotate(45 50 50)"
 	      .attr("transform", function(d) { 
 	        var tx = x(d.profession_name);
 	        var ty = y(parseInt(d.lifesalary));
-	        return "translate(10,-10)rotate(-45 " + tx + " " + ty + ")"; 
+	        return "translate(10,-5)rotate(-30 " + tx + " " + ty + ")"; 
 	      })
-	      // .attr("transform", function(d) { return "rotate(10)"; })
 	      // .attr("text-anchor", "middle")
 	      // .attr("text-align", "center")
               .style("z-index", 100)
