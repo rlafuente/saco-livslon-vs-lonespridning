@@ -60,6 +60,21 @@ body {
 
 strong { font-weight: 700; }
 
+/* Wrap text inside the dropdown */
+
+.bootstrap-select.btn-group .dropdown-toggle .filter-option {
+   overflow:hidden; 
+  white-space:pre; 
+  text-overflow:ellipsis;
+  -webkit-appearance: none;
+}
+
+.bootstrap-select.btn-group .dropdown-menu li a span.text {
+  font-size: 16px;
+  line-height: 1.1;
+  white-space: normal;
+}
+
 /* Charts
 */
 
@@ -164,7 +179,10 @@ strong { font-weight: 700; }
 
 /* Queries for text labels */
 
-@media screen and (max-width: 768px) { .bartext { font-size: 12px; } } /* very small devices */
+@media screen and (max-width: 768px) {  /* very small devices */
+  h2 { font-size: 42px; }
+  .bartext { font-size: 12px; }
+}
 @media screen and (min-width: 768px) { .bartext { font-size: 10px; } } /* small and up */
 @media screen and (min-width: 992px) { .bartext { font-size: 10px; } } /* medium and up */
 
