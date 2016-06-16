@@ -60,6 +60,10 @@ body {
 
 strong { font-weight: 700; }
 
+.container-fluid h2:first-child {
+  margin-bottom: 20px;
+}
+
 /* Wrap text inside the dropdown */
 
 .bootstrap-select.btn-group .dropdown-toggle .filter-option {
@@ -99,7 +103,6 @@ strong { font-weight: 700; }
 .chart-container {
   width:100%;
   height:100%;
-  border: 1px dotted silver;
 }
 
 .bartext {
