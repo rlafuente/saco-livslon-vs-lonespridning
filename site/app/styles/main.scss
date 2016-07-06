@@ -126,8 +126,9 @@ strong { font-weight: 700; }
 }
 
 .chart-title h4 {
-  font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 16px;
+  font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif
+  font-weight: 400;
   margin-top: 5px;
   margin-bottom: 0;
 }
@@ -183,8 +184,6 @@ strong { font-weight: 700; }
   top: 100%;
   left: 0;
 }
-
-
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
