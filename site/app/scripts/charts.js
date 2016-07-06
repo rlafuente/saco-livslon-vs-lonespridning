@@ -96,8 +96,8 @@ ChartOne = (function() {
                 $('#chart-one-subtitle').html("<strong>Livslön</strong>: " + Number((d.lifesalary/1000000).toFixed(1)) + " milj. kronor");
               })
               .on('mouseout', function(d) {
-                $('#chart-one-title').text("Title");
-                $('#chart-one-subtitle').html("Subtitle");
+                $('#chart-one-title').text("Yrkesgrupp vs. Livslön");
+                $('#chart-one-subtitle').html("&nbsp;");
               });
 
           var yAxis = d3.svg.axis() 
@@ -299,8 +299,8 @@ ChartTwo = (function() {
                 $('#chart-two-subtitle-2').html("<strong>Månadslön, högsta 10%</strong>: " + d.P90 + " kronor");
               })
               .on('mouseout', function(d) {
-                $('#chart-two-title').text("Title");
-                $('#chart-two-subtitle-1').html("Subtitle");
+                $('#chart-two-title').text("Yrkesgrupp vs Månadslön");
+                $('#chart-two-subtitle-1').html("&nbsp;");
                 $('#chart-two-subtitle-2').html("&nbsp;");
               });
  
@@ -427,6 +427,7 @@ ChartThree = (function() {
               .attr("r", self.width/100)
               .attr("fill", "#F8F0DE")
               .attr("stroke", "#BDA164")
+              .attr("stroke-width", "1")
               .attr("fill-opacity", 0.2)
 
               .on('mouseover', function(d) {
@@ -442,14 +443,14 @@ ChartThree = (function() {
               })
               .on('mouseout', function(d) {
                 d3.select(this).attr('fill-opacity', 0.2);
-                $('#chart-three-title').text("Title");
-                $('#chart-three-subtitle-1').html("Subtitle");
+                $('#chart-three-title').text("Livslön jämfört med gymnasieutbildad vs Lönespridning (P90/P10)");
+                $('#chart-three-subtitle-1').html("&nbsp;");
                 $('#chart-three-subtitle-2').html("&nbsp;");
               });
   
           var xAxis = d3.svg.axis() 
             .scale(x)
-            .ticks(8, "s")
+            .ticks(Math.floor(self.width/120), "s")
             .orient("bottom");
           self.svg.append("g")
             .attr("class", "axis")
@@ -458,7 +459,7 @@ ChartThree = (function() {
 
           var yAxis = d3.svg.axis() 
             .scale(y)
-            .ticks(8, "s")
+            .ticks(Math.floor(self.width/120), "s")
             .orient("left");
           self.svg.append("g")
             .attr("class", "axis")
