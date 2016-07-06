@@ -133,6 +133,20 @@ strong { font-weight: 700; }
 }
 
 
+/* Axes */
+.axis {
+  fill: rgb(236, 218, 181);
+}
+.axis path,
+.axis line {
+  fill: none;
+  // stroke-width: 2;
+  shape-rendering: crispEdges;
+}
+.axis text {
+  font-size: 10px;
+}
+
 /* Tooltips
 */
 
