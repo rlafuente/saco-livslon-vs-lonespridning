@@ -46,7 +46,7 @@ ChartOne = (function() {
         var fontSize = m.bottom * 0.7 + "px";
 
         // margin value to make room for the y-axis
-        var axisMargin = 30;
+        var yAxisMargin = 30;
 
         // Create SVG container
         self.svg = self.chartContainer.append('svg')
@@ -55,10 +55,10 @@ ChartOne = (function() {
             .attr('viewBox','0 0 '+self.width+' '+self.height)
             .attr("preserveAspectRatio", "xMinYMin meet");
         self.chart = self.svg.append('g')
-            .attr('transform', 'translate(' + axisMargin + ',0)');
+            .attr('transform', 'translate(' + yAxisMargin + ',0)');
 
         var x = d3.scale.ordinal()
-              .rangeRoundBands([0, self.width - axisMargin], .1);
+              .rangeRoundBands([0, self.width - yAxisMargin], .1);
         var y = d3.scale.linear()
               .range([self.height, 0]);
               
@@ -106,7 +106,7 @@ ChartOne = (function() {
             .orient("left");
           self.svg.append("g")
             .attr("class", "axis")
-            .attr("transform", "translate(" + axisMargin*1.2 + ", 0)")
+            .attr("transform", "translate(" + yAxisMargin*1.2 + ", 0)")
             .call(yAxis);
           // remove tick for 0
           d3.selectAll('g.tick')
@@ -126,8 +126,6 @@ ChartOne = (function() {
 	        var ty = y(parseInt(d.lifesalary));
 	        return "translate(10,-5)rotate(-30 " + tx + " " + ty + ")"; 
 	      })
-	      // .attr("text-anchor", "middle")
-	      // .attr("text-align", "center")
               .style("z-index", 100)
 	      .attr("fill", "red")
 	      .attr("opacity", "0")
@@ -216,16 +214,20 @@ ChartTwo = (function() {
         self.pointRadius = containerWidth * 0.01;
         var fontSize = m.bottom * 0.7 + "px";
 
+        // margin value to make room for the y-axis
+        var yAxisMargin = 30;
+
         // Create SVG container
         self.svg = self.chartContainer.append('svg')
             .attr('width', '100%')
             .attr('height', '100%')
             .attr('viewBox','0 0 ' + self.width +' '+ self.height)
             .attr("preserveAspectRatio", "xMinYMin meet");
-        self.chart = self.svg.append('g');
+        self.chart = self.svg.append('g')
+            .attr('transform', 'translate(' + yAxisMargin + ',0)');
 
         var x = d3.scale.ordinal()
-              .rangeRoundBands([0, self.width], .1);
+              .rangeRoundBands([0, self.width - yAxisMargin], .1);
         var y = d3.scale.linear()
               .range([self.height, 0]);
 
@@ -301,7 +303,22 @@ ChartTwo = (function() {
                 $('#chart-two-subtitle-1').html("Subtitle");
                 $('#chart-two-subtitle-2').html("&nbsp;");
               });
-          
+ 
+          var yAxis = d3.svg.axis() 
+            .scale(y)
+            .ticks(8, "s")
+            .orient("left");
+          self.svg.append("g")
+            .attr("class", "axis")
+            .attr("transform", "translate(" + yAxisMargin*1.2 + ", 0)")
+            .call(yAxis);
+          // remove tick for 0
+          d3.selectAll('g.tick')
+            .filter(function(d){ return d==0;} )
+            .select('text') //grab the tick line
+            .style('visibility', 'hidden');
+
+         
         });
 
         // Send resize signal to parent page
@@ -375,28 +392,29 @@ ChartThree = (function() {
         self.pointRadius = containerWidth * 0.01;
         var fontSize = m.bottom * 0.7 + "px";
 
+        // margin value to make room for the axes
+        var xAxisMargin = 30;
+        var yAxisMargin = 30;
+
         // Create SVG container
         self.svg = self.chartContainer.append('svg')
             .attr('width', '100%')
             .attr('height', '100%')
             .attr('viewBox','0 0 ' + self.width +' '+ self.height)
             .attr("preserveAspectRatio", "xMinYMin meet");
-        self.chart = self.svg.append('g');
+        self.chart = self.svg.append('g')
+            .attr('transform', 'translate(' + yAxisMargin + ',' + -xAxisMargin + ')');
 
-        /*
         var x = d3.scale.linear()
-              .range([0, self.width]);
+              .range([20, self.width - 20 - yAxisMargin]);
         var y = d3.scale.linear()
-              .range([self.height, 0]);
-        */
-        var x = d3.scale.linear()
-              .range([20, self.width-20]);
-        var y = d3.scale.linear()
-              .range([self.height-20, 20]);
+              .range([self.height-xAxisMargin, xAxisMargin*2]);
 
         d3.csv(self.data, function (error, data) {
-          x.domain([d3.min(data, function(d) { return parseInt(d.lifesalary); }), d3.max(data, function(d) { return parseInt(d.lifesalary); })]);
-          y.domain([d3.min(data, function(d) { return parseInt(d.median); }), d3.max(data, function(d) { return parseInt(d.median); })]);
+          x.domain([d3.min(data, function(d) { return parseInt(d.lifesalary); }), 
+                    d3.max(data, function(d) { return parseInt(d.lifesalary); })]);
+          y.domain([d3.min(data, function(d) { return parseInt(d.median); }), 
+                    d3.max(data, function(d) { return parseInt(d.median); })]);
  
           var dot = self.chart.selectAll("g")
               .data(data)
@@ -420,6 +438,26 @@ ChartThree = (function() {
                 $('#chart-three-subtitle-1').html("Subtitle");
                 $('#chart-three-subtitle-2').html("&nbsp;");
               });
+  
+          var xAxis = d3.svg.axis() 
+            .scale(x)
+            .ticks(8, "s")
+            .orient("bottom");
+          self.svg.append("g")
+            .attr("class", "axis")
+            .attr("transform", "translate(0," + (self.height-xAxisMargin) + ")")
+            .call(xAxis);
+
+          var yAxis = d3.svg.axis() 
+            .scale(y)
+            .ticks(8, "s")
+            .orient("left");
+          self.svg.append("g")
+            .attr("class", "axis")
+            .attr("transform", "translate(" + yAxisMargin*1.2 + ", 0)")
+            .call(yAxis);
+
+
         });
 
         // Send resize signal to parent page
