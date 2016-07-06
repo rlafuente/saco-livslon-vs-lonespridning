@@ -427,7 +427,7 @@ ChartThree = (function() {
               .attr("r", self.width/100)
               .attr("fill", "#F8F0DE")
               .attr("stroke", "#BDA164")
-              .attr("stroke-width", "1px")
+              .attr("stroke-width", "1")
               .attr("fill-opacity", 0.2)
 
               .on('mouseover', function(d) {
