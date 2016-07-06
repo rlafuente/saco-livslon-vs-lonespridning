@@ -45,16 +45,20 @@ ChartOne = (function() {
         self.pointRadius = containerWidth * 0.01;
         var fontSize = m.bottom * 0.7 + "px";
 
+        // margin value to make room for the y-axis
+        var axisMargin = 30;
+
         // Create SVG container
         self.svg = self.chartContainer.append('svg')
             .attr('width', '100%')
             .attr('height', '100%')
             .attr('viewBox','0 0 '+self.width+' '+self.height)
             .attr("preserveAspectRatio", "xMinYMin meet");
-        self.chart = self.svg.append('g');
+        self.chart = self.svg.append('g')
+            .attr('transform', 'translate(' + axisMargin + ',0)');
 
         var x = d3.scale.ordinal()
-              .rangeRoundBands([0, self.width], .1);
+              .rangeRoundBands([0, self.width - axisMargin], .1);
         var y = d3.scale.linear()
               .range([self.height, 0]);
               
@@ -87,8 +91,6 @@ ChartOne = (function() {
               .attr("height", function(d) { return self.height - y(parseInt(d.lifesalary)); })
               .attr("fill", "lightgrey")
               .attr("width", x.rangeBand())
-              // FIXME: is this line necessary? No. The tip is defined above
-              //.attr("title", function(d) { return "<h4>" + d.profession_name + "</h4><p>" + d.lifesalary + "</p>"; })
               .on('mouseover', function(d) {
                 $('#chart-one-title').text(d.profession_name);
                 $('#chart-one-subtitle').html("<strong>Livslön</strong>: " + Number((d.lifesalary/1000000).toFixed(1)) + " milj. kronor");
@@ -98,7 +100,22 @@ ChartOne = (function() {
                 $('#chart-one-subtitle').html("Subtitle");
               });
 
-	  var yTextPadding = 0;
+          var yAxis = d3.svg.axis() 
+            .scale(y)
+            .ticks(4, "s")
+            .orient("left");
+          self.svg.append("g")
+            .attr("class", "axis")
+            .attr("transform", "translate(" + axisMargin*1.2 + ", 0)")
+            .call(yAxis);
+          // remove tick for 0
+          d3.selectAll('g.tick')
+            .filter(function(d){ return d==0;} )
+            .select('text') //grab the tick line
+            .style('visibility', 'hidden');
+
+
+      var yTextPadding = 0;
 
       self.chart.selectAll("text")
           .data(data)
