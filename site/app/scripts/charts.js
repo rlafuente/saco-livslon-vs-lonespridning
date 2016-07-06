@@ -424,16 +424,24 @@ ChartThree = (function() {
               .attr("class", function(d) { return "element d3-tip " + d.group; })
               .attr("cx", function(d) { return x(parseInt(d.lifesalary)); })
               .attr("cy", function(d) { return y(parseInt(d.median)); })
-              .attr("r", 10)
+              .attr("r", self.width/100)
               .attr("fill", "#F8F0DE")
               .attr("stroke", "#BDA164")
-              // .attr("fill-opacity", 0.6)
+              .attr("fill-opacity", 0.2)
+
               .on('mouseover', function(d) {
+                d3.select(this).attr('fill-opacity', 1);
                 $('#chart-three-title').text(d.profession_name);
-                $('#chart-three-subtitle-1').html("<strong>Lönespridning (P90/P10)</strong>: " + Number(parseFloat(d.income_range).toFixed(2)));
-                $('#chart-three-subtitle-2').html("<strong>Livslön jämfört med gymnasieutbildad</strong>: " + Number(parseFloat(d.lifesalary_vs_baseline).toFixed(2)) + " procent");
+                $('#chart-three-subtitle-1').html(
+                    "<strong>Lönespridning (P90/P10)</strong>: " + Number(parseFloat(d.income_range).toFixed(2))
+                );
+                $('#chart-three-subtitle-2').html(
+                    "<strong>Livslön jämfört med gymnasieutbildad</strong>: " + Number(parseFloat(d.lifesalary_vs_baseline).toFixed(2)) + " procent"
+                );
+
               })
               .on('mouseout', function(d) {
+                d3.select(this).attr('fill-opacity', 0.2);
                 $('#chart-three-title').text("Title");
                 $('#chart-three-subtitle-1').html("Subtitle");
                 $('#chart-three-subtitle-2').html("&nbsp;");
