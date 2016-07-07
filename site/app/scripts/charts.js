@@ -46,7 +46,8 @@ ChartOne = (function() {
         var fontSize = m.bottom * 0.7 + "px";
 
         // margin value to make room for the y-axis
-        var yAxisMargin = 30;
+        var xAxisMargin = 60;
+        var yAxisMargin = 60;
 
         // Create SVG container
         self.svg = self.chartContainer.append('svg')
@@ -55,12 +56,12 @@ ChartOne = (function() {
             .attr('viewBox','0 0 '+self.width+' '+self.height)
             .attr("preserveAspectRatio", "xMinYMin meet");
         self.chart = self.svg.append('g')
-            .attr('transform', 'translate(' + yAxisMargin + ',0)');
+            .attr('transform', 'translate(' + yAxisMargin + ',' + -xAxisMargin + ')');
 
         var x = d3.scale.ordinal()
               .rangeRoundBands([0, self.width - yAxisMargin], .1);
         var y = d3.scale.linear()
-              .range([self.height, 0]);
+              .range([self.height-xAxisMargin, xAxisMargin*2]);
               
         
         d3.csv(self.data, function (error, data) {
@@ -114,6 +115,19 @@ ChartOne = (function() {
             .select('text') //grab the tick line
             .style('visibility', 'hidden');
 
+          self.svg.append("text")
+            .text("Yrkesgrupp")
+            .attr("class", "axis legend")
+            .style("background", "white")
+            .style("text-transform", "uppercase")
+            .attr("transform", "translate(" + yAxisMargin + "," + (self.height-xAxisMargin/3) + ")")
+            .style("text-anchor", "start");
+          self.svg.append("text")
+            .text("Livslön (milj. kr)")
+            .attr("class", "axis legend")
+            .attr("transform", "translate(" + yAxisMargin/2 + "," + (self.height-xAxisMargin) + ") rotate(-90)")
+            .style("text-anchor", "start")
+            .style("background-color", "white");
 
       var yTextPadding = 0;
 
@@ -215,7 +229,8 @@ ChartTwo = (function() {
         var fontSize = m.bottom * 0.7 + "px";
 
         // margin value to make room for the y-axis
-        var yAxisMargin = 30;
+        var xAxisMargin = 60;
+        var yAxisMargin = 60;
 
         // Create SVG container
         self.svg = self.chartContainer.append('svg')
@@ -224,12 +239,12 @@ ChartTwo = (function() {
             .attr('viewBox','0 0 ' + self.width +' '+ self.height)
             .attr("preserveAspectRatio", "xMinYMin meet");
         self.chart = self.svg.append('g')
-            .attr('transform', 'translate(' + yAxisMargin + ',0)');
+            .attr('transform', 'translate(' + yAxisMargin + ',' + -xAxisMargin + ')');
 
         var x = d3.scale.ordinal()
               .rangeRoundBands([0, self.width - yAxisMargin], .1);
         var y = d3.scale.linear()
-              .range([self.height, 0]);
+              .range([self.height-xAxisMargin, xAxisMargin*2]);
 
         d3.csv(self.data, function (error, data) {
           data = data.sort(function(a, b){ return d3.ascending(parseInt(a.median), parseInt(b.median)); });
@@ -318,6 +333,19 @@ ChartTwo = (function() {
             .select('text') //grab the tick line
             .style('visibility', 'hidden');
 
+          self.svg.append("text")
+            .text("Yrkesgrupp")
+            .attr("class", "axis legend")
+            .style("background", "white")
+            .style("text-transform", "uppercase")
+            .attr("transform", "translate(" + yAxisMargin + "," + (self.height-xAxisMargin/3) + ")")
+            .style("text-anchor", "start");
+          self.svg.append("text")
+            .text("Månadslön")
+            .attr("class", "axis legend")
+            .attr("transform", "translate(" + yAxisMargin/2 + "," + (self.height-xAxisMargin) + ") rotate(-90)")
+            .style("text-anchor", "start")
+            .style("background-color", "white");
          
         });
 
@@ -411,10 +439,10 @@ ChartThree = (function() {
               .range([self.height-xAxisMargin, xAxisMargin*2]);
 
         d3.csv(self.data, function (error, data) {
-          x.domain([d3.min(data, function(d) { return parseInt(d.lifesalary); }), 
-                    d3.max(data, function(d) { return parseInt(d.lifesalary); })]);
-          y.domain([d3.min(data, function(d) { return parseInt(d.median); }), 
-                    d3.max(data, function(d) { return parseInt(d.median); })]);
+          x.domain([d3.min(data, function(d) { return parseFloat(d.lifesalary_vs_baseline); }), 
+                    d3.max(data, function(d) { return parseFloat(d.lifesalary_vs_baseline); })]);
+          y.domain([d3.min(data, function(d) { return parseFloat(d.income_range); }), 
+                    d3.max(data, function(d) { return parseFloat(d.income_range); })]);
  
           var dot = self.chart.selectAll("g")
               .data(data)
@@ -422,8 +450,8 @@ ChartThree = (function() {
 
           dot.append("circle")
               .attr("class", function(d) { return "element d3-tip " + d.group; })
-              .attr("cx", function(d) { return x(parseInt(d.lifesalary)); })
-              .attr("cy", function(d) { return y(parseInt(d.median)); })
+              .attr("cx", function(d) { return x(parseFloat(d.lifesalary_vs_baseline)); })
+              .attr("cy", function(d) { return y(parseFloat(d.income_range)); })
               .attr("r", self.width/100)
               .attr("fill", "#F8F0DE")
               .attr("stroke", "#BDA164")
@@ -456,8 +484,6 @@ ChartThree = (function() {
             .attr("class", "axis")
             .attr("transform", "translate(0," + (self.height-xAxisMargin) + ")")
             .call(xAxis);
-
-
           var yAxis = d3.svg.axis() 
             .scale(y)
             .ticks(Math.floor(self.width/120), "s")
@@ -468,13 +494,14 @@ ChartThree = (function() {
             .call(yAxis);
 
           self.svg.append("text")
-            .text("Livslön jämfört med gymnasieutbildad")
+            .text("Lönespridning (P90/P10)")
             .attr("class", "axis legend")
             .style("background", "white")
+            .style("text-transform", "uppercase")
             .attr("transform", "translate(" + yAxisMargin + "," + (self.height-xAxisMargin/3) + ")")
             .style("text-anchor", "start");
           self.svg.append("text")
-            .text("Lönespridning (P90/P10)")
+            .text("Livslön jämfört med gymnasieutbildad")
             .attr("class", "axis legend")
             .attr("transform", "translate(" + yAxisMargin/2 + "," + (self.height-xAxisMargin) + ") rotate(-90)")
             .style("text-anchor", "start")
