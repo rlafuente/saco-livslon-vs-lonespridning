@@ -393,8 +393,8 @@ ChartThree = (function() {
         var fontSize = m.bottom * 0.7 + "px";
 
         // margin value to make room for the axes
-        var xAxisMargin = 30;
-        var yAxisMargin = 30;
+        var xAxisMargin = 60;
+        var yAxisMargin = 60;
 
         // Create SVG container
         self.svg = self.chartContainer.append('svg')
@@ -457,6 +457,7 @@ ChartThree = (function() {
             .attr("transform", "translate(0," + (self.height-xAxisMargin) + ")")
             .call(xAxis);
 
+
           var yAxis = d3.svg.axis() 
             .scale(y)
             .ticks(Math.floor(self.width/120), "s")
@@ -466,7 +467,18 @@ ChartThree = (function() {
             .attr("transform", "translate(" + yAxisMargin*1.2 + ", 0)")
             .call(yAxis);
 
-
+          self.svg.append("text")
+            .text("Livslön jämfört med gymnasieutbildad")
+            .attr("class", "axis legend")
+            .style("background", "white")
+            .attr("transform", "translate(" + yAxisMargin + "," + (self.height-xAxisMargin/3) + ")")
+            .style("text-anchor", "start");
+          self.svg.append("text")
+            .text("Lönespridning (P90/P10)")
+            .attr("class", "axis legend")
+            .attr("transform", "translate(" + yAxisMargin/2 + "," + (self.height-xAxisMargin) + ") rotate(-90)")
+            .style("text-anchor", "start")
+            .style("background-color", "white");
         });
 
         // Send resize signal to parent page
