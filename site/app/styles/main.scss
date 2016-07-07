@@ -4,42 +4,28 @@ $icon-font-path: "../fonts/";
 */
 
 @font-face {
-  font-family: "Unna";
-  font-weight: 400;
-  font-style: normal;
-  src: local("Unna"), url("../fonts/Unna/Unna-Regular.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "Raleway";
-  font-weight: 400;
-  font-style: normal;
-  src: local("Raleway Regular"), url("../fonts/Raleway/Raleway-Regular.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "Raleway";
-  font-weight: 700;
-  font-style: normal;
-  src: local("Raleway Bold"), url("../fonts/Raleway/Raleway-Bold.ttf") format("truetype");
-}
-
-
-@font-face {
   font-family: "OpenSans Cond";
   font-weight: 700;
   font-style: normal;
   src: local("OpenSans CondBold"), url("../fonts/OpenSans-CondBold.ttf") format("truetype");
 }
 
+
+@font-face {
+  font-family: 'BerlingNovaDisplayPro';
+  src: url('/Content/Fonts/2C5E3B_0_0.eot');
+  src: url('/Content/Fonts/2C5E3B_0_0.eot?#iefix') format('embedded-opentype'), url('/Content/Fonts/2C5E3B_0_0.woff2') format('woff2'), url('/Content/Fonts/2C5E3B_0_0.woff') format('woff'), url('/Content/Fonts/2C5E3B_0_0.ttf') format('truetype');
+}
+
+
 /* Overwritting bootstrap variables
 */
 
-$font-family-sans-serif:  "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
-$font-family-serif:       "Unna", Georgia, "Times New Roman", Times, serif !default;
+$font-family-sans-serif:  "proxima-nova", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$font-family-serif:       "BerlingNovaDisplayPro", Georgia, "Times New Roman", Times, serif !default;
 $font-size-base:          18px !default;
 $headings-font-family:    $font-family-serif;
-$headings-font-weight:    400 !default;
+$headings-font-weight:    300 !default;
 $font-size-h1:            floor(($font-size-base * 3.6)) !default; // ~36px
 $font-size-h2:            floor(($font-size-base * 3.15)) !default; // ~30px
 $font-size-h3:            ceil(($font-size-base * 2.7)) !default; // ~24px
@@ -56,6 +42,7 @@ $text-color:              #212424;
 body {
   padding-top: 20px;
   padding-bottom: 20px;
+	font-weight: 300;
 }
 
 strong { font-weight: 700; }
@@ -126,8 +113,8 @@ strong { font-weight: 700; }
 }
 
 .chart-title h4 {
-  font-size: 16px;
-  font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif
+  font-size: 16px;  
+  font-family: "proxima-nova", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 400;
   margin-top: 5px;
   margin-bottom: 0;
@@ -152,7 +139,8 @@ strong { font-weight: 700; }
 */
 
 .d3-tip {
-  font-family: 'Raleway', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: "proxima-nova", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 400;
   font-size: 14px;
   line-height: 1 !important;
   padding: 10px 16px;
