@@ -86,6 +86,7 @@ ChartOne = (function() {
             })
           self.chart.call(tip);
 
+          // Bars
           bar.append("rect")
               .attr("class", function(d) { return "element d3-tip " + d.group; })
               .attr("y", function(d) { return y(parseInt(d.lifesalary)); })
@@ -101,6 +102,7 @@ ChartOne = (function() {
                 $('#chart-one-subtitle').html("&nbsp;");
               });
 
+          // Vertical axis
           var yAxis = d3.svg.axis() 
             .scale(y)
             .ticks(4, "s")
@@ -115,6 +117,7 @@ ChartOne = (function() {
             .select('text') //grab the tick line
             .style('visibility', 'hidden');
 
+          // Axis labels
           self.svg.append("text")
             .text("Yrkesgrupp")
             .attr("class", "axis legend")
@@ -131,42 +134,62 @@ ChartOne = (function() {
 
       var yTextPadding = 0;
 
+      // Mobile swipe events
+      var touchScale = d3.scale.linear().domain([yAxisMargin,self.width]).range([0,data.length-1]).clamp(true);
+      var locator = self.svg.append('circle')
+          .style('display', 'none')
+          .attr('r', 10)
+          .attr('fill', '#f00');
+      function onTouchMove() {
+	var xPos = d3.touches(this)[0][0];
+	var d = data[~~touchScale(xPos)];
+	locator.attr({
+	  cx : x(d.profession_name) + yAxisMargin,
+	  cy : y(d.value)
+	})
+	.style('display', 'block');
+	$('#chart-one-title').text(d.profession_name);
+	$('#chart-one-subtitle').html("<strong>Livslön</strong>: " + Number((d.lifesalary/1000000).toFixed(1)) + " milj. kronor");
+      }
+      self.svg.on('touchmove', onTouchMove);
+      console.log('Mobile init');
+      
+      // Text labels for highlighted bars
       self.chart.selectAll("text")
           .data(data)
           .enter().append("text")
-	      .attr("class", function(d) { return "bartext " + d.group; })
-	      .attr("transform", function(d) { 
-	        var tx = x(d.profession_name);
-	        var ty = y(parseInt(d.lifesalary));
-	        return "translate(10,-5)rotate(-30 " + tx + " " + ty + ")"; 
-	      })
-              .style("z-index", 100)
-	      .attr("fill", "red")
-	      .attr("opacity", "0")
-	      .attr("x", function(d,i) {
-	          // return x(d.profession_name)+x.rangeBand()/2;
-	          return x(d.profession_name);
-	      })
-	      .attr("y", function(d,i) {
-	          return y(parseInt(d.lifesalary));
-	      })
-	      .text(function(d){
-	           return d.profession_name;
-	      });
-
+            .attr("class", function(d) { return "bartext " + d.group; })
+            .attr("transform", function(d) { 
+              var tx = x(d.profession_name);
+              var ty = y(parseInt(d.lifesalary));
+              return "translate(10,-5)rotate(-30 " + tx + " " + ty + ")"; 
+            })
+            .style("z-index", 100)
+            .attr("fill", "red")
+            .attr("opacity", "0")
+            .attr("x", function(d,i) {
+              // return x(d.profession_name)+x.rangeBand()/2;
+              return x(d.profession_name);
+            })
+            .attr("y", function(d,i) {
+              return y(parseInt(d.lifesalary));
+            })
+            .text(function(d){
+              return d.profession_name;
+            });
         });
 
         // Send resize signal to parent page
         if (self.opts.isIframe) {
-            pymChild.sendHeight();
+          pymChild.sendHeight();
         }
     }
     // Transitions only
     ChartOne.prototype.update = function(data) {
-        var self = this;
-        self.data = data;
-
+      var self = this;
+      self.data = data;
     }
+
     ChartOne.prototype.resize = function() {
         var self = this;
         self.svg.remove();
