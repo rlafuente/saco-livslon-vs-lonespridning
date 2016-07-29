@@ -44,11 +44,18 @@ function getUrlVars()
   return vars;
 } 
 
+var chart_one;
+var chart_two;
+var chart_three;
+
 function setChartHighlight(group) {
+  /*
   $("#chart-one .element").attr("fill", "#ECDAB5"); 
   $("#chart-one ." + group).attr("fill", "#c13d8c"); 
   $("#chart-one .bartext").attr("opacity", "0"); 
   $("#chart-one .bartext." + group).attr("opacity", "1"); 
+  */
+  chart_one.applyHighlight(group);
 
   $("#chart-two .median").attr("fill", "#F8F0DE"); 
   $("#chart-two .quartiles").attr("fill", "#BDA164"); 
@@ -88,16 +95,15 @@ function setTextBlocks(group) {
 function loadCharts() {
   var is_iframe = (getUrlVars().iframe === 'true');
   var csvfile = 'data/development_data.csv';
-  var chart_one = new ChartOne('#chart-one', csvfile, {isIframe: is_iframe});
-  var chart_two = new ChartTwo('#chart-two', csvfile, {isIframe: is_iframe});
-  var chart_three = new ChartThree('#chart-three', csvfile, {isIframe: is_iframe});
+  chart_one = new ChartOne('#chart-one', csvfile, {isIframe: is_iframe});
+  chart_two = new ChartTwo('#chart-two', csvfile, {isIframe: is_iframe});
+  chart_three = new ChartThree('#chart-three', csvfile, {isIframe: is_iframe});
   return 'ready';
 }
 
 $(document).ready(function() {
 
   setTextBlocks('education');
-  
   var chart_ready = loadCharts();
   function isChartReady() {
     if (chart_ready === 'ready') {
