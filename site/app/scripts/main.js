@@ -48,29 +48,9 @@ var chart_one;
 var chart_two;
 var chart_three;
 
-function setChartHighlight(group) {
-  /*
-  $("#chart-one .element").attr("fill", "#ECDAB5"); 
-  $("#chart-one ." + group).attr("fill", "#c13d8c"); 
-  $("#chart-one .bartext").attr("opacity", "0"); 
-  $("#chart-one .bartext." + group).attr("opacity", "1"); 
-  */
-  chart_one.applyHighlight(group);
 
-  $("#chart-two .median").attr("fill", "#F8F0DE"); 
-  $("#chart-two .quartiles").attr("fill", "#BDA164"); 
-  $("#chart-two .edges").attr("fill", "#ECDAB5"); 
-  $("#chart-two .median." + group).attr("fill", "#eecae0"); 
-  $("#chart-two .quartiles." + group).attr("fill", "#c13d8c"); 
-  $("#chart-two .edges." + group).attr("fill", "#d67db2"); 
-  $("#chart-two .bartext." + group).attr("opacity", "1"); 
-
-  $("#chart-three .element").attr("fill", "#ECDAB5"); 
-  $("#chart-three ." + group).attr("fill", "#c13d8c");  
-}
 
 function setTextBlocks(group) {
-  console.log("Setting text blocks");
   $.ajax({
     type: "GET",
     url: 'data/copy-stories.csv',
@@ -101,13 +81,18 @@ function loadCharts() {
   return 'ready';
 }
 
+function setChartHighlight(group) {
+  chart_one.applyHighlight(group);
+  chart_two.applyHighlight(group);
+  chart_three.applyHighlight(group);
+}
+
 $(document).ready(function() {
 
   setTextBlocks('education');
   var chart_ready = loadCharts();
   function isChartReady() {
     if (chart_ready === 'ready') {
-      console.log('chart ready');
       setChartHighlight('education');
     }
   }

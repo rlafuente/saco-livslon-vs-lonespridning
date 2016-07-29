@@ -142,6 +142,13 @@ ChartThree = (function() {
             pymChild.sendHeight();
         }
     }
+
+    ChartThree.prototype.applyHighlight = function(group) {
+      if (group && group != self.group) { self.group = group; }
+      $("#chart-three .element").attr("fill", "#ECDAB5"); 
+      $("#chart-three ." + group).attr("fill", "#c13d8c");  
+    }
+
     // Transitions only
     ChartThree.prototype.update = function(data) {
         var self = this;

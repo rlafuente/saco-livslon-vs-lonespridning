@@ -89,7 +89,7 @@ ChartOne = (function() {
         .on('mouseout', function(d) {
           $('#chart-one-title').text("Yrkesgrupp vs. Livslön");
           $('#chart-one-subtitle').html("&nbsp;");
-          this.fill = "lightgrey";
+          self.applyHighlight();
         });
 
 
@@ -123,7 +123,6 @@ ChartOne = (function() {
         .style("background-color", "white");
 
     // Mobile swipe events
-    // FIXME: Only one callback for all charts!
     var touchScale = d3.scale.linear().domain([yAxisMargin,self.width]).range([0,data.length]).clamp(true);
     function onTouchMove() {
       var xPos = d3.touches(this)[0][0];
@@ -134,9 +133,9 @@ ChartOne = (function() {
       d3.select('[name="' + d.profession_name + '"]').attr("fill", "darkred");
       $('#chart-one-title').text(d.profession_name);
       $('#chart-one-subtitle').html("<strong>Livslön</strong>: " + Number((d.lifesalary/1000000).toFixed(1)) + " milj. kronor");
+      console.log("Touch on Chart 1!")
     }
-    self.svg.on('touchmove', onTouchMove);
-    console.log('Mobile init');
+    self.svg.on('touchmove.chart1', onTouchMove);
 
     
     // Text labels for highlighted bars
@@ -162,7 +161,7 @@ ChartOne = (function() {
       pymChild.sendHeight();
     }
   }
-  
+
   ChartOne.prototype.applyHighlight = function(group) {
     if (group && group != self.group) { self.group = group; }
     $("#chart-one .element").attr("fill", "#ECDAB5"); 
