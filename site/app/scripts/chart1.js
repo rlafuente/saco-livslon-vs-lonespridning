@@ -109,6 +109,7 @@ ChartOne = (function() {
     }
     self.svg.on('touchmove.chart1', onTouchMove);
 
+    /*
       // Vertical axis
       var yAxis = d3.svg.axis() 
         .scale(y)
@@ -137,7 +138,8 @@ ChartOne = (function() {
         .attr("transform", "translate(" + yAxisMargin/2 + "," + (self.height-xAxisMargin) + ") rotate(-90)")
         .style("text-anchor", "start")
         .style("background-color", "white");
-    
+    */
+
     // Text labels for highlighted bars
     self.chart.selectAll("text")
       .data(data)

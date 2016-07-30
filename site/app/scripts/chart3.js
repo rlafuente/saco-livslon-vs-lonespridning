@@ -109,7 +109,31 @@ ChartThree = (function() {
                 $('#chart-three-subtitle-1').html("&nbsp;");
                 $('#chart-three-subtitle-2').html("&nbsp;");
               });
-  
+
+
+        // Mobile swipe events
+        // var touchScale = d3.scale.linear().domain([yAxisMargin,self.width]).range([0,data.length]).clamp(true);
+        var touchScale = d3.scale.linear().domain([0,self.width]).range([0,data.length]).clamp(true);
+        function onTouchMove() {
+          var xPos = d3.touches(this)[0][0];
+          var d = data[~~touchScale(xPos)];
+          // reset colors and highlight the touched one
+          self.applyHighlight();
+          var sel = d3.select('#chart-three [name="' + d.profession_name + '"]').style("fill", "darkred").style("opacity", "0.8");
+          $('#chart-three-title').text(d.profession_name);
+          $('#chart-three-subtitle-1').html(
+              "<strong>Lönespridning (P90/P10)</strong>: " + Number(parseFloat(d.income_range).toFixed(2))
+          );
+          $('#chart-three-subtitle-2').html(
+              "<strong>Livslön jämfört med gymnasieutbildad</strong>: " + Number(parseFloat(d.lifesalary_vs_baseline).toFixed(2)) + " procent"
+          );
+          console.log("Touched!")
+        }
+        self.svg.on('touchmove.chart3', onTouchMove);
+
+
+
+        /*  
           var xAxis = d3.svg.axis() 
             .scale(x)
             .ticks(Math.floor(self.width/120), "s")
@@ -140,28 +164,7 @@ ChartThree = (function() {
             .attr("transform", "translate(" + yAxisMargin/2 + "," + (self.height-xAxisMargin) + ") rotate(-90)")
             .style("text-anchor", "start")
             .style("background-color", "white");
-
-        // Mobile swipe events
-        // var touchScale = d3.scale.linear().domain([yAxisMargin,self.width]).range([0,data.length]).clamp(true);
-        var touchScale = d3.scale.linear().domain([0,self.width]).range([0,data.length]).clamp(true);
-        function onTouchMove() {
-          var xPos = d3.touches(this)[0][0];
-          var d = data[~~touchScale(xPos)];
-          // reset colors and highlight the touched one
-          self.applyHighlight();
-          var sel = d3.select('#chart-three [name="' + d.profession_name + '"]').style("fill", "darkred").style("opacity", "0.8");
-          $('#chart-three-title').text(d.profession_name);
-          $('#chart-three-subtitle-1').html(
-              "<strong>Lönespridning (P90/P10)</strong>: " + Number(parseFloat(d.income_range).toFixed(2))
-          );
-          $('#chart-three-subtitle-2').html(
-              "<strong>Livslön jämfört med gymnasieutbildad</strong>: " + Number(parseFloat(d.lifesalary_vs_baseline).toFixed(2)) + " procent"
-          );
-          console.log("Touched!")
-        }
-        self.svg.on('touchmove.chart3', onTouchMove);
-
-
+        */
 
 
 

@@ -133,7 +133,25 @@ ChartTwo = (function() {
                 $('#chart-two-subtitle-1').html("&nbsp;");
                 $('#chart-two-subtitle-2').html("&nbsp;");
               });
- 
+
+
+
+        // Mobile swipe events
+        // var touchScale = d3.scale.linear().domain([yAxisMargin,self.width]).range([0,data.length]).clamp(true);
+        var touchScale = d3.scale.linear().domain([0,self.width]).range([0,data.length]).clamp(true);
+        function onTouchMove() {
+          var xPos = d3.touches(this)[0][0];
+          var d = data[~~touchScale(xPos)];
+          // reset colors and highlight the touched one
+          self.applyHighlight();
+          var sel = d3.select('#chart-two [name="' + d.profession_name + '"]').style("opacity", ".4");
+          $('#chart-two-title').text(d.profession_name);
+          $('#chart-two-subtitle-1').html("<strong>Månadslön, lägst 10%</strong>: " + d.P10 + " kronor");
+          $('#chart-two-subtitle-2').html("<strong>Månadslön, högsta 10%</strong>: " + d.P90 + " kronor");
+        }
+        self.svg.on('touchmove.chart2', onTouchMove);
+
+        /* 
           var yAxis = d3.svg.axis() 
             .scale(y)
             .ticks(8, "s")
@@ -161,23 +179,7 @@ ChartTwo = (function() {
             .attr("transform", "translate(" + yAxisMargin/2 + "," + (self.height-xAxisMargin) + ") rotate(-90)")
             .style("text-anchor", "start")
             .style("background-color", "white");
-
-
-        // Mobile swipe events
-        // var touchScale = d3.scale.linear().domain([yAxisMargin,self.width]).range([0,data.length]).clamp(true);
-        var touchScale = d3.scale.linear().domain([0,self.width]).range([0,data.length]).clamp(true);
-        function onTouchMove() {
-          var xPos = d3.touches(this)[0][0];
-          var d = data[~~touchScale(xPos)];
-          // reset colors and highlight the touched one
-          self.applyHighlight();
-          var sel = d3.select('#chart-two [name="' + d.profession_name + '"]').style("opacity", ".4");
-          $('#chart-two-title').text(d.profession_name);
-          $('#chart-two-subtitle-1').html("<strong>Månadslön, lägst 10%</strong>: " + d.P10 + " kronor");
-          $('#chart-two-subtitle-2').html("<strong>Månadslön, högsta 10%</strong>: " + d.P90 + " kronor");
-        }
-        self.svg.on('touchmove.chart2', onTouchMove);
-
+        */
 
         });
 
