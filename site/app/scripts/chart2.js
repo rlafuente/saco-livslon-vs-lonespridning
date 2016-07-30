@@ -61,13 +61,14 @@ ChartTwo = (function() {
             .attr('height', '100%')
             .attr('viewBox','0 0 ' + self.width +' '+ self.height)
             .attr("preserveAspectRatio", "xMinYMin meet");
-        self.chart = self.svg.append('g')
-            .attr('transform', 'translate(' + yAxisMargin + ',' + -xAxisMargin + ')');
+        self.chart = self.svg.append('g');
+            // .attr('transform', 'translate(' + yAxisMargin + ',' + -xAxisMargin + ')');
 
         var x = d3.scale.ordinal()
-              .rangeRoundBands([0, self.width - yAxisMargin], .1);
+              //.rangeRoundBands([0, self.width - yAxisMargin], .1);
+              .rangeRoundBands([0, self.width], .1);
         var y = d3.scale.linear()
-              .range([self.height-xAxisMargin, xAxisMargin*2]);
+              .range([self.height, 0]);
 
         d3.csv(self.data, function (error, data) {
           data = data.sort(function(a, b){ return d3.ascending(parseInt(a.median), parseInt(b.median)); });
@@ -77,17 +78,6 @@ ChartTwo = (function() {
           //y.domain([0, d3.max(data, function(d) { return parseInt(d.median); })]);
           //y.domain([d3.min(data, function(d) { return parseInt(d.P10)}), d3.max(data, function(d) { return parseInt(d.P90); })]);
           
-          // Initialize tooltip
-          var tip = d3.tip()
-            .attr('class', 'd3-tip')
-            .offset([-10, 0])
-            .html(function(d) {
-              return "<p><strong>Yrke</strong>: " + d.profession_name + "</p>" + 
-                     "<p><strong>Månadslön, lägst 10%</strong>: " + d.P10 + " kronor</p>" +
-                     "<p><strong>Månadslön, högsta 10%</strong>: " + d.P90 + " kronor</p>";
-            })
-          self.chart.call(tip);
-
           var bar = self.chart.selectAll("g")
               .data(data)
             .enter().append("g")
@@ -174,7 +164,8 @@ ChartTwo = (function() {
 
 
         // Mobile swipe events
-        var touchScale = d3.scale.linear().domain([yAxisMargin,self.width]).range([0,data.length]).clamp(true);
+        // var touchScale = d3.scale.linear().domain([yAxisMargin,self.width]).range([0,data.length]).clamp(true);
+        var touchScale = d3.scale.linear().domain([0,self.width]).range([0,data.length]).clamp(true);
         function onTouchMove() {
           var xPos = d3.touches(this)[0][0];
           var d = data[~~touchScale(xPos)];

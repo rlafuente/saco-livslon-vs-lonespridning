@@ -61,13 +61,13 @@ ChartThree = (function() {
             .attr('height', '100%')
             .attr('viewBox','0 0 ' + self.width +' '+ self.height)
             .attr("preserveAspectRatio", "xMinYMin meet");
-        self.chart = self.svg.append('g')
-            .attr('transform', 'translate(' + yAxisMargin + ',' + -xAxisMargin + ')');
-
+        self.chart = self.svg.append('g');
+            // .attr('transform', 'translate(' + yAxisMargin + ',' + -xAxisMargin + ')');
+        var circleRadius = self.width / 100;
         var x = d3.scale.linear()
-              .range([20, self.width - 20 - yAxisMargin]);
+              .range([circleRadius, self.width-circleRadius]);
         var y = d3.scale.linear()
-              .range([self.height-xAxisMargin, xAxisMargin*2]);
+              .range([self.height-circleRadius, circleRadius]);
 
         d3.csv(self.data, function (error, data) {
           x.domain([d3.min(data, function(d) { return parseFloat(d.lifesalary_vs_baseline); }), 
@@ -87,7 +87,7 @@ ChartThree = (function() {
               .attr("class", function(d) { return "element d3-tip " + d.group; })
               .attr("cx", function(d) { return x(parseFloat(d.lifesalary_vs_baseline)); })
               .attr("cy", function(d) { return y(parseFloat(d.income_range)); })
-              .attr("r", self.width/100)
+              .attr("r", circleRadius)
               .attr("fill", "#F8F0DE")
               .attr("stroke", "#BDA164")
               .attr("stroke-width", "1")
@@ -142,7 +142,8 @@ ChartThree = (function() {
             .style("background-color", "white");
 
         // Mobile swipe events
-        var touchScale = d3.scale.linear().domain([yAxisMargin,self.width]).range([0,data.length]).clamp(true);
+        // var touchScale = d3.scale.linear().domain([yAxisMargin,self.width]).range([0,data.length]).clamp(true);
+        var touchScale = d3.scale.linear().domain([0,self.width]).range([0,data.length]).clamp(true);
         function onTouchMove() {
           var xPos = d3.touches(this)[0][0];
           var d = data[~~touchScale(xPos)];

@@ -46,9 +46,11 @@ ChartOne = (function() {
     var yAxisMargin = 60;
     // Set up scales
     var x = d3.scale.ordinal()
-          .rangeRoundBands([0, self.width - yAxisMargin], .1);
+          .rangeRoundBands([0, self.width], .1);
+          //.rangeRoundBands([0, self.width - yAxisMargin], .1);
     var y = d3.scale.linear()
-          .range([self.height-xAxisMargin, xAxisMargin*2]);
+         // .range([self.height-xAxisMargin, xAxisMargin*2]);
+          .range([0, self.height]);
 
     // Create SVG container
     self.svg = self.chartContainer.append('svg')
@@ -56,15 +58,16 @@ ChartOne = (function() {
         .attr('height', '100%')
         .attr('viewBox','0 0 '+self.width+' '+self.height)
         .attr("preserveAspectRatio", "xMinYMin meet");
-    self.chart = self.svg.append('g')
-        .attr('transform', 'translate(' + yAxisMargin + ',' + -xAxisMargin + ')');
+    self.chart = self.svg.append('g');
+        // .attr('transform', 'translate(' + yAxisMargin + ',' + -xAxisMargin + ')');
 
     // Get the data to draw from
     d3.csv(self.data, function (error, data) {
       // Init data and domains
       data = data.sort(function(a, b){ return d3.ascending(a.lifesalary, b.lifesalary);});
+      var maxvalue = d3.max(data, function(d) { return parseInt(d.lifesalary); });
       x.domain(data.map(function(d) { return d.profession_name; }));
-      y.domain([0, d3.max(data, function(d) { return parseInt(d.lifesalary); })]);
+      y.domain([maxvalue, 0]);
 
       // Draw!
       // Start by creating groups for the bars and associated objects
@@ -92,6 +95,19 @@ ChartOne = (function() {
           self.applyHighlight();
         });
 
+    // Mobile swipe events
+    var touchScale = d3.scale.linear().domain([x.rangeBand(),self.width]).range([0,data.length+1]).clamp(true);
+    //var touchScale = d3.scale.linear().domain([yAxisMargin,self.width]).range([0,data.length]).clamp(true);
+    function onTouchMove() {
+      var xPos = d3.touches(this)[0][0];
+      var d = data[~~touchScale(xPos)];
+      // reset colors and highlight the touched one
+      self.applyHighlight();
+      d3.select('[name="' + d.profession_name + '"]').attr("fill", "darkred");
+      $('#chart-one-title').text(d.profession_name);
+      $('#chart-one-subtitle').html("<strong>Livslön</strong>: " + Number((d.lifesalary/1000000).toFixed(1)) + " milj. kronor");
+    }
+    self.svg.on('touchmove.chart1', onTouchMove);
 
       // Vertical axis
       var yAxis = d3.svg.axis() 
@@ -121,22 +137,6 @@ ChartOne = (function() {
         .attr("transform", "translate(" + yAxisMargin/2 + "," + (self.height-xAxisMargin) + ") rotate(-90)")
         .style("text-anchor", "start")
         .style("background-color", "white");
-
-    // Mobile swipe events
-    var touchScale = d3.scale.linear().domain([yAxisMargin,self.width]).range([0,data.length]).clamp(true);
-    function onTouchMove() {
-      var xPos = d3.touches(this)[0][0];
-      var d = data[~~touchScale(xPos)];
-      // reset colors and highlight the touched one
-      self.applyHighlight();
-      //d3.selectAll('.bar').attr("fill", "lightgrey");
-      d3.select('[name="' + d.profession_name + '"]').attr("fill", "darkred");
-      $('#chart-one-title').text(d.profession_name);
-      $('#chart-one-subtitle').html("<strong>Livslön</strong>: " + Number((d.lifesalary/1000000).toFixed(1)) + " milj. kronor");
-      console.log("Touch on Chart 1!")
-    }
-    self.svg.on('touchmove.chart1', onTouchMove);
-
     
     // Text labels for highlighted bars
     self.chart.selectAll("text")
