@@ -213,6 +213,17 @@ strong { font-weight: 700; }
   margin: 30px 0;
 }
 
+
+/* Iframe
+*/
+
+.iframe-container {
+  border: 1px solid #ccc;
+  width: 50%;
+  margin: 100px auto;
+}
+
+
 /* Queries for text labels */
 
 @media screen and (max-width: 768px) {  /* very small devices */
