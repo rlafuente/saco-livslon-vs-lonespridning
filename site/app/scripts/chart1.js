@@ -46,11 +46,14 @@ ChartOne = (function() {
     var yAxisMargin = 60;
     // Set up scales
     var x = d3.scale.ordinal()
-          .rangeRoundBands([0, self.width], .1);
-          //.rangeRoundBands([0, self.width - yAxisMargin], .1);
+          // .rangeRoundBands([0, self.width], .1);
+          .rangeRoundBands([0, self.width - yAxisMargin], .1);
     var y = d3.scale.linear()
-         // .range([self.height-xAxisMargin, xAxisMargin*2]);
-          .range([0, self.height]);
+          .range([xAxisMargin, self.height-xAxisMargin]);
+          // .range([self.height-xAxisMargin, xAxisMargin*2]);
+          // .range([0, self.height]);
+    var yAxisScale = d3.scale.linear()
+          .range([0, self.height-xAxisMargin*2]);
 
     // Create SVG container
     self.svg = self.chartContainer.append('svg')
@@ -58,8 +61,8 @@ ChartOne = (function() {
         .attr('height', '100%')
         .attr('viewBox','0 0 '+self.width+' '+self.height)
         .attr("preserveAspectRatio", "xMinYMin meet");
-    self.chart = self.svg.append('g');
-        // .attr('transform', 'translate(' + yAxisMargin + ',' + -xAxisMargin + ')');
+    self.chart = self.svg.append('g')
+        .attr('transform', 'translate(' + yAxisMargin + ',' + -xAxisMargin + ')');
 
     // Get the data to draw from
     d3.csv(self.data, function (error, data) {
@@ -68,6 +71,7 @@ ChartOne = (function() {
       var maxvalue = d3.max(data, function(d) { return parseInt(d.lifesalary); });
       x.domain(data.map(function(d) { return d.profession_name; }));
       y.domain([maxvalue, 0]);
+      yAxisScale.domain([maxvalue, 0]);
 
       // Draw!
       // Start by creating groups for the bars and associated objects
@@ -108,12 +112,11 @@ ChartOne = (function() {
       $('#chart-one-subtitle').html("<strong>Livslön</strong>: " + Number((d.lifesalary/1000000).toFixed(1)) + " milj. kronor");
     }
     self.svg.on('touchmove.chart1', onTouchMove);
-
-    /*
+    
       // Vertical axis
       var yAxis = d3.svg.axis() 
-        .scale(y)
-        .ticks(4, "s")
+        .scale(yAxisScale)
+        .ticks(3, "s")
         .orient("left");
       self.svg.append("g")
         .attr("class", "axis")
@@ -138,7 +141,7 @@ ChartOne = (function() {
         .attr("transform", "translate(" + yAxisMargin/2 + "," + (self.height-xAxisMargin) + ") rotate(-90)")
         .style("text-anchor", "start")
         .style("background-color", "white");
-    */
+    
 
     // Text labels for highlighted bars
     self.chart.selectAll("text")

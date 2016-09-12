@@ -44,11 +44,10 @@ function getUrlVars()
   return vars;
 } 
 
+// Set up charts
 var chart_one;
 var chart_two;
 var chart_three;
-
-
 
 function setTextBlocks(group) {
   $.ajax({
@@ -88,7 +87,6 @@ function setChartHighlight(group) {
 }
 
 $(document).ready(function() {
-
   setTextBlocks('education');
   var chart_ready = loadCharts();
   function isChartReady() {
