@@ -53,7 +53,7 @@ ChartOne = (function() {
           // .range([self.height-xAxisMargin, xAxisMargin*2]);
           // .range([0, self.height]);
     var yAxisScale = d3.scale.linear()
-          .range([0, self.height-xAxisMargin*2]);
+          .range([0, self.height-xAxisMargin]);
 
     // Create SVG container
     self.svg = self.chartContainer.append('svg')
