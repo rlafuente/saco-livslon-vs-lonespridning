@@ -42,8 +42,8 @@ ChartOne = (function() {
     self.height = h = w * 0.5;
     var fontSize = m.bottom * 0.7 + "px";
     // Margin value to make room for the axes
-    var xAxisMargin = 60;
-    var yAxisMargin = 60;
+    var xAxisMargin = 30;
+    var yAxisMargin = 50;
     // Set up scales
     var x = d3.scale.ordinal()
           // .rangeRoundBands([0, self.width], .1);

@@ -52,8 +52,8 @@ ChartTwo = (function() {
         var fontSize = m.bottom * 0.7 + "px";
 
         // margin value to make room for the y-axis
-        var xAxisMargin = 60;
-        var yAxisMargin = 60;
+        var xAxisMargin = 30;
+        var yAxisMargin = 50;
 
         // Create SVG container
         self.svg = self.chartContainer.append('svg')
@@ -61,17 +61,22 @@ ChartTwo = (function() {
             .attr('height', '100%')
             .attr('viewBox','0 0 ' + self.width +' '+ self.height)
             .attr("preserveAspectRatio", "xMinYMin meet");
-        self.chart = self.svg.append('g');
-            // .attr('transform', 'translate(' + yAxisMargin + ',' + -xAxisMargin + ')');
+        self.chart = self.svg.append('g')
+            .attr('transform', 'translate(' + yAxisMargin + ',0)');
 
         var x = d3.scale.ordinal()
-              //.rangeRoundBands([0, self.width - yAxisMargin], .1);
-              .rangeRoundBands([0, self.width], .1);
+              .rangeRoundBands([0, self.width - yAxisMargin], .1);
+              //.rangeRoundBands([0, self.width], .1);
         var y = d3.scale.linear()
               .range([self.height, 0]);
 
         d3.csv(self.data, function (error, data) {
           data = data.sort(function(a, b){ return d3.ascending(parseInt(a.median), parseInt(b.median)); });
+
+          minvalue = d3.min(data, function(d) { return parseInt(d.P10)});
+          maxvalue = d3.max(data, function(d) { return parseInt(d.P90)});
+          console.log(minvalue);
+          console.log(maxvalue);
 
           x.domain(data.map(function(d) { return +d.median; }));
           y.domain([0, d3.max(data, function(d) { return parseInt(d.P90); })]);
@@ -151,7 +156,7 @@ ChartTwo = (function() {
         }
         self.svg.on('touchmove.chart2', onTouchMove);
 
-        /* 
+         
           var yAxis = d3.svg.axis() 
             .scale(y)
             .ticks(8, "s")
@@ -179,7 +184,7 @@ ChartTwo = (function() {
             .attr("transform", "translate(" + yAxisMargin/2 + "," + (self.height-xAxisMargin) + ") rotate(-90)")
             .style("text-anchor", "start")
             .style("background-color", "white");
-        */
+        
 
         });
 
