@@ -117,6 +117,7 @@ ChartOne = (function() {
       var yAxis = d3.svg.axis() 
         .scale(yAxisScale)
         .ticks(3, "s")
+        .tickFormat(function(d) { return formatMillionSEK(d); })
         .orient("left");
       self.svg.append("g")
         .attr("class", "axis")
@@ -352,6 +353,7 @@ ChartTwo = (function() {
           var yAxis = d3.svg.axis() 
             .scale(y)
             .ticks(8, "s")
+            .tickFormat(function(d) { return formatMillionSEK(d); })
             .orient("left");
           self.svg.append("g")
             .attr("class", "axis")
@@ -563,7 +565,7 @@ ChartThree = (function() {
             .orient("left");
           self.svg.append("g")
             .attr("class", "axis")
-            .attr("transform", "translate(" + yAxisMargin*1.2 + ", 0)")
+            .attr("transform", "translate(" + yAxisMargin + ", 0)")
             .call(yAxis);
 
           self.svg.append("text")
