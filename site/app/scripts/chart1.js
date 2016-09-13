@@ -117,6 +117,7 @@ ChartOne = (function() {
       var yAxis = d3.svg.axis() 
         .scale(yAxisScale)
         .ticks(3, "s")
+        .tickFormat(function(d) { return formatMillionSEK(d); })
         .orient("left");
       self.svg.append("g")
         .attr("class", "axis")

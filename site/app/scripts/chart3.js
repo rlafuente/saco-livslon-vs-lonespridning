@@ -113,7 +113,7 @@ ChartThree = (function() {
 
         // Mobile swipe events
         // var touchScale = d3.scale.linear().domain([yAxisMargin,self.width]).range([0,data.length]).clamp(true);
-        var touchScale = d3.scale.linear().domain([0,self.width]).range([0,data.length]).clamp(true);
+        var touchScale = d3.scale.linear().domain([yAxisMargin,self.width]).range([0,data.length]).clamp(true);
         function onTouchMove() {
           var xPos = d3.touches(this)[0][0];
           var d = data[~~touchScale(xPos)];
@@ -146,7 +146,7 @@ ChartThree = (function() {
             .orient("left");
           self.svg.append("g")
             .attr("class", "axis")
-            .attr("transform", "translate(" + yAxisMargin*1.2 + ", 0)")
+            .attr("transform", "translate(" + yAxisMargin + ", 0)")
             .call(yAxis);
 
           self.svg.append("text")

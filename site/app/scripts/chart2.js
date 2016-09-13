@@ -160,6 +160,7 @@ ChartTwo = (function() {
           var yAxis = d3.svg.axis() 
             .scale(y)
             .ticks(8, "s")
+            .tickFormat(function(d) { return formatMillionSEK(d); })
             .orient("left");
           self.svg.append("g")
             .attr("class", "axis")
