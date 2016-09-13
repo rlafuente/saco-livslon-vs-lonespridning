@@ -42,15 +42,18 @@ ChartOne = (function() {
     self.height = h = w * 0.5;
     var fontSize = m.bottom * 0.7 + "px";
     // Margin value to make room for the axes
-    var xAxisMargin = 60;
-    var yAxisMargin = 60;
+    var xAxisMargin = 30;
+    var yAxisMargin = 50;
     // Set up scales
     var x = d3.scale.ordinal()
-          .rangeRoundBands([0, self.width], .1);
-          //.rangeRoundBands([0, self.width - yAxisMargin], .1);
+          // .rangeRoundBands([0, self.width], .1);
+          .rangeRoundBands([0, self.width - yAxisMargin], .1);
     var y = d3.scale.linear()
-         // .range([self.height-xAxisMargin, xAxisMargin*2]);
-          .range([0, self.height]);
+          .range([xAxisMargin, self.height-xAxisMargin]);
+          // .range([self.height-xAxisMargin, xAxisMargin*2]);
+          // .range([0, self.height]);
+    var yAxisScale = d3.scale.linear()
+          .range([0, self.height-xAxisMargin]);
 
     // Create SVG container
     self.svg = self.chartContainer.append('svg')
@@ -58,8 +61,8 @@ ChartOne = (function() {
         .attr('height', '100%')
         .attr('viewBox','0 0 '+self.width+' '+self.height)
         .attr("preserveAspectRatio", "xMinYMin meet");
-    self.chart = self.svg.append('g');
-        // .attr('transform', 'translate(' + yAxisMargin + ',' + -xAxisMargin + ')');
+    self.chart = self.svg.append('g')
+        .attr('transform', 'translate(' + yAxisMargin + ',' + -xAxisMargin + ')');
 
     // Get the data to draw from
     d3.csv(self.data, function (error, data) {
@@ -68,6 +71,7 @@ ChartOne = (function() {
       var maxvalue = d3.max(data, function(d) { return parseInt(d.lifesalary); });
       x.domain(data.map(function(d) { return d.profession_name; }));
       y.domain([maxvalue, 0]);
+      yAxisScale.domain([maxvalue, 0]);
 
       // Draw!
       // Start by creating groups for the bars and associated objects
@@ -108,12 +112,11 @@ ChartOne = (function() {
       $('#chart-one-subtitle').html("<strong>Livslön</strong>: " + Number((d.lifesalary/1000000).toFixed(1)) + " milj. kronor");
     }
     self.svg.on('touchmove.chart1', onTouchMove);
-
-    /*
+    
       // Vertical axis
       var yAxis = d3.svg.axis() 
-        .scale(y)
-        .ticks(4, "s")
+        .scale(yAxisScale)
+        .ticks(3, "s")
         .orient("left");
       self.svg.append("g")
         .attr("class", "axis")
@@ -138,7 +141,7 @@ ChartOne = (function() {
         .attr("transform", "translate(" + yAxisMargin/2 + "," + (self.height-xAxisMargin) + ") rotate(-90)")
         .style("text-anchor", "start")
         .style("background-color", "white");
-    */
+    
 
     // Text labels for highlighted bars
     self.chart.selectAll("text")
@@ -241,8 +244,8 @@ ChartTwo = (function() {
         var fontSize = m.bottom * 0.7 + "px";
 
         // margin value to make room for the y-axis
-        var xAxisMargin = 60;
-        var yAxisMargin = 60;
+        var xAxisMargin = 30;
+        var yAxisMargin = 50;
 
         // Create SVG container
         self.svg = self.chartContainer.append('svg')
@@ -250,17 +253,22 @@ ChartTwo = (function() {
             .attr('height', '100%')
             .attr('viewBox','0 0 ' + self.width +' '+ self.height)
             .attr("preserveAspectRatio", "xMinYMin meet");
-        self.chart = self.svg.append('g');
-            // .attr('transform', 'translate(' + yAxisMargin + ',' + -xAxisMargin + ')');
+        self.chart = self.svg.append('g')
+            .attr('transform', 'translate(' + yAxisMargin + ',0)');
 
         var x = d3.scale.ordinal()
-              //.rangeRoundBands([0, self.width - yAxisMargin], .1);
-              .rangeRoundBands([0, self.width], .1);
+              .rangeRoundBands([0, self.width - yAxisMargin], .1);
+              //.rangeRoundBands([0, self.width], .1);
         var y = d3.scale.linear()
               .range([self.height, 0]);
 
         d3.csv(self.data, function (error, data) {
           data = data.sort(function(a, b){ return d3.ascending(parseInt(a.median), parseInt(b.median)); });
+
+          minvalue = d3.min(data, function(d) { return parseInt(d.P10)});
+          maxvalue = d3.max(data, function(d) { return parseInt(d.P90)});
+          console.log(minvalue);
+          console.log(maxvalue);
 
           x.domain(data.map(function(d) { return +d.median; }));
           y.domain([0, d3.max(data, function(d) { return parseInt(d.P90); })]);
@@ -340,7 +348,7 @@ ChartTwo = (function() {
         }
         self.svg.on('touchmove.chart2', onTouchMove);
 
-        /* 
+         
           var yAxis = d3.svg.axis() 
             .scale(y)
             .ticks(8, "s")
@@ -368,7 +376,7 @@ ChartTwo = (function() {
             .attr("transform", "translate(" + yAxisMargin/2 + "," + (self.height-xAxisMargin) + ") rotate(-90)")
             .style("text-anchor", "start")
             .style("background-color", "white");
-        */
+        
 
         });
 
@@ -461,8 +469,8 @@ ChartThree = (function() {
         var fontSize = m.bottom * 0.7 + "px";
 
         // margin value to make room for the axes
-        var xAxisMargin = 60;
-        var yAxisMargin = 60;
+        var xAxisMargin = 30;
+        var yAxisMargin = 30;
 
         // Create SVG container
         self.svg = self.chartContainer.append('svg')
@@ -541,8 +549,6 @@ ChartThree = (function() {
         self.svg.on('touchmove.chart3', onTouchMove);
 
 
-
-        /*  
           var xAxis = d3.svg.axis() 
             .scale(x)
             .ticks(Math.floor(self.width/120), "s")
@@ -573,9 +579,6 @@ ChartThree = (function() {
             .attr("transform", "translate(" + yAxisMargin/2 + "," + (self.height-xAxisMargin) + ") rotate(-90)")
             .style("text-anchor", "start")
             .style("background-color", "white");
-        */
-
-
 
         });
 
@@ -651,11 +654,10 @@ function getUrlVars()
   return vars;
 } 
 
+// Set up charts
 var chart_one;
 var chart_two;
 var chart_three;
-
-
 
 function setTextBlocks(group) {
   $.ajax({
@@ -695,7 +697,6 @@ function setChartHighlight(group) {
 }
 
 $(document).ready(function() {
-
   setTextBlocks('education');
   var chart_ready = loadCharts();
   function isChartReady() {
