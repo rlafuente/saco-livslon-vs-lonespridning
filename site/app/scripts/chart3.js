@@ -135,6 +135,7 @@ ChartThree = (function() {
           var xAxis = d3.svg.axis() 
             .scale(x)
             .ticks(Math.floor(self.width/120), "s")
+            .tickFormat(d3.format(".0%"))
             .orient("bottom");
           self.svg.append("g")
             .attr("class", "axis")
