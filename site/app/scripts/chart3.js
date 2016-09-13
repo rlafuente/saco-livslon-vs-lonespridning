@@ -52,8 +52,8 @@ ChartThree = (function() {
         var fontSize = m.bottom * 0.7 + "px";
 
         // margin value to make room for the axes
-        var xAxisMargin = 60;
-        var yAxisMargin = 60;
+        var xAxisMargin = 50;
+        var yAxisMargin = 50;
 
         // Create SVG container
         self.svg = self.chartContainer.append('svg')
@@ -65,9 +65,9 @@ ChartThree = (function() {
             // .attr('transform', 'translate(' + yAxisMargin + ',' + -xAxisMargin + ')');
         var circleRadius = self.width / 100;
         var x = d3.scale.linear()
-              .range([circleRadius, self.width-circleRadius]);
+              .range([circleRadius + yAxisMargin, self.width-circleRadius-yAxisMargin]);
         var y = d3.scale.linear()
-              .range([self.height-circleRadius, circleRadius]);
+              .range([self.height-circleRadius-xAxisMargin, circleRadius + xAxisMargin]);
 
         d3.csv(self.data, function (error, data) {
           x.domain([d3.min(data, function(d) { return parseFloat(d.lifesalary_vs_baseline); }), 
@@ -132,8 +132,6 @@ ChartThree = (function() {
         self.svg.on('touchmove.chart3', onTouchMove);
 
 
-
-        /*  
           var xAxis = d3.svg.axis() 
             .scale(x)
             .ticks(Math.floor(self.width/120), "s")
@@ -164,9 +162,6 @@ ChartThree = (function() {
             .attr("transform", "translate(" + yAxisMargin/2 + "," + (self.height-xAxisMargin) + ") rotate(-90)")
             .style("text-anchor", "start")
             .style("background-color", "white");
-        */
-
-
 
         });
 
