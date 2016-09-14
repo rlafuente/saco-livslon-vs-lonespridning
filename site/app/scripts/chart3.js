@@ -132,38 +132,53 @@ ChartThree = (function() {
         self.svg.on('touchmove.chart3', onTouchMove);
 
 
-          var xAxis = d3.svg.axis() 
-            .scale(x)
-            .ticks(Math.floor(self.width/120), "s")
-            .tickFormat(d3.format(".0%"))
-            .orient("bottom");
-          self.svg.append("g")
-            .attr("class", "axis")
-            .attr("transform", "translate(0," + (self.height-xAxisMargin) + ")")
-            .call(xAxis);
-          var yAxis = d3.svg.axis() 
-            .scale(y)
-            .ticks(Math.floor(self.width/120), "s")
-            .orient("left");
-          self.svg.append("g")
-            .attr("class", "axis")
-            .attr("transform", "translate(" + yAxisMargin + ", 0)")
-            .call(yAxis);
+        /*
+        var xAxis = d3.svg.axis() 
+          .scale(x)
+          .ticks(Math.floor(self.width/120), "s")
+          .tickFormat(d3.format(".0%"))
+          .orient("bottom");
+        self.svg.append("g")
+          .attr("class", "axis")
+          .attr("transform", "translate(0," + (self.height-xAxisMargin) + ")")
+          .call(xAxis);
+        var yAxis = d3.svg.axis() 
+          .scale(y)
+          .ticks(Math.floor(self.width/120), "s")
+          .orient("left");
+        self.svg.append("g")
+          .attr("class", "axis")
+          .attr("transform", "translate(" + yAxisMargin + ", 0)")
+          .call(yAxis);
+        */
 
-          self.svg.append("text")
-            .text("Lönespridning (P90/P10)")
-            .attr("class", "axis legend")
-            .style("background", "white")
-            .style("text-transform", "uppercase")
-            .attr("transform", "translate(" + yAxisMargin + "," + (self.height-xAxisMargin/3) + ")")
-            .style("text-anchor", "start");
-          self.svg.append("text")
-            .text("Livslön jämfört med gymnasieutbildad")
-            .attr("class", "axis legend")
-            .attr("transform", "translate(" + yAxisMargin/2 + "," + (self.height-xAxisMargin) + ") rotate(-90)")
-            .style("text-anchor", "start")
-            .style("background-color", "white");
+        self.svg.append("text")
+          .text("Låg livslön")
+          .attr("class", "axis legend")
+          .style("background", "white")
+          .style("text-transform", "uppercase")
+          .attr("transform", "translate(" + yAxisMargin + "," + (self.height-xAxisMargin/3) + ")")
+          .style("text-anchor", "start");
+        self.svg.append("text")
+          .text("Hög livslön")
+          .attr("class", "axis legend")
+          .style("background", "white")
+          .style("text-transform", "uppercase")
+          .attr("transform", "translate(" + (self.width) + "," + (self.height-xAxisMargin/3) + ")")
+          .style("text-anchor", "end");
 
+        self.svg.append("text")
+          .text("Stor lönespridning")
+          .attr("class", "axis legend")
+          .attr("transform", "translate(" + yAxisMargin/2 + "," + (self.height-xAxisMargin) + ") rotate(-90)")
+          .style("text-anchor", "start")
+          .style("background-color", "white");
+        self.svg.append("text")
+          .text("Liten lönspridning")
+          .attr("class", "axis legend")
+          .attr("transform", "translate(" + yAxisMargin/2 + ",0) rotate(-90)")
+          .style("text-anchor", "end")
+          .style("background-color", "white");
         });
 
         // Send resize signal to parent page
