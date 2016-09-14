@@ -21,7 +21,7 @@ $icon-font-path: "../fonts/";
 /* Overwritting bootstrap variables
 */
 
-$font-family-sans-serif:  "proxima-nova", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$font-family-sans-serif:  "proxima-nova", Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 $font-family-serif:       "BerlingNovaDisplayPro", Georgia, "Times New Roman", Times, serif !default;
 $font-size-base:          18px !default;
 $headings-font-family:    $font-family-serif;
@@ -92,11 +92,6 @@ strong { font-weight: 700; }
   height:100%;
 }
 
-.bartext {
-  font-family: "proxima-nova", "OpenSans Cond", Roboto, Helvetica, Arial, sans-serif;
-  font-weight: 600;
-}
-
 .chart-title {
   background: #eee;
   padding: 10px 14px;
@@ -116,7 +111,7 @@ strong { font-weight: 700; }
 
 .chart-title h4 {
   font-size: 14px;  
-  font-family: "proxima-nova", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "proxima-nova", Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 400;
   margin-top: 5px;
   margin-bottom: 0;
@@ -136,9 +131,20 @@ strong { font-weight: 700; }
 
 .axis text,
 .legend {
-  font-size: 12px;
-  font-weight: 600;
+  font-family: "proxima-nova", Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
   text-transform: uppercase;
+}
+
+.bartext { /* oblique text in chart 1 */
+  font-size: 11px;
+  font-family: "proxima-nova", Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 600;
+}
+
+
+.salarytext {
 }
 
 /*
@@ -151,7 +157,7 @@ strong { font-weight: 700; }
 */
 
 .d3-tip {
-  font-family: "proxima-nova", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "proxima-nova", Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 400;
   font-size: 14px;
   line-height: 1 !important;
