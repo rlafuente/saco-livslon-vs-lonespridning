@@ -155,6 +155,7 @@ ChartOne = (function() {
           return "translate(10,-5)rotate(-20 " + tx + " " + ty + ")"; 
         })
         .style("z-index", 100)
+        .style("font-size", function(d,i) { console.log(self.width); return 30 - self.width/50 + "px"; })
         .attr("fill", "red")
         .attr("opacity", "0")
         .attr("x", function(d,i) { return x(d.profession_name); })
@@ -166,6 +167,9 @@ ChartOne = (function() {
     if (self.opts.isIframe) {
       pymChild.sendHeight();
     }
+  }
+  ChartOne.prototype.on_resize = function(w) {
+    $("#chart-one .bartext").css("font-size", 20-w/50);
   }
 
   ChartOne.prototype.applyHighlight = function(group) {
