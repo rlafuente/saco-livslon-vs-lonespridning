@@ -152,7 +152,7 @@ ChartOne = (function() {
         .attr("transform", function(d) { 
           var tx = x(d.profession_name);
           var ty = y(parseInt(d.lifesalary));
-          return "translate(10,-5)rotate(-20 " + tx + " " + ty + ")"; 
+          return "translate(10,-5)rotate(-30 " + tx + " " + ty + ")"; 
         })
         .style("z-index", 100)
         .attr("fill", "red")
