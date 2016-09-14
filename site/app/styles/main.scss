@@ -93,8 +93,8 @@ strong { font-weight: 700; }
 }
 
 .bartext {
-  font-family: "OpenSans Cond";
-  font-weight: 700;
+  font-family: "proxima-nova", "OpenSans Cond", Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 600;
   font-size: 10px;
   line-height: 1;
 }
@@ -135,11 +135,15 @@ strong { font-weight: 700; }
   // stroke-width: 2;
   shape-rendering: crispEdges;
 }
+
 .axis text {
-  font-size: 10px;
+  font-size: 11px;
+  font-weight: 600;
 }
+
 .legend {
   font-size: 12px;
+  font-weight: 600;
   text-transform: uppercase;
 }
 
@@ -222,6 +226,11 @@ strong { font-weight: 700; }
   width: 50%;
   margin: 100px auto;
 }
+
+@media screen and (max-width: 768px) {  /* very small devices */
+  .iframe-container { width: 100%; }
+}
+
 
 
 /* Queries for text labels */
