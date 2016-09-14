@@ -105,13 +105,13 @@ $(document).ready(function() {
     $(".content").animate({opacity: 1});
   });
 
+  // pym.js
+  function resizeCallback(d) {
+    console.log("Resized!");
+    console.log(d);
+    chart_one.on_resize(d);
+  }
+  var pymChild = new pym.Child({renderCallback: resizeCallback});
+
 });
 
-// pym.js
-function resizeCallback(d) {
-  console.log("Resized!");
-  console.log(d);
-  chart_one.on_resize(d);
-}
-
-var pymChild = new pym.Child({renderCallback: resizeCallback});
