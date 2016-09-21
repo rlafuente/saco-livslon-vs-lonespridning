@@ -43,7 +43,7 @@ ChartOne = (function() {
     var fontSize = m.bottom * 0.7 + "px";
     // Margin value to make room for the axes
     var xAxisMargin = 30;
-    var yAxisMargin = 50;
+    var yAxisMargin = 35;
     // Set up scales
     var x = d3.scale.ordinal()
           // .rangeRoundBands([0, self.width], .1);
@@ -100,7 +100,7 @@ ChartOne = (function() {
         });
 
     // Mobile swipe events
-    var touchScale = d3.scale.linear().domain([x.rangeBand(),self.width]).range([0,data.length+1]).clamp(true);
+    var touchScale = d3.scale.linear().domain([yAxisMargin + x.rangeBand(),self.width]).range([0,data.length+1]).clamp(true);
     //var touchScale = d3.scale.linear().domain([yAxisMargin,self.width]).range([0,data.length]).clamp(true);
     function onTouchMove() {
       var xPos = d3.touches(this)[0][0];
@@ -116,12 +116,12 @@ ChartOne = (function() {
       // Vertical axis
       var yAxis = d3.svg.axis() 
         .scale(yAxisScale)
-        .ticks(3, "s")
-        .tickFormat(function(d) { return formatMillionSEK(d); })
+        .ticks(5)
+        .tickFormat(function(d) { return d/1000000; })
         .orient("left");
       self.svg.append("g")
         .attr("class", "axis")
-        .attr("transform", "translate(" + yAxisMargin*1.2 + ", 0)")
+        .attr("transform", "translate(" + yAxisMargin + ", 0)")
         .call(yAxis);
       // Remove tick for 0
       d3.selectAll('g.tick')
@@ -151,11 +151,11 @@ ChartOne = (function() {
         .attr("class", function(d) { return "bartext " + d.group; })
         .attr("transform", function(d) { 
           var tx = x(d.profession_name);
-          var ty = y(parseInt(d.lifesalary));
+          var ty = y(parseInt(d.lifesalary)) + 10;
           return "translate(10,-5)rotate(-30 " + tx + " " + ty + ")"; 
         })
         .style("z-index", 100)
-        .style("font-size", "12px")
+        //.style("font-size", "12px")
         .attr("fill", "red")
         .attr("opacity", "0")
         .attr("x", function(d,i) { return x(d.profession_name); })
@@ -169,10 +169,10 @@ ChartOne = (function() {
     }
   }
   ChartOne.prototype.on_resize = function(w) {
-    var size = Math.max(16, Math.min(8, 12 - w/50));
-    console.log(size);
-    d3.select("#chart-one .bartext").style("font-size", size + "px");
-    // $("#chart-one .bartext").css("font-size", 20-w/50);
+    //var size = Math.max(16, Math.min(8, 12 - w/50));
+    var size = 12 - w/200;
+    // console.log(size);
+    d3.selectAll(".bartext").style("font-size", size + "px");
   }
 
   ChartOne.prototype.applyHighlight = function(group) {
@@ -253,7 +253,7 @@ ChartTwo = (function() {
 
         // margin value to make room for the y-axis
         var xAxisMargin = 30;
-        var yAxisMargin = 50;
+        var yAxisMargin = 35;
 
         // Create SVG container
         self.svg = self.chartContainer.append('svg')
@@ -275,8 +275,8 @@ ChartTwo = (function() {
 
           minvalue = d3.min(data, function(d) { return parseInt(d.P10)});
           maxvalue = d3.max(data, function(d) { return parseInt(d.P90)});
-          console.log(minvalue);
-          console.log(maxvalue);
+          // console.log(minvalue);
+          // console.log(maxvalue);
 
           x.domain(data.map(function(d) { return +d.median; }));
           y.domain([0, d3.max(data, function(d) { return parseInt(d.P90); })]);
@@ -343,7 +343,7 @@ ChartTwo = (function() {
 
         // Mobile swipe events
         // var touchScale = d3.scale.linear().domain([yAxisMargin,self.width]).range([0,data.length]).clamp(true);
-        var touchScale = d3.scale.linear().domain([0,self.width]).range([0,data.length]).clamp(true);
+        var touchScale = d3.scale.linear().domain([yAxisMargin,self.width]).range([0,data.length]).clamp(true);
         function onTouchMove() {
           var xPos = d3.touches(this)[0][0];
           var d = data[~~touchScale(xPos)];
@@ -360,7 +360,8 @@ ChartTwo = (function() {
           var yAxis = d3.svg.axis() 
             .scale(y)
             .ticks(8, "s")
-            .tickFormat(function(d) { return formatMillionSEK(d); })
+            // .tickFormat(function(d) { return formatMillionSEK(d); })
+            .tickFormat(function(d) { return d / 1000; })
             .orient("left");
           self.svg.append("g")
             .attr("class", "axis")
@@ -380,7 +381,7 @@ ChartTwo = (function() {
             .attr("transform", "translate(" + yAxisMargin*1.4 + "," + (self.height-xAxisMargin/3) + ")")
             .style("text-anchor", "start");
           self.svg.append("text")
-            .text("Månadslön")
+            .text("Månadslön (TKr)")
             .attr("class", "axis legend")
             .attr("transform", "translate(" + yAxisMargin/4 + "," + (self.height-xAxisMargin) + ") rotate(-90)")
             .style("text-anchor", "start")
@@ -488,11 +489,13 @@ ChartThree = (function() {
             .attr("preserveAspectRatio", "xMinYMin meet");
         self.chart = self.svg.append('g');
             // .attr('transform', 'translate(' + yAxisMargin + ',' + -xAxisMargin + ')');
-        var circleRadius = self.width / 100;
+        // var circleRadius = self.width / 100;
+        var circleRadius = 4;
+        console.log(circleRadius);
         var x = d3.scale.linear()
-              .range([circleRadius + yAxisMargin, self.width-circleRadius-yAxisMargin]);
+              .range([circleRadius+yAxisMargin, self.width-circleRadius]);
         var y = d3.scale.linear()
-              .range([self.height-circleRadius-xAxisMargin, circleRadius + xAxisMargin]);
+              .range([self.height-circleRadius-xAxisMargin, circleRadius]);
 
         d3.csv(self.data, function (error, data) {
           x.domain([d3.min(data, function(d) { return parseFloat(d.lifesalary_vs_baseline); }), 
@@ -550,7 +553,6 @@ ChartThree = (function() {
           $('#chart-three-subtitle-2').html(
               "<strong>Livslön jämfört med gymnasieutbildad</strong>: " + Number(parseFloat(d.lifesalary_vs_baseline).toFixed(2)) + " procent"
           );
-          console.log("Touched!")
         }
         self.svg.on('touchmove.chart3', onTouchMove);
 
@@ -567,7 +569,9 @@ ChartThree = (function() {
         self.svg.append("text")
           .attr("class", "salarytext")
           .text("Tjänar mer än gymnasieutbildad")
-          .attr("transform", "translate(" + (line_x + 5) + ",20)")
+          .attr("dx", line_x + 5)
+          .attr("dy", "1em")
+          //.attr("transform", "translate(" + (line_x + 5) + ",20)")
           .style("font-size", "10px")
           .style("fill", "lightgrey");
 
@@ -588,18 +592,34 @@ ChartThree = (function() {
           .style("text-anchor", "end");
 
         self.svg.append("text")
-          .text("Stor lönespridning")
+          .text("Stor löne-")
+          .attr("dy", "0em")
           .attr("class", "axis legend")
-          .attr("transform", "translate(" + yAxisMargin/2 + "," + (self.height-xAxisMargin) + ") rotate(-90)")
-          .style("text-anchor", "start")
-          .style("background-color", "white");
+          .attr("transform", "translate(" + yAxisMargin/2 + "," + (self.height-xAxisMargin/2) + ") rotate(-90)")
+          .style("text-anchor", "start");
         self.svg.append("text")
-          .text("Liten lönspridning")
+          .text("spridning")
+          .attr("dy", "1em")
+          .attr("class", "axis legend")
+          .attr("transform", "translate(" + yAxisMargin/2 + "," + (self.height-xAxisMargin/2) + ") rotate(-90)")
+          .style("text-anchor", "start");
+
+        self.svg.append("text")
+          .text("Liten lön-")
+          .attr("dy", "0em")
           .attr("class", "axis legend")
           .attr("transform", "translate(" + yAxisMargin/2 + ",0) rotate(-90)")
-          .style("text-anchor", "end")
-          .style("background-color", "white");
+          .style("text-anchor", "end");
+        self.svg.append("text")
+          .text("spridning")
+          .attr("dy", "1em")
+          .attr("class", "axis legend")
+          .attr("transform", "translate(" + yAxisMargin/2 + ",0) rotate(-90)")"1em"
+          .style("text-anchor", "end");
+
+
         });
+
         /*
         var xAxis = d3.svg.axis() 
           .scale(x)
@@ -634,8 +654,8 @@ ChartThree = (function() {
 
     ChartThree.prototype.on_resize = function(w) {
       var size = 10 - w/200;
-      console.log(size);
-      d3.select("#chart-three .salarytext").style("font-size", size + "px");
+      // console.log(size);
+      d3.selectAll("#chart-three .salarytext").style("font-size", size + "px");
     }
 
     // Transitions only
@@ -761,8 +781,6 @@ $(document).ready(function() {
 
   // pym.js
   function resizeCallback(d) {
-    //console.log("Resized!");
-    //console.log(d);
     chart_one.on_resize(d);
     chart_three.on_resize(d);
   }
