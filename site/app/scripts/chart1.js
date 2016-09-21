@@ -100,7 +100,7 @@ ChartOne = (function() {
         });
 
     // Mobile swipe events
-    var touchScale = d3.scale.linear().domain([x.rangeBand(),self.width]).range([0,data.length+1]).clamp(true);
+    var touchScale = d3.scale.linear().domain([yAxisMargin + x.rangeBand(),self.width]).range([0,data.length+1]).clamp(true);
     //var touchScale = d3.scale.linear().domain([yAxisMargin,self.width]).range([0,data.length]).clamp(true);
     function onTouchMove() {
       var xPos = d3.touches(this)[0][0];

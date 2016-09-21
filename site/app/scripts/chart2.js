@@ -143,7 +143,7 @@ ChartTwo = (function() {
 
         // Mobile swipe events
         // var touchScale = d3.scale.linear().domain([yAxisMargin,self.width]).range([0,data.length]).clamp(true);
-        var touchScale = d3.scale.linear().domain([0,self.width]).range([0,data.length]).clamp(true);
+        var touchScale = d3.scale.linear().domain([yAxisMargin,self.width]).range([0,data.length]).clamp(true);
         function onTouchMove() {
           var xPos = d3.touches(this)[0][0];
           var d = data[~~touchScale(xPos)];
