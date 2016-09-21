@@ -161,18 +161,34 @@ ChartThree = (function() {
           .style("text-anchor", "end");
 
         self.svg.append("text")
-          .text("Stor lönespridning")
+          .text("Stor löne-")
+          .attr("dy", "0em")
           .attr("class", "axis legend")
-          .attr("transform", "translate(" + yAxisMargin/2 + "," + (self.height-xAxisMargin) + ") rotate(-90)")
-          .style("text-anchor", "start")
-          .style("background-color", "white");
+          .attr("transform", "translate(" + yAxisMargin/2 + "," + (self.height-xAxisMargin/2) + ") rotate(-90)")
+          .style("text-anchor", "start");
         self.svg.append("text")
-          .text("Liten lönspridning")
+          .text("spridning")
+          .attr("dy", "1em")
+          .attr("class", "axis legend")
+          .attr("transform", "translate(" + yAxisMargin/2 + "," + (self.height-xAxisMargin/2) + ") rotate(-90)")
+          .style("text-anchor", "start");
+
+        self.svg.append("text")
+          .text("Liten lön-")
+          .attr("dy", "0em")
           .attr("class", "axis legend")
           .attr("transform", "translate(" + yAxisMargin/2 + ",0) rotate(-90)")
-          .style("text-anchor", "end")
-          .style("background-color", "white");
+          .style("text-anchor", "end");
+        self.svg.append("text")
+          .text("spridning")
+          .attr("dy", "1em")
+          .attr("class", "axis legend")
+          .attr("transform", "translate(" + yAxisMargin/2 + ",0) rotate(-90)")
+          .style("text-anchor", "end");
+
+
         });
+
         /*
         var xAxis = d3.svg.axis() 
           .scale(x)

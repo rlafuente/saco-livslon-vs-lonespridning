@@ -43,7 +43,7 @@ ChartOne = (function() {
     var fontSize = m.bottom * 0.7 + "px";
     // Margin value to make room for the axes
     var xAxisMargin = 30;
-    var yAxisMargin = 50;
+    var yAxisMargin = 35;
     // Set up scales
     var x = d3.scale.ordinal()
           // .rangeRoundBands([0, self.width], .1);
@@ -116,12 +116,12 @@ ChartOne = (function() {
       // Vertical axis
       var yAxis = d3.svg.axis() 
         .scale(yAxisScale)
-        .ticks(3, "s")
-        .tickFormat(function(d) { return formatMillionSEK(d); })
+        .ticks(5)
+        .tickFormat(function(d) { return d/1000000; })
         .orient("left");
       self.svg.append("g")
         .attr("class", "axis")
-        .attr("transform", "translate(" + yAxisMargin*1.2 + ", 0)")
+        .attr("transform", "translate(" + yAxisMargin + ", 0)")
         .call(yAxis);
       // Remove tick for 0
       d3.selectAll('g.tick')

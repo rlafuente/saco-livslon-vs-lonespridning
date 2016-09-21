@@ -53,7 +53,7 @@ ChartTwo = (function() {
 
         // margin value to make room for the y-axis
         var xAxisMargin = 30;
-        var yAxisMargin = 50;
+        var yAxisMargin = 35;
 
         // Create SVG container
         self.svg = self.chartContainer.append('svg')
@@ -160,7 +160,8 @@ ChartTwo = (function() {
           var yAxis = d3.svg.axis() 
             .scale(y)
             .ticks(8, "s")
-            .tickFormat(function(d) { return formatMillionSEK(d); })
+            // .tickFormat(function(d) { return formatMillionSEK(d); })
+            .tickFormat(function(d) { return d / 1000; })
             .orient("left");
           self.svg.append("g")
             .attr("class", "axis")
@@ -180,7 +181,7 @@ ChartTwo = (function() {
             .attr("transform", "translate(" + yAxisMargin*1.4 + "," + (self.height-xAxisMargin/3) + ")")
             .style("text-anchor", "start");
           self.svg.append("text")
-            .text("Månadslön")
+            .text("Månadslön (TKr)")
             .attr("class", "axis legend")
             .attr("transform", "translate(" + yAxisMargin/4 + "," + (self.height-xAxisMargin) + ") rotate(-90)")
             .style("text-anchor", "start")
