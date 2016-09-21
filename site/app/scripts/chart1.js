@@ -171,7 +171,7 @@ ChartOne = (function() {
   ChartOne.prototype.on_resize = function(w) {
     //var size = Math.max(16, Math.min(8, 12 - w/50));
     var size = 12 - w/200;
-    console.log(size);
+    // console.log(size);
     d3.selectAll(".bartext").style("font-size", size + "px");
   }
 

@@ -75,8 +75,8 @@ ChartTwo = (function() {
 
           minvalue = d3.min(data, function(d) { return parseInt(d.P10)});
           maxvalue = d3.max(data, function(d) { return parseInt(d.P90)});
-          console.log(minvalue);
-          console.log(maxvalue);
+          // console.log(minvalue);
+          // console.log(maxvalue);
 
           x.domain(data.map(function(d) { return +d.median; }));
           y.domain([0, d3.max(data, function(d) { return parseInt(d.P90); })]);

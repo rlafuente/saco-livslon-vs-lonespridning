@@ -62,11 +62,13 @@ ChartThree = (function() {
             .attr("preserveAspectRatio", "xMinYMin meet");
         self.chart = self.svg.append('g');
             // .attr('transform', 'translate(' + yAxisMargin + ',' + -xAxisMargin + ')');
-        var circleRadius = self.width / 100;
+        // var circleRadius = self.width / 100;
+        var circleRadius = 4;
+        console.log(circleRadius);
         var x = d3.scale.linear()
-              .range([circleRadius + yAxisMargin, self.width-circleRadius-yAxisMargin]);
+              .range([circleRadius+yAxisMargin, self.width-circleRadius]);
         var y = d3.scale.linear()
-              .range([self.height-circleRadius-xAxisMargin, circleRadius + xAxisMargin]);
+              .range([self.height-circleRadius-xAxisMargin, circleRadius]);
 
         d3.csv(self.data, function (error, data) {
           x.domain([d3.min(data, function(d) { return parseFloat(d.lifesalary_vs_baseline); }), 
@@ -140,7 +142,9 @@ ChartThree = (function() {
         self.svg.append("text")
           .attr("class", "salarytext")
           .text("Tjänar mer än gymnasieutbildad")
-          .attr("transform", "translate(" + (line_x + 5) + ",20)")
+          .attr("dx", line_x + 5)
+          .attr("dy", "1em")
+          //.attr("transform", "translate(" + (line_x + 5) + ",20)")
           .style("font-size", "10px")
           .style("fill", "lightgrey");
 
@@ -183,7 +187,7 @@ ChartThree = (function() {
           .text("spridning")
           .attr("dy", "1em")
           .attr("class", "axis legend")
-          .attr("transform", "translate(" + yAxisMargin/2 + ",0) rotate(-90)")
+          .attr("transform", "translate(" + yAxisMargin/2 + ",0) rotate(-90)")"1em"
           .style("text-anchor", "end");
 
 
@@ -223,7 +227,7 @@ ChartThree = (function() {
 
     ChartThree.prototype.on_resize = function(w) {
       var size = 10 - w/200;
-      console.log(size);
+      // console.log(size);
       d3.selectAll("#chart-three .salarytext").style("font-size", size + "px");
     }
 
