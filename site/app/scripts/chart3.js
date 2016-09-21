@@ -124,7 +124,6 @@ ChartThree = (function() {
           $('#chart-three-subtitle-2').html(
               "<strong>Livslön jämfört med gymnasieutbildad</strong>: " + Number(parseFloat(d.lifesalary_vs_baseline).toFixed(2)) + " procent"
           );
-          console.log("Touched!")
         }
         self.svg.on('touchmove.chart3', onTouchMove);
 
@@ -209,7 +208,7 @@ ChartThree = (function() {
     ChartThree.prototype.on_resize = function(w) {
       var size = 10 - w/200;
       console.log(size);
-      d3.select("#chart-three .salarytext").style("font-size", size + "px");
+      d3.selectAll("#chart-three .salarytext").style("font-size", size + "px");
     }
 
     // Transitions only

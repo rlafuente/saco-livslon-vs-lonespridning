@@ -151,11 +151,11 @@ ChartOne = (function() {
         .attr("class", function(d) { return "bartext " + d.group; })
         .attr("transform", function(d) { 
           var tx = x(d.profession_name);
-          var ty = y(parseInt(d.lifesalary));
+          var ty = y(parseInt(d.lifesalary)) + 10;
           return "translate(10,-5)rotate(-30 " + tx + " " + ty + ")"; 
         })
         .style("z-index", 100)
-        .style("font-size", "12px")
+        //.style("font-size", "12px")
         .attr("fill", "red")
         .attr("opacity", "0")
         .attr("x", function(d,i) { return x(d.profession_name); })
@@ -169,10 +169,10 @@ ChartOne = (function() {
     }
   }
   ChartOne.prototype.on_resize = function(w) {
-    var size = Math.max(16, Math.min(8, 12 - w/50));
+    //var size = Math.max(16, Math.min(8, 12 - w/50));
+    var size = 12 - w/200;
     console.log(size);
-    d3.select("#chart-one .bartext").style("font-size", size + "px");
-    // $("#chart-one .bartext").css("font-size", 20-w/50);
+    d3.selectAll(".bartext").style("font-size", size + "px");
   }
 
   ChartOne.prototype.applyHighlight = function(group) {

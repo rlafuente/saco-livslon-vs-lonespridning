@@ -107,8 +107,6 @@ $(document).ready(function() {
 
   // pym.js
   function resizeCallback(d) {
-    //console.log("Resized!");
-    //console.log(d);
     chart_one.on_resize(d);
     chart_three.on_resize(d);
   }
