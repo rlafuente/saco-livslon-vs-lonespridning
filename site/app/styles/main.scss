@@ -245,6 +245,11 @@ strong { font-weight: 700; }
   .chart-title h4 { font-size: 12px; }
 }
 
+@media screen and (max-width: 425px) {  /* graphs legend */
+  .axis text,
+  .legend { font-size:  7px; }
+}
+
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
