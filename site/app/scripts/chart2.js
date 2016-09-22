@@ -49,7 +49,6 @@ ChartTwo = (function() {
         self.width = w = containerWidth - m.left - m.right;
         self.height = h = w * 0.5;
         self.pointRadius = containerWidth * 0.01;
-        var fontSize = m.bottom * 0.7 + "px";
 
         // margin value to make room for the y-axis
         var xAxisMargin = 30;

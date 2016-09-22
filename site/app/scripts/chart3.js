@@ -48,7 +48,6 @@ ChartThree = (function() {
         self.width = w = containerWidth - m.left - m.right;
         self.height = h = w * 0.5;
         self.pointRadius = containerWidth * 0.01;
-        var fontSize = m.bottom * 0.7 + "px";
 
         // margin value to make room for the axes
         var xAxisMargin = 50;
@@ -192,26 +191,6 @@ ChartThree = (function() {
 
 
         });
-
-        /*
-        var xAxis = d3.svg.axis() 
-          .scale(x)
-          .ticks(Math.floor(self.width/120), "s")
-          .tickFormat(d3.format(".0%"))
-          .orient("bottom");
-        self.svg.append("g")
-          .attr("class", "axis")
-          .attr("transform", "translate(0," + (self.height-xAxisMargin) + ")")
-          .call(xAxis);
-        var yAxis = d3.svg.axis() 
-          .scale(y)
-          .ticks(Math.floor(self.width/120), "s")
-          .orient("left");
-        self.svg.append("g")
-          .attr("class", "axis")
-          .attr("transform", "translate(" + yAxisMargin + ", 0)")
-          .call(yAxis);
-        */
 
         // Send resize signal to parent page
         if (self.opts.isIframe) {
