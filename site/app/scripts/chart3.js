@@ -187,7 +187,7 @@ ChartThree = (function() {
           .text("spridning")
           .attr("dy", "1em")
           .attr("class", "axis legend")
-          .attr("transform", "translate(" + yAxisMargin/2 + ",0) rotate(-90)")"1em"
+          .attr("transform", "translate(" + yAxisMargin/2 + ",0) rotate(-90)")
           .style("text-anchor", "end");
 
 

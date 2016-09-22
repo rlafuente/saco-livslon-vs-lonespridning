@@ -5,6 +5,8 @@ import browserSync from 'browser-sync';
 import del from 'del';
 import {stream as wiredep} from 'wiredep';
 import ghPages from 'gulp-gh-pages';
+var mainBowerFiles = require('gulp-main-bower-files');
+
 
 const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
@@ -47,7 +49,7 @@ gulp.task('html', ['styles'], () => {
 
   return gulp.src('app/*.html')
     .pipe(assets)
-//    .pipe($.if('*.js', $.uglify()))
+    .pipe($.if('*.js', $.uglify().on('error', function(e){ console.log(e); })    ))
     .pipe($.if('*.css', $.minifyCss({compatibility: '*'})))
     .pipe(assets.restore())
     .pipe($.useref())
@@ -83,6 +85,13 @@ gulp.task('fonts', () => {
   }).concat('app/fonts/**/*'))
     .pipe(gulp.dest('.tmp/fonts'))
     .pipe(gulp.dest('dist/fonts'));
+});
+
+gulp.task('scripts', function(){
+  return gulp.src('./bower.json')
+    .pipe(mainBowerFiles( ))
+    //.pipe(uglify())
+    .pipe(gulp.dest('dist/bower_components'));
 });
 
 gulp.task('extras', () => {
@@ -164,7 +173,7 @@ gulp.task('wiredep', () => {
     .pipe(gulp.dest('app'));
 });
 
-gulp.task('build', ['html', 'data', 'images', 'fonts', 'extras'], () => {
+gulp.task('build', ['html', 'data', 'images', 'scripts', 'fonts', 'extras'], () => {
   return gulp.src('dist/**/*').pipe($.size({title: 'build', gzip: true}));
 });
 
