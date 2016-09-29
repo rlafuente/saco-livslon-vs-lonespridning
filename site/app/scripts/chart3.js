@@ -88,10 +88,10 @@ ChartThree = (function() {
               .attr("cx", function(d) { return x(parseFloat(d.lifesalary_vs_baseline)); })
               .attr("cy", function(d) { return y(parseFloat(d.income_range)); })
               .attr("r", circleRadius)
-              .attr("fill", "#F8F0DE")
-              .attr("stroke", "#BDA164")
+              .attr("fill", "#BDA164")
+              .attr("stroke", "white")
               .attr("stroke-width", "1")
-              .attr("fill-opacity", 0.2)
+              .attr("fill-opacity", 1)
 
               .on('mouseover', function(d) {
                 d3.select(this).attr('fill-opacity', 1);
