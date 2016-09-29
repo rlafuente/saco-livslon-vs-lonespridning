@@ -91,13 +91,17 @@ ChartOne = (function() {
         .attr("fill", "lightgrey")
         .attr("width", x.rangeBand())
         .on('mouseover', function(d) {
+          self.applyHighlight();
+          d3.select('[name="' + d.profession_name + '"]').attr("fill", "darkred");
           $('#chart-one-title').text(d.profession_name);
           $('#chart-one-subtitle').html("<strong>Livslön</strong>: " + Number((d.lifesalary/1000000).toFixed(1)) + " milj. kronor");
+          /*
         })
         .on('mouseout', function(d) {
           $('#chart-one-title').text("Yrkesgrupp vs. Livslön");
           $('#chart-one-subtitle').html("&nbsp;");
           self.applyHighlight();
+          */
         });
 
     // Mobile swipe events

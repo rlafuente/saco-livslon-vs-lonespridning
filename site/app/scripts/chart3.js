@@ -93,8 +93,8 @@ ChartThree = (function() {
               .attr("fill-opacity", 1)
 
               .on('mouseover', function(d) {
-                d3.select(this).attr('fill', 'darkred');
-                self.applyHighlight(d.group);
+                self.applyHighlight();
+                d3.select('#chart-three [name="' + d.profession_name + '"]').attr('fill', 'darkred');
                 $('#chart-three-title').text(d.profession_name);
                 $('#chart-three-subtitle-1').html(
                     "<strong>Lönespridning (P90/P10)</strong>: " + Number(parseFloat(d.income_range).toFixed(2))
@@ -104,8 +104,8 @@ ChartThree = (function() {
                 );
               })
               .on('mouseout', function(d) {
-                d3.select(this).attr('fill', '#BDA164');
-                self.applyHighlight(d.group);
+                self.applyHighlight();
+                d3.select('#chart-three [name="' + d.profession_name + '"]').attr('fill', '#BDA164');
                 $('#chart-three-title').text("Livslön jämfört med gymnasieutbildad vs Lönespridning (P90/P10)");
                 $('#chart-three-subtitle-1').html("&nbsp;");
                 $('#chart-three-subtitle-2').html("&nbsp;");

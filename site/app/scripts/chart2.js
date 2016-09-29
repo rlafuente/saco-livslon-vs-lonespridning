@@ -128,14 +128,19 @@ ChartTwo = (function() {
               .attr("rx", 3)
               .attr("ry", 3)
               .on('mouseover', function(d) {
+                self.applyHighlight();
+                var sel = d3.select('#chart-two [name="' + d.profession_name + '"]').style("opacity", ".4");
                 $('#chart-two-title').text(d.profession_name);
                 $('#chart-two-subtitle-1').html("<strong>Månadslön, lägst 10%</strong>: " + d.P10 + " kronor");
                 $('#chart-two-subtitle-2').html("<strong>Månadslön, högsta 10%</strong>: " + d.P90 + " kronor");
+              /*
               })
               .on('mouseout', function(d) {
+                self.applyHighlight();
                 $('#chart-two-title').text("Yrkesgrupp vs Månadslön");
                 $('#chart-two-subtitle-1').html("&nbsp;");
                 $('#chart-two-subtitle-2').html("&nbsp;");
+                */
               });
 
 
