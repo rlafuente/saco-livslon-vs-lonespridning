@@ -9,6 +9,7 @@ ChartOne = (function() {
 
     // Inital state
     self.data = data;
+    self.width = 0;
     // Highlight group
     self.group = 'education';
     // Append chart container
@@ -171,8 +172,9 @@ ChartOne = (function() {
   ChartOne.prototype.on_resize = function(w) {
     //var size = Math.max(16, Math.min(8, 12 - w/50));
     var size = 12 - w/200;
-    // console.log(size);
     d3.selectAll(".bartext").style("font-size", size + "px");
+
+    if (w < 600) { $(".bartext").hide(); } else { $(".bartext").show(); }
   }
 
   ChartOne.prototype.applyHighlight = function(group) {

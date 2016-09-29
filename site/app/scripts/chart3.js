@@ -63,7 +63,6 @@ ChartThree = (function() {
             // .attr('transform', 'translate(' + yAxisMargin + ',' + -xAxisMargin + ')');
         // var circleRadius = self.width / 100;
         var circleRadius = 4;
-        console.log(circleRadius);
         var x = d3.scale.linear()
               .range([circleRadius+yAxisMargin, self.width-circleRadius]);
         var y = d3.scale.linear()
@@ -208,7 +207,6 @@ ChartThree = (function() {
 
     ChartThree.prototype.on_resize = function(w) {
       var size = 10 - w/200;
-      // console.log(size);
       d3.selectAll("#chart-three .salarytext").style("font-size", size + "px");
     }
 
