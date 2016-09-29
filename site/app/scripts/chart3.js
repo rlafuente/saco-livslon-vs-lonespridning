@@ -94,7 +94,8 @@ ChartThree = (function() {
               .attr("fill-opacity", 1)
 
               .on('mouseover', function(d) {
-                d3.select(this).attr('fill-opacity', 1);
+                d3.select(this).attr('fill', 'darkred');
+                self.applyHighlight(d.group);
                 $('#chart-three-title').text(d.profession_name);
                 $('#chart-three-subtitle-1').html(
                     "<strong>Lönespridning (P90/P10)</strong>: " + Number(parseFloat(d.income_range).toFixed(2))
@@ -104,7 +105,8 @@ ChartThree = (function() {
                 );
               })
               .on('mouseout', function(d) {
-                d3.select(this).attr('fill-opacity', 0.2);
+                d3.select(this).attr('fill', '#BDA164');
+                self.applyHighlight(d.group);
                 $('#chart-three-title').text("Livslön jämfört med gymnasieutbildad vs Lönespridning (P90/P10)");
                 $('#chart-three-subtitle-1').html("&nbsp;");
                 $('#chart-three-subtitle-2').html("&nbsp;");
@@ -200,7 +202,7 @@ ChartThree = (function() {
 
     ChartThree.prototype.applyHighlight = function(group) {
       if (group && group != self.group) { self.group = group; }
-      d3.selectAll("#chart-three .element").style("fill", "#ECDAB5"); 
+      d3.selectAll("#chart-three .element").style("fill", "#BDA164"); 
       d3.selectAll("#chart-three ." + self.group).style("fill", "#c13d8c");  
     }
 

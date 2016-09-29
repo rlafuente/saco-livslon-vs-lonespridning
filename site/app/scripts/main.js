@@ -111,6 +111,5 @@ $(document).ready(function() {
     chart_three.on_resize(d);
   }
   var pymChild = new pym.Child({renderCallback: resizeCallback});
-
 });
 
