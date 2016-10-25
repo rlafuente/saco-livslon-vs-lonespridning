@@ -82,7 +82,7 @@ ChartThree = (function() {
             .enter().append("g");
 
           dot.append("circle")
-              .attr("name", function(d) { return d.profession_name; })
+              .attr("name", function(d) { return d.profession_label; })
               .attr("class", function(d) { return "element d3-tip " + d.group; })
               .attr("cx", function(d) { return x(parseFloat(d.lifesalary_vs_baseline)); })
               .attr("cy", function(d) { return y(parseFloat(d.income_range)); })
@@ -94,8 +94,8 @@ ChartThree = (function() {
 
               .on('mouseover', function(d) {
                 self.applyHighlight();
-                d3.select('#chart-three [name="' + d.profession_name + '"]').attr('fill', 'darkred');
-                $('#chart-three-title').text(d.profession_name);
+                d3.select('#chart-three [name="' + d.profession_label + '"]').attr('fill', 'darkred');
+                $('#chart-three-title').text(d.profession_label);
                 $('#chart-three-subtitle-1').html(
                     "<strong>Lönespridning (P90/P10)</strong>: " + Number(parseFloat(d.income_range).toFixed(2))
                 );
@@ -105,7 +105,7 @@ ChartThree = (function() {
               })
               .on('mouseout', function(d) {
                 self.applyHighlight();
-                d3.select('#chart-three [name="' + d.profession_name + '"]').attr('fill', '#BDA164');
+                d3.select('#chart-three [name="' + d.profession_label + '"]').attr('fill', '#BDA164');
                 $('#chart-three-title').text("Livslön jämfört med gymnasieutbildad vs Lönespridning (P90/P10)");
                 $('#chart-three-subtitle-1').html("&nbsp;");
                 $('#chart-three-subtitle-2').html("&nbsp;");
@@ -118,8 +118,8 @@ ChartThree = (function() {
           var d = data[~~touchScale(xPos)];
           // reset colors and highlight the touched one
           self.applyHighlight();
-          var sel = d3.select('#chart-three [name="' + d.profession_name + '"]').style("fill", "darkred").style("opacity", "0.8");
-          $('#chart-three-title').text(d.profession_name);
+          var sel = d3.select('#chart-three [name="' + d.profession_label + '"]').style("fill", "darkred").style("opacity", "0.8");
+          $('#chart-three-title').text(d.profession_label);
           $('#chart-three-subtitle-1').html(
               "<strong>Lönespridning (P90/P10)</strong>: " + Number(parseFloat(d.income_range).toFixed(2))
           );

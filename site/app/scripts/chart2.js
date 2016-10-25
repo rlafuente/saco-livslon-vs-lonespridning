@@ -116,11 +116,11 @@ ChartTwo = (function() {
               .attr("r", function(d) { return 3; })
               .attr("cx", x.rangeBand() / 2)
               .attr("fill", "#F8F0DE")
-              .attr("id", function(d) { return d.profession_name });
+              .attr("id", function(d) { return d.profession_label });
 
           // transparent overlay for mouseovers
           bar.append("rect")
-              .attr("name", function(d) { return d.profession_name; })
+              .attr("name", function(d) { return d.profession_label; })
               .attr("class", function(d) { return "bar-overlay " + d.group; })
               .attr("y", function(d) { return y(d.P90); })
               .attr("height", function(d) { return self.height - y(parseInt(d.P90 - d.P10)); })
@@ -131,8 +131,8 @@ ChartTwo = (function() {
               .attr("ry", 3)
               .on('mouseover', function(d) {
                 self.applyHighlight();
-                var sel = d3.select('#chart-two [name="' + d.profession_name + '"]').style("opacity", ".4");
-                $('#chart-two-title').text(d.profession_name);
+                var sel = d3.select('#chart-two [name="' + d.profession_label + '"]').style("opacity", ".4");
+                $('#chart-two-title').text(d.profession_label);
                 $('#chart-two-subtitle-1').html("<strong>Månadslön, lägst 10%</strong>: " + d.P10 + " kronor");
                 $('#chart-two-subtitle-2').html("<strong>Månadslön, högsta 10%</strong>: " + d.P90 + " kronor");
               /*
@@ -155,8 +155,8 @@ ChartTwo = (function() {
           var d = data[~~touchScale(xPos)];
           // reset colors and highlight the touched one
           self.applyHighlight();
-          var sel = d3.select('#chart-two [name="' + d.profession_name + '"]').style("opacity", ".4");
-          $('#chart-two-title').text(d.profession_name);
+          var sel = d3.select('#chart-two [name="' + d.profession_label + '"]').style("opacity", ".4");
+          $('#chart-two-title').text(d.profession_label);
           $('#chart-two-subtitle-1').html("<strong>Månadslön, lägst 10%</strong>: " + d.P10 + " kronor");
           $('#chart-two-subtitle-2').html("<strong>Månadslön, högsta 10%</strong>: " + d.P90 + " kronor");
         }

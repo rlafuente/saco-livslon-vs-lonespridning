@@ -64,6 +64,9 @@ function setTextBlocks(group) {
       $("#text-block-1").html(text1);
       $("#text-block-2").html(text2);
       $("#text-block-3").html(text3);
+      $("#chart-caption-1").html(title);
+      $("#chart-caption-2").html(title);
+      $("#chart-caption-3").html(title);
     },
     error: function(xhr, ajaxOptions, thrownError) {
       alert("Status: " + xhr.status + "     Error: " + thrownError);
@@ -73,7 +76,8 @@ function setTextBlocks(group) {
 
 function loadCharts() {
   var is_iframe = (getUrlVars().iframe === 'true');
-  var csvfile = 'data/development_data.csv';
+  var csvfile = 'data/data-latest.csv';
+  // var csvfile = 'data/development_data.csv';
   chart_one = new ChartOne('#chart-one', csvfile, {isIframe: is_iframe});
   chart_two = new ChartTwo('#chart-two', csvfile, {isIframe: is_iframe});
   chart_three = new ChartThree('#chart-three', csvfile, {isIframe: is_iframe});

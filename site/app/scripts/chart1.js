@@ -74,7 +74,7 @@ ChartOne = (function() {
       // Init data and domains
       data = data.sort(function(a, b){ return d3.ascending(a.lifesalary, b.lifesalary);});
       var maxvalue = d3.max(data, function(d) { return parseInt(d.lifesalary); });
-      x.domain(data.map(function(d) { return d.profession_name; }));
+      x.domain(data.map(function(d) { return d.profession_label; }));
       y.domain([maxvalue, 0]);
       yAxisScale.domain([maxvalue, 0]);
 
@@ -84,11 +84,11 @@ ChartOne = (function() {
           .data(data)
         .enter().append("g")
           .attr("width", 20)
-          .attr("transform", function(d) { return "translate(" + x(d.profession_name) + ",0)"; });
+          .attr("transform", function(d) { return "translate(" + x(d.profession_label) + ",0)"; });
 
       // Bars
       bar.append("rect")
-        .attr("name", function(d) { return d.profession_name; })
+        .attr("name", function(d) { return d.profession_label; })
         .attr("class", function(d) { return "bar element " + d.group; })
         .attr("y", function(d) { return y(parseInt(d.lifesalary)); })
         .attr("height", function(d) { return self.height - y(parseInt(d.lifesalary)); })
@@ -96,8 +96,8 @@ ChartOne = (function() {
         .attr("width", x.rangeBand())
         .on('mouseover', function(d) {
           self.applyHighlight();
-          d3.select('[name="' + d.profession_name + '"]').attr("fill", "darkred");
-          $('#chart-one-title').text(d.profession_name);
+          d3.select('[name="' + d.profession_label + '"]').attr("fill", "darkred");
+          $('#chart-one-title').text(d.profession_label);
           $('#chart-one-subtitle').html("<strong>Livslön</strong>: " + Number((d.lifesalary/1000000).toFixed(1)) + " milj. kronor");
           /*
         })
@@ -116,8 +116,8 @@ ChartOne = (function() {
       var d = data[~~touchScale(xPos)];
       // reset colors and highlight the touched one
       self.applyHighlight();
-      d3.select('[name="' + d.profession_name + '"]').attr("fill", "darkred");
-      $('#chart-one-title').text(d.profession_name);
+      d3.select('[name="' + d.profession_label + '"]').attr("fill", "darkred");
+      $('#chart-one-title').text(d.profession_label);
       $('#chart-one-subtitle').html("<strong>Livslön</strong>: " + Number((d.lifesalary/1000000).toFixed(1)) + " milj. kronor");
     }
     self.svg.on('touchmove.chart1', onTouchMove);
@@ -154,12 +154,13 @@ ChartOne = (function() {
     
 
     // Text labels for highlighted bars
+      /*
     self.chart.selectAll("text")
       .data(data)
       .enter().append("text")
         .attr("class", function(d) { return "bartext " + d.group; })
         .attr("transform", function(d) { 
-          var tx = x(d.profession_name);
+          var tx = x(d.profession_label);
           var ty = y(parseInt(d.lifesalary)) + 10;
           return "translate(10,-5)rotate(-30 " + tx + " " + ty + ")"; 
         })
@@ -167,9 +168,11 @@ ChartOne = (function() {
         //.style("font-size", "12px")
         .attr("fill", "red")
         .attr("opacity", "0")
-        .attr("x", function(d,i) { return x(d.profession_name); })
+        .attr("x", function(d,i) { return x(d.profession_label); })
         .attr("y", function(d,i) { return y(parseInt(d.lifesalary)); })
-        .text(function(d){ return d.profession_name; });
+        .text(function(d){ return d.profession_label; });
+
+      */
     });
 
     // Send resize signal to parent page
