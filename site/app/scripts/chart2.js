@@ -97,6 +97,7 @@ ChartTwo = (function() {
               .attr("ry", 3)
               .attr("fill", "#ECDAB5")
 
+          /*
           // quartiles
           bar.append("rect")
               .attr("class", function(d) { return "quartiles " + d.group; })
@@ -106,12 +107,13 @@ ChartTwo = (function() {
               .attr("rx", 3)
               .attr("ry", 3)
               .attr("fill", "#BDA164");
+          */
           
           // median
           bar.append("circle")
               .attr("class", function(d) { return "median " + d.group; })
               .attr("cy", function(d) { return y(d.median); })
-              .attr("r", function(d) { return 1; })
+              .attr("r", function(d) { return 3; })
               .attr("cx", x.rangeBand() / 2)
               .attr("fill", "#F8F0DE")
               .attr("id", function(d) { return d.profession_name });
