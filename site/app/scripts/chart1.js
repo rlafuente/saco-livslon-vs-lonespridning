@@ -1,3 +1,7 @@
+/*
+ * Yearly incomes
+ */
+
 ChartOne = (function() {
   function ChartOne(selector, data, opts) {
     var self = this;
