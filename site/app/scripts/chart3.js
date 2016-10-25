@@ -130,7 +130,7 @@ ChartThree = (function() {
         self.svg.on('touchmove.chart3', onTouchMove);
 
         // Salary indicator line
-        line_x = x(0.1);
+        line_x = x(1);
         self.svg.append("line")
           .attr("x1", line_x)
           .attr("y1", 0)
@@ -146,7 +146,7 @@ ChartThree = (function() {
           .attr("dy", "1em")
           //.attr("transform", "translate(" + (line_x + 5) + ",20)")
           .style("font-size", "10px")
-          .style("fill", "lightgrey");
+          .style("fill", "grey");
 
         // Axes
         self.svg.append("text")
