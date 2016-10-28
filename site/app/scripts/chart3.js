@@ -80,10 +80,11 @@ ChartThree = (function() {
             // .attr('transform', 'translate(' + yAxisMargin + ',' + -xAxisMargin + ')');
         // var circleRadius = self.width / 100;
         var circleRadius = 4;
+	var glowRadius = 4;
         var x = d3.scale.linear()
-              .range([circleRadius+yAxisMargin, self.width-circleRadius]);
+              .range([glowRadius+circleRadius+yAxisMargin, self.width-circleRadius-glowRadius]);
         var y = d3.scale.linear()
-              .range([self.height-circleRadius-xAxisMargin, circleRadius]);
+              .range([self.height-circleRadius-glowRadius-xAxisMargin, circleRadius+glowRadius]);
 
         d3.csv(self.data, function (error, data) {
           x.domain([d3.min(data, function(d) { return parseFloat(d.lifesalary_vs_baseline); }), 
@@ -104,7 +105,7 @@ ChartThree = (function() {
               .attr("class", function(d) { return "element d3-tip glow " + d.group; })
               .attr("cx", function(d) { return x(parseFloat(d.lifesalary_vs_baseline)); })
               .attr("cy", function(d) { return y(parseFloat(d.income_range)); })
-              .attr("r", circleRadius+5)
+              .attr("r", circleRadius+glowRadius)
               .attr("fill", "darkred")
 	      .attr("fill-opacity", .1);
 
