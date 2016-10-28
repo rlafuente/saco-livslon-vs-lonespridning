@@ -59,6 +59,23 @@ ChartThree = (function() {
             .attr('height', '100%')
             .attr('viewBox','0 0 ' + self.width +' '+ self.height)
             .attr("preserveAspectRatio", "xMinYMin meet");
+        // Add outer glow filter to svg
+        // http://www.visualcinnamon.com/2016/06/glow-filter-d3-visualization.html
+	var defs = self.svg.append("defs");
+	var filter = defs.append("filter")
+		.attr("id","glow")
+                .attr("height", "130%");
+	filter.append("feGaussianBlur")
+		.attr("in", "SourceAlpha")
+		.attr("stdDeviation","5")
+		.attr("result","coloredBlur");
+	var feMerge = filter.append("feMerge");
+	feMerge.append("feMergeNode")
+		.attr("in","coloredBlur");
+	feMerge.append("feMergeNode")
+		.attr("in","SourceGraphic");
+
+        // Set up chart
         self.chart = self.svg.append('g');
             // .attr('transform', 'translate(' + yAxisMargin + ',' + -xAxisMargin + ')');
         // var circleRadius = self.width / 100;
@@ -81,6 +98,16 @@ ChartThree = (function() {
               .data(data)
             .enter().append("g");
 
+	  // outer highlight circle
+          dot.append("circle")
+              .attr("name", function(d) { return d.profession_label; })
+              .attr("class", function(d) { return "element d3-tip glow " + d.group; })
+              .attr("cx", function(d) { return x(parseFloat(d.lifesalary_vs_baseline)); })
+              .attr("cy", function(d) { return y(parseFloat(d.income_range)); })
+              .attr("r", circleRadius+5)
+              .attr("fill", "darkred")
+	      .attr("fill-opacity", .1);
+
           dot.append("circle")
               .attr("name", function(d) { return d.profession_label; })
               .attr("class", function(d) { return "element d3-tip " + d.group; })
@@ -94,7 +121,11 @@ ChartThree = (function() {
 
               .on('mouseover', function(d) {
                 self.applyHighlight();
-                d3.select('#chart-three [name="' + d.profession_label + '"]').attr('fill', 'darkred');
+                d3.select(this)
+                  .style('fill', 'darkred');
+		d3.select('[name="' + d.profession_label + '"].glow')
+		  .attr("fill-opacity", 0.7);
+
                 $('#chart-three-title').text(d.profession_label);
                 $('#chart-three-subtitle-1').html(
                     "<strong>Lönespridning (P90/P10)</strong>: " + Number(parseFloat(d.income_range).toFixed(2))
@@ -105,7 +136,10 @@ ChartThree = (function() {
               })
               .on('mouseout', function(d) {
                 self.applyHighlight();
-                d3.select('#chart-three [name="' + d.profession_label + '"]').attr('fill', '#BDA164');
+                d3.select(this).attr('fill', '#BDA164')
+		  .style("filter", "");
+		d3.select('[name="' + d.profession_label + '"].glow')
+		  .attr("fill-opacity", 0.1);
                 $('#chart-three-title').text("Livslön jämfört med gymnasieutbildad vs Lönespridning (P90/P10)");
                 $('#chart-three-subtitle-1').html("&nbsp;");
                 $('#chart-three-subtitle-2').html("&nbsp;");
@@ -118,7 +152,10 @@ ChartThree = (function() {
           var d = data[~~touchScale(xPos)];
           // reset colors and highlight the touched one
           self.applyHighlight();
-          var sel = d3.select('#chart-three [name="' + d.profession_label + '"]').style("fill", "darkred").style("opacity", "0.8");
+          var sel = d3.select(this)
+            .style("fill", "darkred")
+            .style("box-shadow", "0px 0px 5px darkred");
+
           $('#chart-three-title').text(d.profession_label);
           $('#chart-three-subtitle-1').html(
               "<strong>Lönespridning (P90/P10)</strong>: " + Number(parseFloat(d.income_range).toFixed(2))

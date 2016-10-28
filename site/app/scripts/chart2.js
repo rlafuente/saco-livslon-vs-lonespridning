@@ -205,12 +205,10 @@ ChartTwo = (function() {
     ChartTwo.prototype.applyHighlight = function(group) {
       if (group && group != self.group) { self.group = group; }
       d3.selectAll("#chart-two .median").style("fill", "#F8F0DE"); 
-      d3.selectAll("#chart-two .quartiles").style("fill", "#BDA164"); 
       d3.selectAll("#chart-two .edges").style("fill", "#ECDAB5"); 
 
       d3.selectAll("#chart-two .median." + self.group).style("fill", "#eecae0"); 
-      d3.selectAll("#chart-two .quartiles." + self.group).style("fill", "#c13d8c"); 
-      d3.selectAll("#chart-two .edges." + self.group).style("fill", "#d67db2"); 
+      d3.selectAll("#chart-two .edges." + self.group).style("fill", "#c13d8c"); 
       d3.selectAll("#chart-two .bartext." + self.group).style("opacity", "1"); 
       d3.selectAll(".bar-overlay").style("opacity", "0");
     }
