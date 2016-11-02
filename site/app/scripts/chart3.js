@@ -129,7 +129,9 @@ ChartThree = (function() {
               .on('mouseover', function(d) {
                 self.applyHighlight();
 		d3.select('.glow[name="' + this.getAttribute('name') + '"]').moveToFront();
-		d3.select(this).moveToFront();
+		d3.select(this)
+                  .style('fill', 'blue')
+                  .moveToFront();
 
                 $('#chart-three-title').text(d.profession_label);
                 $('#chart-three-subtitle-1').html(
@@ -241,7 +243,7 @@ ChartThree = (function() {
     ChartThree.prototype.applyHighlight = function(group) {
       if (group && group != self.group) { self.group = group; }
       d3.selectAll("#chart-three .element").style("fill", "#BDA164"); 
-      d3.selectAll("#chart-three ." + self.group).style("fill", "#c13d8c");  
+      d3.selectAll("#chart-three ." + self.group).style("fill", "#c13d8c").moveToFront();  
     }
 
     ChartThree.prototype.on_resize = function(w) {
