@@ -2,6 +2,12 @@
  * Scatterplot
  */
 
+d3.selection.prototype.moveToFront = function() {
+  return this.each(function(){
+    this.parentNode.parentNode.appendChild(this.parentNode);
+  });
+};
+
 ChartThree = (function() {
     function ChartThree(selector, data, opts) {
         var self = this;
@@ -102,7 +108,7 @@ ChartThree = (function() {
 	  // outer highlight circle
           dot.append("circle")
               .attr("name", function(d) { return d.profession_label; })
-              .attr("class", function(d) { return "element d3-tip glow " + d.group; })
+              .attr("class", function(d) { return "d3-tip glow " + d.group; })
               .attr("cx", function(d) { return x(parseFloat(d.lifesalary_vs_baseline)); })
               .attr("cy", function(d) { return y(parseFloat(d.income_range)); })
               .attr("r", circleRadius+glowRadius)
@@ -122,10 +128,10 @@ ChartThree = (function() {
 
               .on('mouseover', function(d) {
                 self.applyHighlight();
-                d3.select(this)
-                  .style('fill', 'darkred');
-		d3.select('[name="' + d.profession_label + '"].glow')
-		  .attr("fill-opacity", 0.7);
+		d3.select('.glow[name="' + this.getAttribute('name') + '"]').moveToFront();
+		d3.select(this)
+                  .style('fill', 'blue')
+                  .moveToFront();
 
                 $('#chart-three-title').text(d.profession_label);
                 $('#chart-three-subtitle-1').html(
@@ -136,14 +142,10 @@ ChartThree = (function() {
                 );
               })
               .on('mouseout', function(d) {
-                self.applyHighlight();
-                d3.select(this).attr('fill', '#BDA164')
-		  .style("filter", "");
-		d3.select('[name="' + d.profession_label + '"].glow')
-		  .attr("fill-opacity", 0.1);
-                $('#chart-three-title').text("Livslön jämfört med gymnasieutbildad vs Lönespridning (P90/P10)");
-                $('#chart-three-subtitle-1').html("&nbsp;");
-                $('#chart-three-subtitle-2').html("&nbsp;");
+		self.applyHighlight();
+		$('#chart-three-title').text("Livslön jämfört med gymnasieutbildad vs Lönespridning (P90/P10)");
+		$('#chart-three-subtitle-1').html("&nbsp;");
+		$('#chart-three-subtitle-2').html("&nbsp;");
               });
 
         // Mobile swipe events
@@ -153,19 +155,20 @@ ChartThree = (function() {
           var d = data[~~touchScale(xPos)];
           // reset colors and highlight the touched one
           self.applyHighlight();
-          var sel = d3.select(this)
-            .style("fill", "darkred")
-            .style("box-shadow", "0px 0px 5px darkred");
+          var sel = d3.select('#chart-three .element[name="' + d.profession_label + '"]')
+            .style("fill", "blue")
+	    .moveToFront();
 
           $('#chart-three-title').text(d.profession_label);
-          $('#chart-three-subtitle-1').html(
-              "<strong>Lönespridning (P90/P10)</strong>: " + Number(parseFloat(d.income_range).toFixed(2))
-          );
-          $('#chart-three-subtitle-2').html(
-              "<strong>Livslön jämfört med gymnasieutbildad</strong>: " + Number(parseFloat(d.lifesalary_vs_baseline).toFixed(2)) + " procent"
-          );
+          $('#chart-three-subtitle-1').html( "<strong>Lönespridning (P90/P10)</strong>: " + Number(parseFloat(d.income_range).toFixed(2)));
+          $('#chart-three-subtitle-2').html( "<strong>Livslön jämfört med gymnasieutbildad</strong>: " + Number(parseFloat(d.lifesalary_vs_baseline).toFixed(2)) + " procent");
         }
         self.svg.on('touchmove.chart3', onTouchMove);
+        self.svg.on('touchend.chart3', function() {
+          $('#chart-three-title').text("Livslön jämfört med gymnasieutbildad vs Lönespridning (P90/P10)");
+          $('#chart-three-subtitle-1').html("&nbsp;");
+	  $('#chart-three-subtitle-2').html("&nbsp;");
+        });
 
         // Salary indicator line
         line_x = x(1);
@@ -240,7 +243,7 @@ ChartThree = (function() {
     ChartThree.prototype.applyHighlight = function(group) {
       if (group && group != self.group) { self.group = group; }
       d3.selectAll("#chart-three .element").style("fill", "#BDA164"); 
-      d3.selectAll("#chart-three ." + self.group).style("fill", "#c13d8c");  
+      d3.selectAll("#chart-three ." + self.group).style("fill", "#c13d8c").moveToFront();  
     }
 
     ChartThree.prototype.on_resize = function(w) {
