@@ -203,7 +203,7 @@ ChartThree = (function() {
           .style("text-anchor", "end");
 
         self.svg.append("text")
-          .text("Stor löne-")
+          .text("Liten löne-")
           .attr("dy", "0em")
           .attr("class", "axis legend")
           .attr("transform", "translate(" + yAxisMargin/2 + "," + (self.height-xAxisMargin/2) + ") rotate(-90)")
@@ -216,7 +216,7 @@ ChartThree = (function() {
           .style("text-anchor", "start");
 
         self.svg.append("text")
-          .text("Liten lön-")
+          .text("Stor lön-")
           .attr("dy", "0em")
           .attr("class", "axis legend")
           .attr("transform", "translate(" + yAxisMargin/2 + ",0) rotate(-90)")
