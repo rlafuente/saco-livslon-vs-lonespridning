@@ -69,7 +69,7 @@ ChartTwo = (function() {
               .rangeRoundBands([0, self.width - yAxisMargin], .1);
               //.rangeRoundBands([0, self.width], .1);
         var y = d3.scale.linear()
-              .range([self.height, 0]);
+              .range([self.height - xAxisMargin, 0]);
 
         d3.csv(self.data, function (error, data) {
           data = data.sort(function(a, b){ return d3.ascending(parseInt(a.median), parseInt(b.median)); });
@@ -80,7 +80,7 @@ ChartTwo = (function() {
           // console.log(maxvalue);
 
           x.domain(data.map(function(d) { return +d.median; }));
-          y.domain([0, d3.max(data, function(d) { return parseInt(d.P90); })]);
+          y.domain([20000, d3.max(data, function(d) { console.log(d.P10); return parseInt(d.P90); })]);
           //y.domain([0, d3.max(data, function(d) { return parseInt(d.median); })]);
           //y.domain([d3.min(data, function(d) { return parseInt(d.P10)}), d3.max(data, function(d) { return parseInt(d.P90); })]);
           
@@ -93,23 +93,12 @@ ChartTwo = (function() {
           bar.append("rect")
               .attr("class", function(d) { return "edges " + d.group; })
               .attr("y", function(d) { return y(d.P90); })
-              .attr("height", function(d) { return self.height - y(parseInt(d.P90 - d.P10)); })
+              .attr("height", function(d) { return y(d.P10) - y(d.P90); })
               .attr("width", x.rangeBand())
               .attr("rx", 3)
               .attr("ry", 3)
               .attr("fill", "#ECDAB5")
 
-          /*
-          // quartiles
-          bar.append("rect")
-              .attr("class", function(d) { return "quartiles " + d.group; })
-              .attr("y", function(d) { return y(d._Q3); })
-              .attr("height", function(d) { return self.height - y(parseInt(d._Q3 - d._Q1)); })
-              .attr("width", x.rangeBand())
-              .attr("rx", 3)
-              .attr("ry", 3)
-              .attr("fill", "#BDA164");
-          */
           
           // median
           bar.append("circle")
@@ -125,7 +114,7 @@ ChartTwo = (function() {
               .attr("name", function(d) { return d.profession_label; })
               .attr("class", function(d) { return "bar-overlay " + d.group; })
               .attr("y", function(d) { return y(d.P90); })
-              .attr("height", function(d) { return self.height - y(parseInt(d.P90 - d.P10)); })
+              .attr("height", function(d) { return y(d.P10) - y(d.P90); })
               .attr("width", x.rangeBand())
               .style("opacity", "0")
               .style("fill", "darkred")
@@ -155,13 +144,13 @@ ChartTwo = (function() {
          
           var yAxis = d3.svg.axis() 
             .scale(y)
-            .ticks(8, "s")
+            .ticks(6, "s")
             // .tickFormat(function(d) { return formatMillionSEK(d); })
             .tickFormat(function(d) { return d / 1000; })
             .orient("left");
           self.svg.append("g")
             .attr("class", "axis")
-            .attr("transform", "translate(" + yAxisMargin*1.2 + ", 0)")
+            .attr("transform", "translate(" + yAxisMargin + ", 0)")
             .call(yAxis);
           // remove tick for 0
           d3.selectAll('g.tick')
