@@ -98,10 +98,28 @@ ChartThree = (function() {
           // Sort data so that touch events follow proper order
           data.sort(function(a,b) { return a.lifesalary_vs_baseline - b.lifesalary_vs_baseline; });
 
+          // Salary indicator line
+          line_x = x(1);
+          self.svg.append("line")
+            .attr("x1", line_x)
+            .attr("y1", 0)
+            .attr("x2", line_x)
+            .attr("y2", self.height - xAxisMargin)
+            .style("stroke-width", 1)
+            .style("stroke", "lightgrey")
+            .style("fill", "none");
+          self.svg.append("text")
+            .attr("class", "salarytext")
+            .text("Tjänar mer än gymnasieutbildad")
+            .attr("dx", line_x + 5)
+            .attr("dy", "1em")
+            //.attr("transform", "translate(" + (line_x + 5) + ",20)")
+            .style("font-size", "10px")
+            .style("fill", "grey");
+
           var dot = self.chart.selectAll("g")
               .data(data)
             .enter().append("g");
-
 	  // outer highlight circle
           dot.append("circle")
               .attr("name", function(d) { return d.profession_label; })
@@ -163,24 +181,6 @@ ChartThree = (function() {
 	  $('#chart-three-subtitle-2').html("&nbsp;");
         });
 
-        // Salary indicator line
-        line_x = x(1);
-        self.svg.append("line")
-          .attr("x1", line_x)
-          .attr("y1", 0)
-          .attr("x2", line_x)
-          .attr("y2", self.height - xAxisMargin)
-          .style("stroke-width", 1)
-          .style("stroke", "lightgrey")
-          .style("fill", "none");
-        self.svg.append("text")
-          .attr("class", "salarytext")
-          .text("Tjänar mer än gymnasieutbildad")
-          .attr("dx", line_x + 5)
-          .attr("dy", "1em")
-          //.attr("transform", "translate(" + (line_x + 5) + ",20)")
-          .style("font-size", "10px")
-          .style("fill", "grey");
 
         // Axes
         self.svg.append("text")
