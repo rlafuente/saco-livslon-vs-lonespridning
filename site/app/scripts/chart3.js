@@ -149,19 +149,21 @@ ChartThree = (function() {
               });
 
         // Mobile swipe events
-        var touchScale = d3.scale.linear().domain([yAxisMargin,self.width]).range([1,data.length]).clamp(true);
+        var touchScale = d3.scale.linear().domain([yAxisMargin,self.width]).range([0,data.length]).clamp(true);
         function onTouchMove() {
           var xPos = d3.touches(this)[0][0];
           var d = data[~~touchScale(xPos)];
           // reset colors and highlight the touched one
           self.applyHighlight();
+          if (typeof d != 'undefined' && d) {
           var sel = d3.select('#chart-three .element[name="' + d.profession_label + '"]')
             .style("fill", "blue")
 	    .moveToFront();
-
           $('#chart-three-title').text(d.profession_label);
           $('#chart-three-subtitle-1').html( "<strong>Lönespridning (P90/P10)</strong>: " + Number(parseFloat(d.income_range).toFixed(2)));
           $('#chart-three-subtitle-2').html( "<strong>Livslön jämfört med gymnasieutbildad</strong>: " + Number(parseFloat(d.lifesalary_vs_baseline).toFixed(2)) + " procent");
+          }
+
         }
         self.svg.on('touchmove.chart3', onTouchMove);
         self.svg.on('touchend.chart3', function() {
