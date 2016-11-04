@@ -72,12 +72,30 @@ function setTextBlocks(group) {
       alert("Status: " + xhr.status + "     Error: " + thrownError);
     }
   });
-};
+}
+
+function setChartTooltips() {
+  $.ajax({
+    type: "GET",
+    url: 'data/copy-general.csv',
+    dataType: "text",
+    success: function(data) {
+      // dropdown options
+      csv = $.csv.toObjects(data);
+      chart_one.tooltip = csv[2]['text'];
+      chart_two.tooltip = csv[3]['text'];
+      chart_three.tooltip = csv[4]['text'];
+    },
+    error: function(xhr, ajaxOptions, thrownError) {
+      alert("Status: " + xhr.status + "     Error: " + thrownError);
+    }
+  });
+
+}
 
 function loadCharts() {
   var is_iframe = (getUrlVars().iframe === 'true');
   var csvfile = 'data/data-latest.csv';
-  // var csvfile = 'data/development_data.csv';
   chart_one = new ChartOne('#chart-one', csvfile, {isIframe: is_iframe});
   chart_two = new ChartTwo('#chart-two', csvfile, {isIframe: is_iframe});
   chart_three = new ChartThree('#chart-three', csvfile, {isIframe: is_iframe});
@@ -95,6 +113,7 @@ $(document).ready(function() {
   var chart_ready = loadCharts();
   function isChartReady() {
     if (chart_ready === 'ready') {
+      setChartTooltips();
       setChartHighlight('education');
     }
   }

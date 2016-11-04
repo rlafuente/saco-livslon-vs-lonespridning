@@ -16,26 +16,23 @@ ChartThree = (function() {
             isIframe: false
         }
         self.opts = $.extend(defaultOpts, opts);
-
         // Inital state
         self.data = data;
         // Highlight group
         self.group = 'education';
-
         // Append chart container
         self.chartContainer = self.container.append("div")
             .attr("class", "chart-container");
-
         // Render charts
         self.drawChart();
-
         // Do transitions
         self.update(data);
-
         // Make responsize
         d3.select(window).on('resize', function() {
             self.resize();
         });
+        // Set up tooltip
+        self.tooltip = '';
     }
     // Draw DOM elements
     ChartThree.prototype.drawChart = function() {
@@ -95,8 +92,8 @@ ChartThree = (function() {
         d3.csv(self.data, function (error, data) {
           x.domain([d3.min(data, function(d) { return parseFloat(d.lifesalary_vs_baseline); }), 
                     d3.max(data, function(d) { return parseFloat(d.lifesalary_vs_baseline); })]);
-          y.domain([d3.min(data, function(d) { return parseFloat(d.income_range); }), 
-                    d3.max(data, function(d) { return parseFloat(d.income_range); })]);
+          y.domain([d3.min(data, function(d) { return parseFloat(d.income_range_perc); }), 
+                    d3.max(data, function(d) { return parseFloat(d.income_range_perc); })]);
  
           // Sort data so that touch events follow proper order
           data.sort(function(a,b) { return a.lifesalary_vs_baseline - b.lifesalary_vs_baseline; });
@@ -110,7 +107,7 @@ ChartThree = (function() {
               .attr("name", function(d) { return d.profession_label; })
               .attr("class", function(d) { return "d3-tip glow " + d.group; })
               .attr("cx", function(d) { return x(parseFloat(d.lifesalary_vs_baseline)); })
-              .attr("cy", function(d) { return y(parseFloat(d.income_range)); })
+              .attr("cy", function(d) { return y(parseFloat(d.income_range_perc)); })
               .attr("r", circleRadius+glowRadius)
               .attr("fill", "darkred")
 	      .attr("fill-opacity", .1);
@@ -119,7 +116,7 @@ ChartThree = (function() {
               .attr("name", function(d) { return d.profession_label; })
               .attr("class", function(d) { return "element d3-tip " + d.group; })
               .attr("cx", function(d) { return x(parseFloat(d.lifesalary_vs_baseline)); })
-              .attr("cy", function(d) { return y(parseFloat(d.income_range)); })
+              .attr("cy", function(d) { return y(parseFloat(d.income_range_perc)); })
               .attr("r", circleRadius)
               .attr("fill", "#BDA164")
               .attr("stroke", "white")
@@ -134,12 +131,7 @@ ChartThree = (function() {
                   .moveToFront();
 
                 $('#chart-three-title').text(d.profession_label);
-                $('#chart-three-subtitle-1').html(
-                    "<strong>Lönespridning (P90/P10)</strong>: " + Number(parseFloat(d.income_range).toFixed(2))
-                );
-                $('#chart-three-subtitle-2').html(
-                    "<strong>Livslön jämfört med gymnasieutbildad</strong>: " + (Number(parseFloat(d.lifesalary_vs_baseline).toFixed(4)) * 100).toFixed(2) + " procent"
-                );
+                $('#chart-three-subtitle-1').html(self.getTooltip(d));
               })
               .on('mouseout', function(d) {
 		self.applyHighlight();
@@ -160,8 +152,7 @@ ChartThree = (function() {
             .style("fill", "blue")
 	    .moveToFront();
           $('#chart-three-title').text(d.profession_label);
-          $('#chart-three-subtitle-1').html( "<strong>Lönespridning (P90/P10)</strong>: " + Number(parseFloat(d.income_range).toFixed(2)));
-          $('#chart-three-subtitle-2').html( "<strong>Livslön jämfört med gymnasieutbildad</strong>: " + Number(parseFloat(d.lifesalary_vs_baseline).toFixed(2)) + " procent");
+          $('#chart-three-subtitle-1').html(self.getTooltip(d));
           }
 
         }
@@ -240,6 +231,22 @@ ChartThree = (function() {
         if (self.opts.isIframe) {
             pymChild.sendHeight();
         }
+    }
+
+    ChartThree.prototype.getTooltip = function(d) {
+      var self = this;
+      return self.tooltip
+        .replace("{ lifesalary }", Number((d.lifesalary/1000000).toFixed(1)))
+        .replace("{ mer/mindre }", function(s) {
+          if (Number(d.lifesalary_vs_baseline) > 1) { return "mer" } else { return "mindre"}
+        })
+        .replace("{ lifesalary_vs_baseline }", function(s) {
+          if (d.lifesalary_vs_baseline >= 1) { return (100 * Number(d.lifesalary_vs_baseline) - 100).toFixed(1) } 
+          else { return Math.abs(100 - Number(d.lifesalary_vs_baseline)*100).toFixed(1) }
+        })
+        .replace("{baseline}", d.baseline)
+        .replace("{ income_range_kr }", d.income_range_kr)
+        .replace("{ income_range_perc }", Number(d.income_range_perc).toFixed(1));
     }
 
     ChartThree.prototype.applyHighlight = function(group) {

@@ -30,6 +30,8 @@ ChartTwo = (function() {
         d3.select(window).on('resize', function() {
             self.resize();
         });
+        // Set up tooltip
+        self.tooltip = '';
     }
     // Draw DOM elements
     ChartTwo.prototype.drawChart = function() {
@@ -133,19 +135,8 @@ ChartTwo = (function() {
                 self.applyHighlight();
                 var sel = d3.select('#chart-two [name="' + d.profession_label + '"]').style("opacity", ".4");
                 $('#chart-two-title').text(d.profession_label);
-                $('#chart-two-subtitle-1').html("<strong>Månadslön, lägst 10%</strong>: " + d.P10 + " kronor");
-                $('#chart-two-subtitle-2').html("<strong>Månadslön, högsta 10%</strong>: " + d.P90 + " kronor");
-              /*
-              })
-              .on('mouseout', function(d) {
-                self.applyHighlight();
-                $('#chart-two-title').text("Yrkesgrupp vs Månadslön");
-                $('#chart-two-subtitle-1').html("&nbsp;");
-                $('#chart-two-subtitle-2').html("&nbsp;");
-                */
+                $('#chart-two-subtitle-1').html(self.getTooltip(d));
               });
-
-
 
         // Mobile swipe events
         // var touchScale = d3.scale.linear().domain([yAxisMargin,self.width]).range([0,data.length]).clamp(true);
@@ -157,8 +148,7 @@ ChartTwo = (function() {
           self.applyHighlight();
           var sel = d3.select('#chart-two [name="' + d.profession_label + '"]').style("opacity", ".4");
           $('#chart-two-title').text(d.profession_label);
-          $('#chart-two-subtitle-1').html("<strong>Månadslön, lägst 10%</strong>: " + d.P10 + " kronor");
-          $('#chart-two-subtitle-2').html("<strong>Månadslön, högsta 10%</strong>: " + d.P90 + " kronor");
+          $('#chart-two-subtitle-1').html(self.getTooltip(d));
         }
         self.svg.on('touchmove.chart2', onTouchMove);
 
@@ -200,6 +190,15 @@ ChartTwo = (function() {
         if (self.opts.isIframe) {
             pymChild.sendHeight();
         }
+    }
+
+    ChartTwo.prototype.getTooltip = function(d) {
+      var self = this;
+      return self.tooltip
+      .replace("{ P10 }", d.P10)
+      .replace("{ P90 }", d.P90)
+      .replace("{ income_range_kr }", d.income_range_kr)
+      .replace("{ income_range_perc }", Number(d.income_range_perc).toFixed(1));
     }
 
     ChartTwo.prototype.applyHighlight = function(group) {

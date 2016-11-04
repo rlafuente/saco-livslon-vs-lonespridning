@@ -27,6 +27,8 @@ ChartOne = (function() {
     d3.select(window).on('resize', function() {
       self.resize();
     });
+    // Set up tooltip
+    self.tooltip = '';
   }
   // Draw DOM elements
   ChartOne.prototype.drawChart = function() {
@@ -86,6 +88,7 @@ ChartOne = (function() {
           .attr("width", 20)
           .attr("transform", function(d) { return "translate(" + x(d.profession_label) + ",0)"; });
 
+      
       // Bars
       bar.append("rect")
         .attr("name", function(d) { return d.profession_label; })
@@ -98,15 +101,8 @@ ChartOne = (function() {
           self.applyHighlight();
           d3.select('[name="' + d.profession_label + '"]').attr("fill", "darkred");
           $('#chart-one-title').text(d.profession_label);
-          $('#chart-one-subtitle').html("<strong>Livslön</strong>: " + Number((d.lifesalary/1000000).toFixed(1)) + " milj. kronor");
-          /*
-        })
-        .on('mouseout', function(d) {
-          $('#chart-one-title').text("Yrkesgrupp vs. Livslön");
-          $('#chart-one-subtitle').html("&nbsp;");
-          self.applyHighlight();
-          */
-        });
+          $('#chart-one-subtitle').html(self.getTooltip(d));
+      });
 
     // Mobile swipe events
     var touchScale = d3.scale.linear().domain([yAxisMargin + x.rangeBand(),self.width]).range([0,data.length+1]).clamp(true);
@@ -118,68 +114,47 @@ ChartOne = (function() {
       self.applyHighlight();
       d3.select('[name="' + d.profession_label + '"]').attr("fill", "darkred");
       $('#chart-one-title').text(d.profession_label);
-      $('#chart-one-subtitle').html("<strong>Livslön</strong>: " + Number((d.lifesalary/1000000).toFixed(1)) + " milj. kronor");
+      $('#chart-one-subtitle').html(self.getTooltip(d));
     }
     self.svg.on('touchmove.chart1', onTouchMove);
     
-      // Vertical axis
-      var yAxis = d3.svg.axis() 
-        .scale(yAxisScale)
-        .ticks(5)
-        .tickFormat(function(d) { return d/1000000; })
-        .orient("left");
-      self.svg.append("g")
-        .attr("class", "axis")
-        .attr("transform", "translate(" + yAxisMargin + ", 0)")
-        .call(yAxis);
-      // Remove tick for 0
-      d3.selectAll('g.tick')
-        .filter(function(d){ return d==0;} )
-        .select('text')
-        .style('visibility', 'hidden');
-      // Axis labels
-      self.svg.append("text")
-        .text("Yrkesgrupp")
-        .attr("class", "axis legend")
-        .style("background", "white")
-        .style("text-transform", "uppercase")
-        .attr("transform", "translate(" + yAxisMargin*1.4 + "," + (self.height-xAxisMargin/3) + ")")
-        .style("text-anchor", "start");
-      self.svg.append("text")
-        .text("Livslön (milj. kr)")
-        .attr("class", "axis legend")
-        .attr("transform", "translate(" + yAxisMargin/4 + "," + (self.height-xAxisMargin) + ") rotate(-90)")
-        .style("text-anchor", "start")
-        .style("background-color", "white");
-    
-
-    // Text labels for highlighted bars
-      /*
-    self.chart.selectAll("text")
-      .data(data)
-      .enter().append("text")
-        .attr("class", function(d) { return "bartext " + d.group; })
-        .attr("transform", function(d) { 
-          var tx = x(d.profession_label);
-          var ty = y(parseInt(d.lifesalary)) + 10;
-          return "translate(10,-5)rotate(-30 " + tx + " " + ty + ")"; 
-        })
-        .style("z-index", 100)
-        //.style("font-size", "12px")
-        .attr("fill", "red")
-        .attr("opacity", "0")
-        .attr("x", function(d,i) { return x(d.profession_label); })
-        .attr("y", function(d,i) { return y(parseInt(d.lifesalary)); })
-        .text(function(d){ return d.profession_label; });
-
-      */
-    });
+    // Vertical axis
+    var yAxis = d3.svg.axis() 
+      .scale(yAxisScale)
+      .ticks(5)
+      .tickFormat(function(d) { return d/1000000; })
+      .orient("left");
+    self.svg.append("g")
+      .attr("class", "axis")
+      .attr("transform", "translate(" + yAxisMargin + ", 0)")
+      .call(yAxis);
+    // Remove tick for 0
+    d3.selectAll('g.tick')
+      .filter(function(d){ return d==0;} )
+      .select('text')
+      .style('visibility', 'hidden');
+    // Axis labels
+    self.svg.append("text")
+      .text("Yrkesgrupp")
+      .attr("class", "axis legend")
+      .style("background", "white")
+      .style("text-transform", "uppercase")
+      .attr("transform", "translate(" + yAxisMargin*1.4 + "," + (self.height-xAxisMargin/3) + ")")
+      .style("text-anchor", "start");
+    self.svg.append("text")
+      .text("Livslön (milj. kr)")
+      .attr("class", "axis legend")
+      .attr("transform", "translate(" + yAxisMargin/4 + "," + (self.height-xAxisMargin) + ") rotate(-90)")
+      .style("text-anchor", "start")
+      .style("background-color", "white");
 
     // Send resize signal to parent page
     if (self.opts.isIframe) {
       pymChild.sendHeight();
     }
+  });
   }
+
   ChartOne.prototype.on_resize = function(w) {
     //var size = Math.max(16, Math.min(8, 12 - w/50));
     var size = 12 - w/200;
@@ -187,6 +162,18 @@ ChartOne = (function() {
 
     if (w < 600) { $(".bartext").hide(); } else { $(".bartext").show(); }
   }
+
+  ChartOne.prototype.getTooltip = function(d) {
+    var self = this;
+    return self.tooltip
+    .replace("{ lifesalary }", Number((d.lifesalary/1000000).toFixed(1)))
+    .replace("{ baseline_diff }", Number((Math.abs(d.baseline_diff)/1000000).toFixed(1)))
+    .replace("{mer/mindre}", function(s) {
+      if (d.baseline_diff > 0) { return "mer" } else { return "mindre"}
+    })
+    .replace("{ baseline }", d.baseline);
+  }
+
 
   ChartOne.prototype.applyHighlight = function(group) {
     if (group && group != self.group) { self.group = group; }
