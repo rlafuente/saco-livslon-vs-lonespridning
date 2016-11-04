@@ -1,0 +1,39 @@
+_order,profession_label,_profession_education,group,P10,median,mean,P90,income_range,lifesalary,_baseline,_baseline_lifesalary,lifesalary_vs_baseline
+1,Förskollärare,Förskollärarutbildning,education,24800,28000,29147,33820,1.363709677,14486467,Gymn Samhv,16291761,0.889
+2,Grundlärare (årskurs1-6),Lärarutbildning mot grundskolans tidiga år,education,24800,29000,30277,36670,1.478629032,15215979,Gymn Samhv,16291761,0.934
+3,Ämneslärare (årskurs 7-9/gymnasiet),Lärarutbildning mot grundskolans senare år eller gymnasium,education,26172,30827,32659,40800,1.558917928,15802427,Gymn Samhv,16291761,0.970
+4,Lärare i praktisk-estetiska ämnen,Lärarutbildning i praktiskt-estetiskt ämne,education,26090,30840,32324,39050,1.496742047,15502843,Gymn Samhv,16291761,0.952
+5,Yrkeslärare,Yrkeslärarutbildning,education,27200,32850,34569,43000,1.580882353,15940028,Gymn Samhv,16291761,0.978
+6,Humanistisk,Humanistisk utbildning,humanities,22560,29300,32075,44071,1.953501773,15647784,Gymn Samhv,16291761,0.960
+7,Konstnärlig,Konstnärlig utbildning,humanities,23133,30595,32043,41400,1.789651148,14649528,Gymn Samhv,16291761,0.899
+8,Teologisk,Teologisk utbildning,humanities,25829,36875,38179,51466,1.992566495,17089913,Gymn Samhv,16291761,1.049
+9,Biblioteks-/informationsvetenskaplig,Biblioteks-/informationsvetenskaplig utbildning,,25230,29202,30699,37700,1.494252874,14858653,Gymn Samhv,16291761,0.912
+10,Ekonom,Ekonomiutbildning,,26501,41862,50636,79419,2.996830308,23475469,Gymn Samhv,16291761,1.441
+11,Personal-/beteendevetenskaplig,Personal-/beteendevetenskaplig utbildning,,24149,31139,35686,51950,2.151227794,17892968,Gymn Samhv,16291761,1.098
+12,Jurist,Juristutbildning,,27300,44409,51936,82000,3.003663004,23632857,Gymn Samhv,16291761,1.451
+13,Journalistik/medievetenskaplig,Journalistik-/medievetenskaplig utbildning,,23400,31495,33672,46001,1.965854701,17804413,Gymn Samhv,16291761,1.093
+14,Psykolog,Psykologutbildning,,29000,36000,36634,42443,1.463551724,17345935,Gymn Samhv,16291761,1.065
+15,Samhällsvetenskap/förvaltning,Samhällsvetar-/förvaltningsutbildning,,24911,35650,40844,60924,2.445666573,19159257,Gymn Samhv,16291761,1.176
+16,Biolog,Biologiutbildning,,23800,30300,32460,43862,1.842941176,16299375,Gymn Natv,17151600,0.950
+17,Systemvetenskaplig,Systemvetenskaplig utbildning,,27816,40500,42828,58692,2.110008628,19964309,Gymn Samhv,16291761,1.225
+18,Fysiker,Fysikerutbildning,,24156,36094,38964,57200,2.367941712,18296718,Gymn Natv,17151600,1.067
+19,Geovetenskaplig,Geovetenskaplig utbildning,,24000,33200,35698,49006,2.041916667,17186914,Gymn Natv,17151600,1.002
+20,Kemist,Kemistutbildning,,25550,35682,37814,52450,2.052837573,17408755,Gymn Natv,17151600,1.015
+21,Matematiker/statistiker,Matematiker-/statistikerutbildning,,25100,39015,43767,64473,2.568645418,20254397,Gymn Natv,17151600,1.181
+22,Arkitekt,Arkitektutbildning,,28600,39600,41666,56700,1.982517483,18596438,Gymn Natv,17151600,1.084
+23,Civilingenjör,Civilingenjörsutbildning,,31351,46399,51216,72620,2.316353545,23065174,Gymn Natv,17151600,1.345
+24,Högskoleingenjör,Högskoleingenjörsutbildning,,27795,37307,39411,52850,1.901421119,19139391,Gymn Natv,17151600,1.116
+25,Agronom/hortonom,Agronom/hortonomutbildning,,25923,35400,41307,58300,2.248968098,18639551,Gymn Natv,17151600,1.087
+26,Veterinär,Veterinärutbildning,,22794,39557,40665,58450,2.564271299,19222953,Gymn Natv,17151600,1.121
+27,Apotekare,Apotekarutbildning,,30184,38100,41265,55360,1.834084283,19941652,Gymn Natv,17151600,1.163
+28,Arbetsterapeut,Arbetsterapeututbildning,,24551,28400,29219,34100,1.38894546,14740896,Gymn Samhv,16291761,0.905
+29,Biomedicinsk analytiker,Biomedicinsk analytikerutbildning,,24979,29908,31308,38512,1.541775091,15375115,Gymn Samhv,16291761,0.944
+30,Läkare,Läkarutbildning,,35000,64000,61979,85055,2.430142857,26070964,Gymn Natv,17151600,1.520
+31,Receptarie,Receptarieutbildning,,27660,32800,34463,43102,1.558279103,16663002,Gymn Natv,17151600,0.972
+32,Fysioterapeut,Fysioterapeututbildning,healthcare,24000,28751,30300,38000,1.583333333,15272251,Gymn Samhv,16291761,0.937
+33,Sjuksköterska,Sjuksköterskeutbildning,healthcare,25502,29550,30649,36942,1.448592267,15860318,Gymn Samhv,16291761,0.974
+34,Social omsorg,Social omsorgsutbildning,social,23584,29850,31791,41300,1.751187246,15497999,Gymn Samhv,16291761,0.951
+35,Socionom,Socionomutbildning,social,25451,30300,32247,40550,1.593257632,16126312,Gymn Samhv,16291761,0.990
+36,Tandhygienist,Tandhygienistutbildning,,24300,29470,29709,34577,1.422921811,14625883,Gymn Samhv,16291761,0.898
+37,Tandläkare,Tandläkarutbildning,,31000,44152,46138,63681,2.054225806,20250759,Gymn Natv,17151600,1.181
+38,"Akademiker, totalt",Genomsnittlig akademiker,,25784,33900,39676,59672,2.314303444,19022945,Gymn Samh+Natv,16399390,1.160
