@@ -117,7 +117,7 @@ ChartTwo = (function() {
               .attr("height", function(d) { return y(d.P10) - y(d.P90); })
               .attr("width", x.rangeBand())
               .style("opacity", "0")
-              .style("fill", "darkred")
+              .style("fill", "#008ea1")
               .attr("rx", 3)
               .attr("ry", 3)
               .on('mouseover', function(d) {

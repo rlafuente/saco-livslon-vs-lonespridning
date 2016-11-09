@@ -99,7 +99,7 @@ ChartOne = (function() {
         .attr("width", x.rangeBand())
         .on('mouseover', function(d) {
           self.applyHighlight();
-          d3.select('[name="' + d.profession_label + '"]').attr("fill", "darkred");
+          d3.select('[name="' + d.profession_label + '"]').attr("fill", "#008ea1");
           $('#chart-one-title').text(d.profession_label);
           $('#chart-one-subtitle').html(self.getTooltip(d));
       });
@@ -112,7 +112,7 @@ ChartOne = (function() {
       var d = data[~~touchScale(xPos)];
       // reset colors and highlight the touched one
       self.applyHighlight();
-      d3.select('[name="' + d.profession_label + '"]').attr("fill", "darkred");
+      d3.select('[name="' + d.profession_label + '"]').attr("fill", "#008ea1");
       $('#chart-one-title').text(d.profession_label);
       $('#chart-one-subtitle').html(self.getTooltip(d));
     }

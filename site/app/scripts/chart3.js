@@ -127,7 +127,7 @@ ChartThree = (function() {
               .attr("cx", function(d) { return x(parseFloat(d.lifesalary_vs_baseline)); })
               .attr("cy", function(d) { return y(parseFloat(d.income_range_perc)); })
               .attr("r", circleRadius+glowRadius)
-              .attr("fill", "darkred")
+              .attr("fill", "#008ea1")
 	      .attr("fill-opacity", .1);
 
           dot.append("circle")
@@ -145,7 +145,7 @@ ChartThree = (function() {
                 self.applyHighlight();
 		d3.select('.glow[name="' + this.getAttribute('name') + '"]').moveToFront();
 		d3.select(this)
-                  .style('fill', 'blue')
+                  .style('fill', '#008ea1')
                   .moveToFront();
 
                 $('#chart-three-title').text(d.profession_label);
@@ -167,7 +167,7 @@ ChartThree = (function() {
           self.applyHighlight();
           if (typeof d != 'undefined' && d) {
           var sel = d3.select('#chart-three .element[name="' + d.profession_label + '"]')
-            .style("fill", "blue")
+            .style("fill", "#008ea1")
 	    .moveToFront();
           $('#chart-three-title').text(d.profession_label);
           $('#chart-three-subtitle-1').html(self.getTooltip(d));
