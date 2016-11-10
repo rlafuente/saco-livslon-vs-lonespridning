@@ -1,0 +1,19 @@
+block,text,comment
+TITLE,Livslön och lönespridning - så hänger det ihop,
+INTRO,Möjligheterna till god löneutveckling över livet är störst i yrkesgrupper med stor lönepridning. Yrkesgrupper med lite lönespridning har låga livslöner. Låt oss visa med ett konkret exempel. Börja med att välja en utbildningsgrupp att utgå från.,
+CHART1_TOOLTIP,Livslönen för en person med den här utbildningen är { lifesalary } miljoner kronor <strong>vilket är cirka { baseline_diff } miljoner kronor {mer/mindre}</strong> än genomsnittet för en { baseline }.,"Round the salary to millions + one decimal
+{mer/mindre} means ""more/less"". If baselineDiff > 0 print ""mer"" else, ""mindre""."
+CHART2_TOOLTIP,"10 procent tjänar mindre än { P10 } kronor, 10 procent tjänar mer än { P90 } kronor.
+Lönespridningen, dvs skillnaden mellan de som tjänar minst och mest är { income_range_kr } kronor ( { income_range_perc } procent). ",
+CHART3_TOOLTIP,"Lönespridning: { income_range_kr } kronor ({ income_range_perc } procent)<br>
+Livslön: { lifesalary } kronor, vilket är { lifesalary_vs_baseline } procent { mer/mindre } än genomsnittet för en {baseline}.","income_range: Round to one decimal
+lifesalary_vs_baseline: 
+1.051 => +5,1%
+0,983 => -1,7%"
+CHART1_Y_AXIS,Livslön (milj. kr),Round the salary to millions + one decimal
+CHART1_X_AXIS,Yrkesgrupp,
+CHART2_Y_AXIS,Månadslön,
+CHART2_X_AXIS,Yrkesgrupp,
+CHART3_Y_AXIS,Livslön jämfört med gymnasieutbildad,"1.051 => +5,1%
+0,983 => -1,7%"""
+CHART3_X_AXIS,Lönespridning (P90/P10),
