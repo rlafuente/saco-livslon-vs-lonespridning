@@ -57,6 +57,11 @@ function setTextBlocks(group) {
     success: function(data) {
       // dropdown options
       csv = $.csv.toObjects(data);
+      $('[value="education"]').text(csv[0]['education']);
+      $('[value="humanities"]').text(csv[0]['humanities']);
+      $('[value="healthcare"]').text(csv[0]['healthcare']);
+      $('[value="social"]').text(csv[0]['social']);
+
       var title = csv[0][group];
       var text1 = csv[1][group];
       var text2 = csv[2][group];
