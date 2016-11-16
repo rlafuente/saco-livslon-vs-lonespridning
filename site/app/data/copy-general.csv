@@ -17,3 +17,6 @@ CHART2_X_AXIS,Yrkesgrupp,
 CHART3_Y_AXIS,Livslön jämfört med gymnasieutbildad,"1.051 => +5,1%
 0,983 => -1,7%"""
 CHART3_X_AXIS,Lönespridning (P90/P10),
+CHART1_TITLE,Livslöner för olika utbildningar,
+CHART2_TITLE,Lönespridning i olika yrken,
+CHART3_TITLE,Livslön och lönespridning – så hänger det ihop,

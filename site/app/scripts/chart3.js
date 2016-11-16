@@ -153,7 +153,7 @@ ChartThree = (function() {
               })
               .on('mouseout', function(d) {
 		self.applyHighlight();
-		$('#chart-three-title').text("Livslön jämfört med gymnasieutbildad vs Lönespridning (P90/P10)");
+		$('#chart-three-title').text(self.title);
 		$('#chart-three-subtitle-1').html("&nbsp;");
 		$('#chart-three-subtitle-2').html("&nbsp;");
               });

@@ -122,7 +122,12 @@ ChartTwo = (function() {
                 self.applyHighlight();
                 var sel = d3.select('#chart-two [name="' + d.profession_label + '"]').style("opacity", ".4");
                 $('#chart-two-title').text(d.profession_label);
-                $('#chart-two-subtitle-1').html(self.getTooltip(d));
+                $('#chart-two-subtitle-1').html(self.getTooltip(d))})
+              .on('mouseout', function(d) {
+		self.applyHighlight();
+		$('#chart-two-title').text(self.title);
+		$('#chart-two-subtitle-1').html("&nbsp;");
+		$('#chart-two-subtitle-2').html("&nbsp;");
               });
 
         // Mobile swipe events

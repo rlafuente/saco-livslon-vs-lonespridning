@@ -101,8 +101,12 @@ ChartOne = (function() {
           self.applyHighlight();
           d3.select('[name="' + d.profession_label + '"]').attr("fill", "#008ea1");
           $('#chart-one-title').text(d.profession_label);
-          $('#chart-one-subtitle').html(self.getTooltip(d));
-      });
+          $('#chart-one-subtitle').html(self.getTooltip(d))})
+        .on('mouseout', function(d) {
+          self.applyHighlight();
+          $('#chart-one-title').text(self.title);
+          $('#chart-one-subtitle').html("&nbsp;");
+        });
 
     // Mobile swipe events
     var touchScale = d3.scale.linear().domain([yAxisMargin + x.rangeBand(),self.width]).range([0,data.length+1]).clamp(true);
