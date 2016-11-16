@@ -33,16 +33,14 @@
     
       <div class="row">
         <div class="col-xs-12">
-          <p>Sacos studier om akademikernas livslön visar att det lönar sig allt sämre att läsa på högskolan. Nära hälften av de undersökta utbildningarna är rena förlustaffärer. Dessa utbildningar har gemensamt att de leder till yrken där möjligheterna att göra lönekarriär är mycket små. Det finns nämligen ett samband mellan den förväntade livslönen i ett visst yrke och möjligheterna att göra lönekarriär (lönespridningen) i samma yrke. </p>
-          <p>
-            Låt oss visa detta med ett konkret exempel. Börja med att välja en referensgrupp att utgå ifrån.
-          </p>
+          <!-- <h2 id="main-title">Livslön och lönespridning - så hänger det ihop</h2> -->
+          <p id="intro-text">Möjligheterna till god löneutveckling över livet är störst i yrkesgrupper med stor lönepridning. Yrkesgrupper med lite lönespridning har låga livslöner. Låt oss visa med ett konkret exempel. Börja med att välja en utbildningsgrupp att utgå från.</p>
           <p>
             <select class="form-control selectpicker">
-              <option value="humanities">Kultur (bibliotekarie, konstnärlig, humanistisk)</option>
-              <option value="education">Utbildning (förskollärare, lärargrupperna)</option>
-              <option value="social">Omsorg (socionom, social omsorgsutbildning)</option>
-              <option value="healthcare">Vård (arbetsterapeut, fysioterapeut, sjuksköterska)</option>
+              <option value="education">Utbildning (lärare, förskollärare)</option>
+              <option value="humanities">Humaniora (konst, humanist, teolog)</option>
+              <option value="healthcare">Vård (arbetsterapuet, sjukgymnast, receptarie, sjuksköterska)</option>
+              <option value="social">Social omsorg (socialt omsorgsarbete, socionom)</option>
            </select>
           </p>   
         </div>
@@ -50,20 +48,20 @@
       <div class="row content">
         <div class="col-xs-12 chart-one-container">  
           <div class="chart-title">
-            <h3 id="chart-one-title" class="small">Livslöner för olika utbildningar</h3>
+            <h3 id="chart-one-title" class="small">Yrkesgrupp vs. Livslön</h3>
             <h4 id="chart-one-subtitle" class="small">&harr; Swipa för att se detaljer</h4>
           </div>
           <div id="chart-one"> </div>
           <p id="chart-caption-1" class="group-subtitle small">
             Utbildning <em>(lärare, förskollärare)</em>
           </p>
-          <p id="text-block-1" class="text-blocks">Läkare tjänare under en livstid betydligt bättre än en person med endast gymnasieutbildning. Sjuksköterskor däremot når aldrig tjänar aldrig ”i kapp” sin utbildning. Läkare har, med andra ord, <strong class="highlight">betydligt bättre livslön</strong>.</p>
+          <p id="text-block-1" class="text-blocks">I grafen ovan ser du livslöner för olika utbildningar. Livslönen är detsamma som den genomsnittliga nettolönen över livet. Personer med en lärar-/förskollärarutbildning tillhör dem som förlorar ekonomiskt på sin utbildning. I många fall skiljer det miljontals kronor i livslön mellan lönsamma och olönsamma utbildningar.</p>
         </div>
       </div><!-- /.row -->
       <div class="row content">
         <div class="col-xs-12 chart-two-container">
           <div class="chart-title">
-            <h3 id="chart-two-title" class="small">Lönespridning i olika yrken</h3>
+            <h3 id="chart-two-title" class="small">Yrkesgrupp vs Månadslön</h3>
             <h4 id="chart-two-subtitle-1" class="small">&harr; Swipa för att se detaljer</h4>
             <!--<h4 id="chart-two-subtitle-2" class="small">&nbsp;</h4>-->
           </div>
@@ -71,13 +69,13 @@
           <p id="chart-caption-2" class="group-subtitle small">
             Utbildning <em>(lärare, förskollärare)</em>
           </p>
-          <p id="text-block-2" class="text-blocks">Samtidigt är lönespridning, det vill säga möjligheten att påverka sin lön, är över <strong class="highlight">dubbelt så stor</strong> bland läkare som bland sjuksköterskor.</p>
+          <p id="text-block-2" class="text-blocks">Olönsamma utbildningar har vanligtvis en sak gemensamt: de leder till yrken med liten lönespridning. Lönespridningen i ett visst yrke är skillnaden mellan den som tjänar minst och den som tjänar mest. Med andra ord kan man säga att liten lönespridning ger små möjligheter att höja sin lön, medan stor lönespridning innebär att det finns stora möjligheter att höja sin lön. I grafen ovan ser du att möjligheten att påverka sin lön är mer än dubbelt så stor i ett flertal yrken jämfört med lärare och förskolelärare.</p>
         </div>
       </div><!-- /.row -->
       <div class="row content">
         <div class="col-xs-12 chart-three-container">
           <div class="chart-title">
-            <h3 id="chart-three-title" class="small">Livslön och lönespridning – så hänger det ihop</h3>
+            <h3 id="chart-three-title" class="small">Livslön jämfört med gymnasieutbildad vs. Lönespridning (P90/P10)</h3>
             <h4 id="chart-three-subtitle-1" class="small">&harr; Swipa för att se detaljer</h4>
             <!--<h4 id="chart-three-subtitle-2" class="small">&nbsp;</h4>-->
           </div>
@@ -89,7 +87,7 @@
       </div><!-- /.row -->
       <div class="row content conclusions">
         <div class="col-xs-12">          
-          <p id="text-block-3" class="text-blocks">Det här sambandet ser vi på hela arbetsmarknaden. I de branscher där lönespridningen är stor (vågräta axeln) är livslönerna också högst (lodräta axeln).</p>
+          <p id="text-block-3" class="text-blocks">Sambandet mellan livslön och lönespridning blir tydligt när vi tittar på dem tillsammans. Den vågräta axeln visar livslönen, medan den lodräta visar lönespridningen. Med några få undantag innebär stor lönespridning också hög livslön. De med liten lönespridning och låg livslön (längst ner till vänster i grafen ovan) är huvudsakligen kvinnodominerade yrkesgrupper i offentlig sektor. Det här sambandet ser vi på hela arbetsmarknaden. För att lyfta yrkesgrupper med låg livslön krävs det därför åtgärder som ökar möjligheterna att göra lönekarriär, exempelvis inrätta fler karriärvägar och utveckla den lokala lönebildningen.</p>
         </div>
       </div><!-- /.row -->
       
