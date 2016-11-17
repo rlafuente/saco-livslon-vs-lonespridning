@@ -88,7 +88,7 @@ function setChartTooltips() {
       // dropdown options
       csv = $.csv.toObjects(data);
       $("#main-title").text(csv[0]['text']);
-      $("#intro-text").text(csv[1]['text']);
+      $("#intro-text").html(csv[1]['text']);
       chart_one.tooltip = csv[2]['text'];
       chart_two.tooltip = csv[3]['text'];
       chart_three.tooltip = csv[4]['text'];
