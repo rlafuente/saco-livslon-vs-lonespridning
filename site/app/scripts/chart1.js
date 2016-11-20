@@ -105,7 +105,7 @@ ChartOne = (function() {
         .on('mouseout', function(d) {
           self.applyHighlight();
           $('#chart-one-title').text(self.title);
-          $('#chart-one-subtitle').html("&nbsp;");
+          $('#chart-one-subtitle').html("↔ Swipa för att se detaljer");
         });
 
     // Mobile swipe events

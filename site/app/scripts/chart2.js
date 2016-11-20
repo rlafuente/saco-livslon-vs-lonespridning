@@ -126,7 +126,7 @@ ChartTwo = (function() {
               .on('mouseout', function(d) {
 		self.applyHighlight();
 		$('#chart-two-title').text(self.title);
-		$('#chart-two-subtitle-1').html("&nbsp;");
+		$('#chart-two-subtitle-1').html("↔ Swipa för att se detaljer");
 		$('#chart-two-subtitle-2').html("&nbsp;");
               });
 
