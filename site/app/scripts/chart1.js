@@ -51,16 +51,17 @@ ChartOne = (function() {
     // Margin value to make room for the axes
     var xAxisMargin = 30;
     var yAxisMargin = 35;
+    var barPadding = .1;
     // Set up scales
     var x = d3.scale.ordinal()
           // .rangeRoundBands([0, self.width], .1);
-          .rangeRoundBands([0, self.width - yAxisMargin], .1);
+          .rangeRoundBands([0, self.width - yAxisMargin], barPadding);
     var y = d3.scale.linear()
           .range([xAxisMargin, self.height-xAxisMargin]);
           // .range([self.height-xAxisMargin, xAxisMargin*2]);
           // .range([0, self.height]);
     var yAxisScale = d3.scale.linear()
-          .range([0, self.height-xAxisMargin]);
+          .range([xAxisMargin, self.height-xAxisMargin]);
 
     // Create SVG container
     self.svg = self.chartContainer.append('svg')
@@ -74,11 +75,12 @@ ChartOne = (function() {
     // Get the data to draw from
     d3.csv(self.data, function (error, data) {
       // Init data and domains
-      data = data.sort(function(a, b){ return d3.ascending(a.lifesalary, b.lifesalary);});
-      var maxvalue = d3.max(data, function(d) { return parseInt(d.lifesalary); });
+      data = data.sort(function(a, b){ return d3.ascending(parseInt(a.baseline_diff), parseInt(b.baseline_diff));});
+      var maxvalue = d3.max(data, function(d) { return parseInt(d.baseline_diff); });
+      var minvalue = d3.min(data, function(d) { return parseInt(d.baseline_diff); });
       x.domain(data.map(function(d) { return d.profession_label; }));
-      y.domain([maxvalue, 0]);
-      yAxisScale.domain([maxvalue, 0]);
+      y.domain([maxvalue, minvalue]);
+      yAxisScale.domain([maxvalue, minvalue]);
 
       // Draw!
       // Start by creating groups for the bars and associated objects
@@ -87,19 +89,33 @@ ChartOne = (function() {
         .enter().append("g")
           .attr("width", 20)
           .attr("transform", function(d) { return "translate(" + x(d.profession_label) + ",0)"; });
-
       
       // Bars
       bar.append("rect")
         .attr("name", function(d) { return d.profession_label; })
         .attr("class", function(d) { return "bar element " + d.group; })
-        .attr("y", function(d) { return y(parseInt(d.lifesalary)); })
-        .attr("height", function(d) { return self.height - y(parseInt(d.lifesalary)); })
+        .attr("y", function(d) { if (d.baseline_diff < 0) {
+          return y(0); 
+        } else {
+          return y(parseInt(d.baseline_diff));
+        }})
+        .attr("height", function(d) { if (d.baseline_diff < 0) {
+          return y(parseInt(d.baseline_diff)) - y(0); 
+        } else {
+          return y(0) - y(parseInt(d.baseline_diff));
+        }})
         .attr("fill", "lightgrey")
-        .attr("width", x.rangeBand())
+        .attr("width", x.rangeBand());
+      bar.append("rect")
+        .attr("name", function(d) { return d.profession_label; })
+        .attr("class", function(d) { return "bar-overlay " + d.group; })
+        .attr("y", 0)
+        .attr("height", self.height)
+        .attr("width", x.rangeBand() + 1)
+        .style("opacity", "0")
         .on('mouseover', function(d) {
           self.applyHighlight();
-          d3.select('[name="' + d.profession_label + '"]').attr("fill", "#008ea1");
+          d3.select('#chart-one [name="' + d.profession_label + '"]').attr("fill", "#008ea1");
           $('#chart-one-title').text(d.profession_label);
           $('#chart-one-subtitle').html(self.getTooltip(d))})
         .on('mouseout', function(d) {
@@ -125,18 +141,22 @@ ChartOne = (function() {
     // Vertical axis
     var yAxis = d3.svg.axis() 
       .scale(yAxisScale)
-      .ticks(5)
+      .ticks(9)
       .tickFormat(function(d) { return d/1000000; })
       .orient("left");
     self.svg.append("g")
       .attr("class", "axis")
-      .attr("transform", "translate(" + yAxisMargin + ", 0)")
+      .attr("transform", "translate(" + yAxisMargin + ", " + -xAxisMargin + ")")
       .call(yAxis);
-    // Remove tick for 0
-    d3.selectAll('g.tick')
-      .filter(function(d){ return d==0;} )
-      .select('text')
-      .style('visibility', 'hidden');
+    // Axis line
+    self.svg.append("line")
+      .attr("x1", yAxisMargin)
+      .attr("y1", y(0) - xAxisMargin)
+      .attr("x2", self.width)
+      .attr("y2", y(0) - xAxisMargin)
+      .style("stroke-width", 1)
+      .style("stroke", "#ECDAB5")
+      .style("fill", "none");
     // Axis labels
     self.svg.append("text")
       .text("Yrkesgrupp")

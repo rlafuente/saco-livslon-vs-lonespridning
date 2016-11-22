@@ -97,7 +97,6 @@ ChartTwo = (function() {
               .attr("ry", 3)
               .attr("fill", "#ECDAB5")
 
-          
           // median
           bar.append("circle")
               .attr("class", function(d) { return "median " + d.group; })
@@ -113,7 +112,7 @@ ChartTwo = (function() {
               .attr("class", function(d) { return "bar-overlay " + d.group; })
               .attr("y", function(d) { return y(d.P90); })
               .attr("height", function(d) { return y(d.P10) - y(d.P90); })
-              .attr("width", x.rangeBand())
+              .attr("width", x.rangeBand() + 1)
               .style("opacity", "0")
               .style("fill", "#008ea1")
               .attr("rx", 3)
@@ -156,7 +155,7 @@ ChartTwo = (function() {
             .attr("transform", "translate(" + yAxisMargin + ", 0)")
             .call(yAxis);
           // remove tick for 0
-          d3.selectAll('g.tick')
+          d3.selectAll('#chart-two g.tick')
             .filter(function(d){ return d==0;} )
             .select('text') //grab the tick line
             .style('visibility', 'hidden');
