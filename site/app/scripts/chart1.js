@@ -57,11 +57,11 @@ ChartOne = (function() {
           // .rangeRoundBands([0, self.width], .1);
           .rangeRoundBands([0, self.width - yAxisMargin], barPadding);
     var y = d3.scale.linear()
-          .range([xAxisMargin, self.height-xAxisMargin]);
+          .range([xAxisMargin, self.height]);
           // .range([self.height-xAxisMargin, xAxisMargin*2]);
           // .range([0, self.height]);
     var yAxisScale = d3.scale.linear()
-          .range([xAxisMargin, self.height-xAxisMargin]);
+          .range([xAxisMargin, self.height]);
 
     // Create SVG container
     self.svg = self.chartContainer.append('svg')
