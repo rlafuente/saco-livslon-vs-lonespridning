@@ -106,6 +106,7 @@ ChartOne = (function() {
         }})
         .attr("fill", "lightgrey")
         .attr("width", x.rangeBand());
+      // Mouseover overlay
       bar.append("rect")
         .attr("name", function(d) { return d.profession_label; })
         .attr("class", function(d) { return "bar-overlay " + d.group; })

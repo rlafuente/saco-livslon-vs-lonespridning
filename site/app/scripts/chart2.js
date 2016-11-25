@@ -89,6 +89,7 @@ ChartTwo = (function() {
               .attr("transform", function(d) { return "translate(" + x(d.profession_label) + ",0)"; });
 
           bar.append("rect")
+              .attr("name", function(d) { return d.profession_label; })
               .attr("class", function(d) { return "edges " + d.group; })
               .attr("y", function(d) { return y(d.P90); })
               .attr("height", function(d) { return y(d.P10) - y(d.P90); })
@@ -108,18 +109,18 @@ ChartTwo = (function() {
 
           // transparent overlay for mouseovers
           bar.append("rect")
-              .attr("name", function(d) { return d.profession_label; })
               .attr("class", function(d) { return "bar-overlay " + d.group; })
-              .attr("y", function(d) { return y(d.P90); })
-              .attr("height", function(d) { return y(d.P10) - y(d.P90); })
-              .attr("width", x.rangeBand() + 1)
+              .attr("y", 0)
+              .attr("height", self.height)
+              // .attr("y", function(d) { return y(d.P90); })
+              // .attr("height", function(d) { return y(d.P10) - y(d.P90); })
+              .attr("width", x.rangeBand() + 2)
               .style("opacity", "0")
-              .style("fill", "#008ea1")
               .attr("rx", 3)
               .attr("ry", 3)
               .on('mouseover', function(d) {
                 self.applyHighlight();
-                var sel = d3.select('#chart-two [name="' + d.profession_label + '"]').style("opacity", ".4");
+                var sel = d3.select('.edges[name="' + d.profession_label + '"]').style("fill", "#008ea1");
                 $('#chart-two-title').text(d.profession_label);
                 $('#chart-two-subtitle-1').html(self.getTooltip(d))})
               .on('mouseout', function(d) {
