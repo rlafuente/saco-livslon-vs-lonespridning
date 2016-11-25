@@ -166,7 +166,7 @@ ChartOne = (function() {
       .attr("transform", "translate(" + yAxisMargin*1.4 + "," + (self.height-xAxisMargin/3) + ")")
       .style("text-anchor", "start");
     self.svg.append("text")
-      .text("Livslön jfr med icke-akademiker")
+      .text("Livslön jfr med gymnasieutbildade")
       .attr("class", "axis legend")
       .attr("transform", "translate(" + yAxisMargin/4 + "," + (self.height-xAxisMargin) + ") rotate(-90)")
       .style("text-anchor", "start")
