@@ -77,7 +77,7 @@ ChartTwo = (function() {
           minvalue = d3.min(data, function(d) { return parseInt(d.P10)});
           maxvalue = d3.max(data, function(d) { return parseInt(d.P90)});
 
-          x.domain(data.map(function(d) { return +d.median; }));
+          x.domain(data.map(function(d) { return d.profession_label; }));
           y.domain([20000, d3.max(data, function(d) { return parseInt(d.P90); })]);
           //y.domain([0, d3.max(data, function(d) { return parseInt(d.median); })]);
           //y.domain([d3.min(data, function(d) { return parseInt(d.P10)}), d3.max(data, function(d) { return parseInt(d.P90); })]);
@@ -86,7 +86,7 @@ ChartTwo = (function() {
               .data(data)
             .enter().append("g")
               .attr("width", 20)
-              .attr("transform", function(d) { return "translate(" + x(+d.median) + ",0)"; });
+              .attr("transform", function(d) { return "translate(" + x(d.profession_label) + ",0)"; });
 
           bar.append("rect")
               .attr("class", function(d) { return "edges " + d.group; })
