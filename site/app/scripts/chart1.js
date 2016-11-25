@@ -137,6 +137,11 @@ ChartOne = (function() {
       $('#chart-one-subtitle').html(self.getTooltip(d));
     }
     self.svg.on('touchmove.chart1', onTouchMove);
+    self.svg.on('touchend.chart1', function() {
+      $('#chart-one-title').text("Livslöner för olika utbildningar");
+      $('#chart-one-subtitle-1').html("↔ Swipa för att se detaljer");
+      $('#chart-one-subtitle-2').html("&nbsp;");
+    });
     
     // Vertical axis
     var yAxis = d3.svg.axis() 

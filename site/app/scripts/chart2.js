@@ -142,6 +142,11 @@ ChartTwo = (function() {
           $('#chart-two-subtitle-1').html(self.getTooltip(d));
         }
         self.svg.on('touchmove.chart2', onTouchMove);
+        self.svg.on('touchend.chart2', function() {
+          $('#chart-two-title').text("Lönespridning i olika yrken");
+          $('#chart-two-subtitle-1').html("↔ Swipa för att se detaljer");
+	  $('#chart-two-subtitle-2').html("&nbsp;");
+        });
 
          
           var yAxis = d3.svg.axis() 

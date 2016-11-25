@@ -176,8 +176,8 @@ ChartThree = (function() {
         }
         self.svg.on('touchmove.chart3', onTouchMove);
         self.svg.on('touchend.chart3', function() {
-          $('#chart-three-title').text("Livslön jämfört med gymnasieutbildad vs Lönespridning (P90/P10)");
-          $('#chart-three-subtitle-1').html("&nbsp;");
+          $('#chart-three-title').text("Livslön och lönespridning – så hänger det ihop");
+          $('#chart-three-subtitle-1').html("↔ Swipa för att se detaljer");
 	  $('#chart-three-subtitle-2').html("&nbsp;");
         });
 
