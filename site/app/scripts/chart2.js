@@ -138,7 +138,7 @@ ChartTwo = (function() {
           var d = data[~~touchScale(xPos)];
           // reset colors and highlight the touched one
           self.applyHighlight();
-          var sel = d3.select('#chart-two [name="' + d.profession_label + '"]').style("opacity", ".4");
+          var sel = d3.select('.edges[name="' + d.profession_label + '"]').style("fill", "#008ea1");
           $('#chart-two-title').text(d.profession_label);
           $('#chart-two-subtitle-1').html(self.getTooltip(d));
         }
