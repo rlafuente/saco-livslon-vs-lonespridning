@@ -139,9 +139,9 @@ ChartOne = (function() {
     }
     self.svg.on('touchmove.chart1', onTouchMove);
     self.svg.on('touchend.chart1', function() {
+      self.applyHighlight();
       $('#chart-one-title').text("Livslöner för olika utbildningar");
-      $('#chart-one-subtitle-1').html("↔ Swipa för att se detaljer");
-      $('#chart-one-subtitle-2').html("&nbsp;");
+      $('#chart-one-subtitle').html("↔ Swipa för att se detaljer");
     });
     
     // Vertical axis
