@@ -72,14 +72,14 @@ ChartTwo = (function() {
               .range([self.height - xAxisMargin, 0]);
 
         d3.csv(self.data, function (error, data) {
-          data = data.sort(function(a, b){ return d3.ascending(parseInt(a.median), parseInt(b.median)); });
+          data = data.sort(function(a, b){ return d3.ascending(parseInt(a.mean), parseInt(b.mean)); });
 
           minvalue = d3.min(data, function(d) { return parseInt(d.P10)});
           maxvalue = d3.max(data, function(d) { return parseInt(d.P90)});
 
           x.domain(data.map(function(d) { return d.profession_label; }));
           y.domain([20000, d3.max(data, function(d) { return parseInt(d.P90); })]);
-          //y.domain([0, d3.max(data, function(d) { return parseInt(d.median); })]);
+          //y.domain([0, d3.max(data, function(d) { return parseInt(d.mean); })]);
           //y.domain([d3.min(data, function(d) { return parseInt(d.P10)}), d3.max(data, function(d) { return parseInt(d.P90); })]);
           
           var bar = self.chart.selectAll("g")
@@ -98,10 +98,10 @@ ChartTwo = (function() {
               .attr("ry", 3)
               .attr("fill", "#ECDAB5")
 
-          // median
+          // mean
           bar.append("circle")
-              .attr("class", function(d) { return "median " + d.group; })
-              .attr("cy", function(d) { return y(d.median); })
+              .attr("class", function(d) { return "mean " + d.group; })
+              .attr("cy", function(d) { return y(d.mean); })
               .attr("r", function(d) { return 3; })
               .attr("cx", x.rangeBand() / 2)
               .attr("fill", "#F8F0DE")
@@ -201,10 +201,10 @@ ChartTwo = (function() {
 
     ChartTwo.prototype.applyHighlight = function(group) {
       if (group && group != self.group) { self.group = group; }
-      d3.selectAll("#chart-two .median").style("fill", "#F8F0DE"); 
+      d3.selectAll("#chart-two .mean").style("fill", "#F8F0DE"); 
       d3.selectAll("#chart-two .edges").style("fill", "#ECDAB5"); 
 
-      d3.selectAll("#chart-two .median." + self.group).style("fill", "#eecae0"); 
+      d3.selectAll("#chart-two .mean." + self.group).style("fill", "#eecae0"); 
       d3.selectAll("#chart-two .edges." + self.group).style("fill", "#c13d8c"); 
       d3.selectAll("#chart-two .bartext." + self.group).style("opacity", "1"); 
       d3.selectAll(".bar-overlay").style("opacity", "0");
