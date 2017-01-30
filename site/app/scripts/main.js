@@ -121,12 +121,12 @@ function setChartHighlight(group) {
 }
 
 $(document).ready(function() {
-  setTextBlocks('education');
+  setTextBlocks('humanities');
   var chart_ready = loadCharts();
   function isChartReady() {
     if (chart_ready === 'ready') {
       setChartTooltips();
-      setChartHighlight('education');
+      setChartHighlight('humanities');
     }
   }
   setTimeout(isChartReady, 1000);
