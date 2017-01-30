@@ -104,7 +104,7 @@ ChartOne = (function() {
         } else {
           return y(0) - y(parseInt(d.baseline_diff));
         }})
-        .attr("fill", "red")
+        .attr("fill", "#008ea1")
         .attr("width", x.rangeBand());
       // Mouseover overlay
       bar.append("rect")
