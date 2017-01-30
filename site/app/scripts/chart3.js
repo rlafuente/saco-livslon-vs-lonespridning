@@ -90,13 +90,13 @@ ChartThree = (function() {
               .range([self.height-circleRadius-glowRadius-xAxisMargin, circleRadius+glowRadius]);
 
         d3.csv(self.data, function (error, data) {
-          x.domain([d3.min(data, function(d) { return parseFloat(d.lifesalary_vs_baseline); }), 
-                    d3.max(data, function(d) { return parseFloat(d.lifesalary_vs_baseline); })]);
-          y.domain([d3.min(data, function(d) { return parseFloat(d.income_range_perc); }), 
+          x.domain([d3.min(data, function(d) { return parseFloat(d.income_range_perc); }), 
                     d3.max(data, function(d) { return parseFloat(d.income_range_perc); })]);
+          y.domain([d3.min(data, function(d) { return parseFloat(d.lifesalary_vs_baseline); }), 
+                    d3.max(data, function(d) { return parseFloat(d.lifesalary_vs_baseline); })]);
  
           // Sort data so that touch events follow proper order
-          data.sort(function(a,b) { return a.lifesalary_vs_baseline - b.lifesalary_vs_baseline; });
+          data.sort(function(a,b) { return a.income_range_perc - b.income_range_perc; });
 
           // Salary indicator line
           line_x = x(1);
@@ -124,8 +124,8 @@ ChartThree = (function() {
           dot.append("circle")
               .attr("name", function(d) { return d.profession_label; })
               .attr("class", function(d) { return "d3-tip glow " + d.group; })
-              .attr("cx", function(d) { return x(parseFloat(d.lifesalary_vs_baseline)); })
-              .attr("cy", function(d) { return y(parseFloat(d.income_range_perc)); })
+              .attr("cx", function(d) { return x(parseFloat(d.income_range_perc)); })
+              .attr("cy", function(d) { return y(parseFloat(d.lifesalary_vs_baseline)); })
               .attr("r", circleRadius+glowRadius)
               .attr("fill", "#008ea1")
 	      .attr("fill-opacity", .1);
@@ -133,8 +133,8 @@ ChartThree = (function() {
           dot.append("circle")
               .attr("name", function(d) { return d.profession_label; })
               .attr("class", function(d) { return "element d3-tip " + d.group; })
-              .attr("cx", function(d) { return x(parseFloat(d.lifesalary_vs_baseline)); })
-              .attr("cy", function(d) { return y(parseFloat(d.income_range_perc)); })
+              .attr("cx", function(d) { return x(parseFloat(d.income_range_perc)); })
+              .attr("cy", function(d) { return y(parseFloat(d.lifesalary_vs_baseline)); })
               .attr("r", circleRadius)
               .attr("fill", "#BDA164")
               .attr("stroke", "white")
@@ -184,14 +184,14 @@ ChartThree = (function() {
 
         // Axes
         self.svg.append("text")
-          .text("Låg livslön")
+          .text("Liten lönespridning")
           .attr("class", "axis legend")
           .style("background", "white")
           .style("text-transform", "uppercase")
           .attr("transform", "translate(" + yAxisMargin + "," + (self.height-xAxisMargin/3) + ")")
           .style("text-anchor", "start");
         self.svg.append("text")
-          .text("Hög livslön")
+          .text("Stor lönespridning")
           .attr("class", "axis legend")
           .style("background", "white")
           .style("text-transform", "uppercase")
@@ -199,27 +199,14 @@ ChartThree = (function() {
           .style("text-anchor", "end");
 
         self.svg.append("text")
-          .text("Liten löne-")
+          .text("Låg livslön")
           .attr("dy", "0em")
           .attr("class", "axis legend")
           .attr("transform", "translate(" + yAxisMargin/2 + "," + (self.height-xAxisMargin/2) + ") rotate(-90)")
           .style("text-anchor", "start");
         self.svg.append("text")
-          .text("spridning")
-          .attr("dy", "1em")
-          .attr("class", "axis legend")
-          .attr("transform", "translate(" + yAxisMargin/2 + "," + (self.height-xAxisMargin/2) + ") rotate(-90)")
-          .style("text-anchor", "start");
-
-        self.svg.append("text")
-          .text("Stor lön-")
+          .text("Hög livslön")
           .attr("dy", "0em")
-          .attr("class", "axis legend")
-          .attr("transform", "translate(" + yAxisMargin/2 + ",0) rotate(-90)")
-          .style("text-anchor", "end");
-        self.svg.append("text")
-          .text("spridning")
-          .attr("dy", "1em")
           .attr("class", "axis legend")
           .attr("transform", "translate(" + yAxisMargin/2 + ",0) rotate(-90)")
           .style("text-anchor", "end");
