@@ -99,20 +99,20 @@ ChartThree = (function() {
           data.sort(function(a,b) { return a.income_range_perc - b.income_range_perc; });
 
           // Salary indicator line
-          line_x = x(1);
+          line_y = y(1);
           self.svg.append("line")
-            .attr("x1", line_x)
-            .attr("y1", 0)
-            .attr("x2", line_x)
-            .attr("y2", self.height - xAxisMargin)
+            .attr("x1", yAxisMargin)
+            .attr("y1", line_y)
+            .attr("x2", self.width - yAxisMargin)
+            .attr("y2", line_y)
             .style("stroke-width", 1)
             .style("stroke", "lightgrey")
             .style("fill", "none");
           self.svg.append("text")
             .attr("class", "salarytext")
             .text("Tjänar mer än gymnasieutbildad")
-            .attr("dx", line_x + 5)
-            .attr("dy", "1em")
+            .attr("dx", yAxisMargin)
+            .attr("dy", line_y - 5)
             //.attr("transform", "translate(" + (line_x + 5) + ",20)")
             .style("font-size", "10px")
             .style("fill", "grey");
