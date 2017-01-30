@@ -36,4 +36,4 @@ _order,profession_label,_profession_education,group,P10,median,mean,P90,income_r
 35,Socionom,Socionomutbildning,social,25451,30300,32247,40550,1.593257632,15099,16126312,samhällsvetenskapligt gymnasieutbildad,16291761,0.990,-165449
 36,Tandhygienist,Tandhygienistutbildning,,24300,29470,29709,34577,1.422921811,10277,14625883,samhällsvetenskapligt gymnasieutbildad,16291761,0.898,-1665878
 37,Tandläkare,Tandläkarutbildning,,31000,44152,46138,63681,2.054225806,32681,20250759,naturvetenskapligt gymnasieutbildad,17151600,1.181,3099159
-38,"Akademiker, totalt",Genomsnittlig akademiker,,25784,33900,39676,59672,2.314303444,33888,19022945,genomsnittlig gymnasieutbildad,16399390,1.160,2623555
+38,"Akademiker, totalt",Genomsnittlig akademiker,,25784,33900,39676,59672,2.314303444,33888,19022945,gymnasieutbildad,16399390,1.160,2623555
