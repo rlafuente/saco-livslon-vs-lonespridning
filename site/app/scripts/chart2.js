@@ -96,7 +96,7 @@ ChartTwo = (function() {
               .attr("width", x.rangeBand())
               .attr("rx", 3)
               .attr("ry", 3)
-              .attr("fill", "#ECDAB5")
+              .attr("fill", "#383f82")
 
           // mean
           bar.append("circle")
@@ -202,7 +202,7 @@ ChartTwo = (function() {
     ChartTwo.prototype.applyHighlight = function(group) {
       if (group && group != self.group) { self.group = group; }
       d3.selectAll("#chart-two .mean").style("fill", "#F8F0DE"); 
-      d3.selectAll("#chart-two .edges").style("fill", "#ECDAB5"); 
+      d3.selectAll("#chart-two .edges").style("fill", "#383f82"); 
 
       d3.selectAll("#chart-two .mean." + self.group).style("fill", "#eecae0"); 
       d3.selectAll("#chart-two .edges." + self.group).style("fill", "#c13d8c"); 

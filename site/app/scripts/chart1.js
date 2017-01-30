@@ -104,7 +104,7 @@ ChartOne = (function() {
         } else {
           return y(0) - y(parseInt(d.baseline_diff));
         }})
-        .attr("fill", "lightgrey")
+        .attr("fill", "red")
         .attr("width", x.rangeBand());
       // Mouseover overlay
       bar.append("rect")
@@ -161,7 +161,7 @@ ChartOne = (function() {
       .attr("x2", self.width)
       .attr("y2", y(0) - xAxisMargin)
       .style("stroke-width", 1)
-      .style("stroke", "#ECDAB5")
+      .style("stroke", "#383f82")
       .style("fill", "none");
     // Axis labels
     self.svg.append("text")
@@ -207,7 +207,7 @@ ChartOne = (function() {
 
   ChartOne.prototype.applyHighlight = function(group) {
     if (group && group != self.group) { self.group = group; }
-    $("#chart-one .element").attr("fill", "#ECDAB5"); 
+    $("#chart-one .element").attr("fill", "#383f82"); 
     $("#chart-one ." + self.group).attr("fill", "#c13d8c"); 
     $("#chart-one .bartext").attr("opacity", "0"); 
     $("#chart-one .bartext." + self.group).attr("opacity", "1"); 

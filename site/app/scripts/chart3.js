@@ -136,7 +136,7 @@ ChartThree = (function() {
               .attr("cx", function(d) { return x(parseFloat(d.income_range_perc)); })
               .attr("cy", function(d) { return y(parseFloat(d.lifesalary_vs_baseline)); })
               .attr("r", circleRadius)
-              .attr("fill", "#BDA164")
+              .attr("fill", "#383f82")
               .attr("stroke", "white")
               .attr("stroke-width", "1")
               .attr("fill-opacity", 1)
@@ -238,7 +238,7 @@ ChartThree = (function() {
 
     ChartThree.prototype.applyHighlight = function(group) {
       if (group && group != self.group) { self.group = group; }
-      d3.selectAll("#chart-three .element").style("fill", "#BDA164"); 
+      d3.selectAll("#chart-three .element").style("fill", "#383f82"); 
       d3.selectAll("#chart-three ." + self.group).style("fill", "#c13d8c").moveToFront();  
     }
 
