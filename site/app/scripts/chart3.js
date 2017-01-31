@@ -88,12 +88,16 @@ ChartThree = (function() {
               .range([glowRadius+circleRadius+yAxisMargin, self.width-circleRadius-glowRadius]);
         var y = d3.scale.linear()
               .range([self.height-circleRadius-glowRadius-xAxisMargin, circleRadius+glowRadius]);
+        var yAxisScale = d3.scale.linear()
+              .range([self.height-circleRadius-glowRadius-xAxisMargin, circleRadius+glowRadius]);
 
         d3.csv(self.data, function (error, data) {
           x.domain([d3.min(data, function(d) { return parseFloat(d.income_range_perc); }), 
                     d3.max(data, function(d) { return parseFloat(d.income_range_perc); })]);
-          y.domain([d3.min(data, function(d) { return parseFloat(d.lifesalary_vs_baseline); }), 
-                    d3.max(data, function(d) { return parseFloat(d.lifesalary_vs_baseline); })]);
+          var y_minvalue = d3.min(data, function(d) { return parseFloat(d.lifesalary_vs_baseline); });
+          var y_maxvalue = d3.max(data, function(d) { return parseFloat(d.lifesalary_vs_baseline); });
+          y.domain([y_minvalue, y_maxvalue]);
+          yAxisScale.domain([y_minvalue, y_maxvalue]);
  
           // Sort data so that touch events follow proper order
           data.sort(function(a,b) { return a.income_range_perc - b.income_range_perc; });
@@ -157,6 +161,19 @@ ChartThree = (function() {
 		$('#chart-three-subtitle-1').html("↔ Swipa för att se detaljer");
 		$('#chart-three-subtitle-2').html("&nbsp;");
               });
+
+
+        // Vertical axis
+        var yAxis = d3.svg.axis() 
+          .scale(yAxisScale)
+          .ticks(5)
+          .tickFormat(function(d) { return d; })
+          .orient("left");
+        self.svg.append("g")
+          .attr("class", "axis")
+          //.attr("transform", "translate(" + yAxisMargin + ", " + -xAxisMargin + ")")
+          .attr("transform", "translate(" + yAxisMargin + ",0)")
+          .call(yAxis);
 
         // Mobile swipe events
         var touchScale = d3.scale.linear().domain([yAxisMargin,self.width]).range([0,data.length]).clamp(true);
