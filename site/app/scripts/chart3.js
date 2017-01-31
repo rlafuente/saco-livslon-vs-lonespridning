@@ -107,7 +107,7 @@ ChartThree = (function() {
           self.svg.append("line")
             .attr("x1", yAxisMargin)
             .attr("y1", line_y)
-            .attr("x2", self.width - yAxisMargin)
+            .attr("x2", self.width)
             .attr("y2", line_y)
             .style("stroke-width", 1)
             .style("stroke", "lightgrey")
@@ -172,7 +172,7 @@ ChartThree = (function() {
         self.svg.append("g")
           .attr("class", "axis")
           //.attr("transform", "translate(" + yAxisMargin + ", " + -xAxisMargin + ")")
-          .attr("transform", "translate(" + yAxisMargin + ",0)")
+          .attr("transform", "translate(" + yAxisMargin*1.1 + ",0)")
           .call(yAxis);
 
         // Mobile swipe events
