@@ -86,14 +86,18 @@ ChartThree = (function() {
 	var glowRadius = 4;
         var x = d3.scale.linear()
               .range([glowRadius+circleRadius+yAxisMargin, self.width-circleRadius-glowRadius]);
+        var xAxisScale = d3.scale.linear()
+              .range([glowRadius+circleRadius+yAxisMargin, self.width-circleRadius-glowRadius]);
         var y = d3.scale.linear()
               .range([self.height-circleRadius-glowRadius-xAxisMargin, circleRadius+glowRadius]);
         var yAxisScale = d3.scale.linear()
               .range([self.height-circleRadius-glowRadius-xAxisMargin, circleRadius+glowRadius]);
 
         d3.csv(self.data, function (error, data) {
-          x.domain([d3.min(data, function(d) { return parseFloat(d.income_range_perc); }), 
-                    d3.max(data, function(d) { return parseFloat(d.income_range_perc); })]);
+          var x_minvalue = d3.min(data, function(d) { return parseFloat(d.income_range_perc); });
+          var x_maxvalue = d3.max(data, function(d) { return parseFloat(d.income_range_perc); });
+          x.domain([x_minvalue, x_maxvalue]);
+          xAxisScale.domain([x_minvalue, x_maxvalue]);
           var y_minvalue = d3.min(data, function(d) { return parseFloat(d.lifesalary_vs_baseline); });
           var y_maxvalue = d3.max(data, function(d) { return parseFloat(d.lifesalary_vs_baseline); });
           y.domain([y_minvalue, y_maxvalue]);
@@ -174,6 +178,20 @@ ChartThree = (function() {
           //.attr("transform", "translate(" + yAxisMargin + ", " + -xAxisMargin + ")")
           .attr("transform", "translate(" + yAxisMargin*1.1 + ",0)")
           .call(yAxis);
+
+        // Vertical axis
+        var xAxis = d3.svg.axis() 
+          .scale(xAxisScale)
+          .ticks(8)
+          .tickFormat(d3.format(".1f"))
+          .orient("bottom");
+        self.svg.append("g")
+          .attr("class", "axis")
+          //.attr("transform", "translate(" + yAxisMargin + ", " + -xAxisMargin + ")")
+          .attr("transform", "translate(0," + (self.height-xAxisMargin) + ")")
+          .call(xAxis);
+
+
 
         // Mobile swipe events
         var touchScale = d3.scale.linear().domain([yAxisMargin,self.width]).range([0,data.length]).clamp(true);
