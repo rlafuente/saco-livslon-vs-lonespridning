@@ -175,7 +175,7 @@ ChartTwo = (function() {
             .attr("transform", "translate(" + yAxisMargin*1.4 + "," + (self.height-xAxisMargin/3) + ")")
             .style("text-anchor", "start");
           self.svg.append("text")
-            .text("Månadslön (TKr)")
+            .text("Månadslön 2014 (tkr)")
             .attr("class", "axis legend")
             .attr("transform", "translate(" + yAxisMargin/4 + "," + (self.height-xAxisMargin) + ") rotate(-90)")
             .style("text-anchor", "start")
