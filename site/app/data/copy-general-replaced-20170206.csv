@@ -5,14 +5,14 @@ CHART1_TOOLTIP,Livslönen för en person med den här utbildningen är { lifesal
 {mer/mindre} means ""more/less"". If baselineDiff > 0 print ""mer"" else, ""mindre""."
 CHART2_TOOLTIP,"10 procent tjänar mindre än { P10 } kronor, 10 procent tjänar mer än { P90 } kr. Lönespridningen, d.v.s. kvoten mellan dessa värden, är { income_range_perc }. Lönespannet, d.v.s. skillnaden mellan 90:e och 10:e percentilen är { income_range_kr } kr.",
 CHART3_TOOLTIP,"Lönespridning: { income_range_perc }. Skillnaden mellan 90:e och 10:e percentilen är { income_range_kr } kr.<br/>
-Livslön (netto): { lifesalary } Mkr, vilket är { lifesalary_vs_baseline } procent { mer/mindre } än genomsnittet för en {baseline}.","income_range: Round to one decimal
+Livslön (netto): { lifesalary } kr, vilket är { lifesalary_vs_baseline } procent { mer/mindre } än genomsnittet för en {baseline}.","income_range: Round to one decimal
 lifesalary_vs_baseline: 
 1.051 => +5,1%
 0,983 => -1,7%"
 CHART1_Y_AXIS,Livslön jfr med icke-akademiker,Round the salary to millions + one decimal
-CHART1_X_AXIS,Utbildningsgrupp,
+CHART1_X_AXIS,Utbildning,
 CHART2_Y_AXIS,Månadslön,
-CHART2_X_AXIS,Utbildningsgrupp,
+CHART2_X_AXIS,Utbildning,
 CHART3_Y_AXIS,Livslön jämfört med gymnasieutbildad,"1.051 => +5,1%
 0,983 => -1,7%"""
 CHART3_X_AXIS,Lönespridning (P90/P10),
