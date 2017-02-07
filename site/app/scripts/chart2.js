@@ -8,7 +8,7 @@ ChartTwo = (function() {
         self.container = d3.select(selector);
         defaultOpts = {
             isIframe: false
-        }
+        };
         self.opts = $.extend(defaultOpts, opts);
 
         // Inital state
@@ -66,7 +66,7 @@ ChartTwo = (function() {
             .attr('transform', 'translate(' + yAxisMargin + ',0)');
 
         var x = d3.scale.ordinal()
-              .rangeRoundBands([0, self.width - yAxisMargin], .1);
+              .rangeRoundBands([0, self.width - yAxisMargin], 0.1);
               //.rangeRoundBands([0, self.width], .1);
         var y = d3.scale.linear()
               .range([self.height - xAxisMargin, 0]);
@@ -74,8 +74,8 @@ ChartTwo = (function() {
         d3.csv(self.data, function (error, data) {
           data = data.sort(function(a, b){ return d3.ascending(parseInt(a.mean), parseInt(b.mean)); });
 
-          minvalue = d3.min(data, function(d) { return parseInt(d.P10)});
-          maxvalue = d3.max(data, function(d) { return parseInt(d.P90)});
+          minvalue = d3.min(data, function(d) { return parseInt(d.P10); });
+          maxvalue = d3.max(data, function(d) { return parseInt(d.P90); });
 
           x.domain(data.map(function(d) { return d.profession_label; }));
           y.domain([20000, d3.max(data, function(d) { return parseInt(d.P90); })]);
@@ -96,7 +96,7 @@ ChartTwo = (function() {
               .attr("width", x.rangeBand())
               .attr("rx", 3)
               .attr("ry", 3)
-              .attr("fill", "#383f82")
+              .attr("fill", "#383f82");
 
           // mean
           bar.append("circle")
@@ -105,7 +105,7 @@ ChartTwo = (function() {
               .attr("r", function(d) { return 3; })
               .attr("cx", x.rangeBand() / 2)
               .attr("fill", "#F8F0DE")
-              .attr("id", function(d) { return d.profession_label });
+              .attr("id", function(d) { return d.profession_label; });
 
           // transparent overlay for mouseovers
           bar.append("rect")
@@ -122,7 +122,8 @@ ChartTwo = (function() {
                 self.applyHighlight();
                 var sel = d3.select('.edges[name="' + d.profession_label + '"]').style("fill", "#008ea1");
                 $('#chart-two-title').text(d.profession_label);
-                $('#chart-two-subtitle-1').html(self.getTooltip(d))})
+                $('#chart-two-subtitle-1').html(self.getTooltip(d));
+              })
               .on('mouseout', function(d) {
 		self.applyHighlight();
 		$('#chart-two-title').text(self.title);
@@ -163,7 +164,7 @@ ChartTwo = (function() {
             .call(yAxis);
           // remove tick for 0
           d3.selectAll('#chart-two g.tick')
-            .filter(function(d){ return d==0;} )
+            .filter(function(d){ return d === 0;} )
             .select('text') //grab the tick line
             .style('visibility', 'hidden');
 
@@ -188,7 +189,7 @@ ChartTwo = (function() {
         if (self.opts.isIframe) {
             pymChild.sendHeight();
         }
-    }
+    };
 
     ChartTwo.prototype.getTooltip = function(d) {
       var self = this;
@@ -197,7 +198,7 @@ ChartTwo = (function() {
       .replace("{ P90 }", d.P90)
       .replace("{ income_range_kr }", d.income_range_kr)
       .replace("{ income_range_perc }", Number(d.income_range_perc).toFixed(1));
-    }
+    };
 
     ChartTwo.prototype.applyHighlight = function(group) {
       if (group && group != self.group) { self.group = group; }
@@ -208,20 +209,20 @@ ChartTwo = (function() {
       d3.selectAll("#chart-two .edges." + self.group).style("fill", "#c13d8c"); 
       d3.selectAll("#chart-two .bartext." + self.group).style("opacity", "1"); 
       d3.selectAll(".bar-overlay").style("opacity", "0");
-    }
+    };
 
     // Transitions only
     ChartTwo.prototype.update = function(data) {
         var self = this;
         self.data = data;
 
-    }
+    };
     ChartTwo.prototype.resize = function() {
         var self = this;
         self.svg.remove();
         self.drawChart();
         self.update(self.data);
-    }
+    };
     return ChartTwo;
 })();
 

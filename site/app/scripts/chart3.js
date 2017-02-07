@@ -14,7 +14,7 @@ ChartThree = (function() {
         self.container = d3.select(selector);
         defaultOpts = {
             isIframe: false
-        }
+        };
         self.opts = $.extend(defaultOpts, opts);
         // Inital state
         self.data = data;
@@ -136,7 +136,7 @@ ChartThree = (function() {
               .attr("cy", function(d) { return y(parseFloat(d.lifesalary_vs_baseline)); })
               .attr("r", circleRadius+glowRadius)
               .attr("fill", "#008ea1")
-	      .attr("fill-opacity", .1);
+	      .attr("fill-opacity", 0.1);
 
           dot.append("circle")
               .attr("name", function(d) { return d.profession_label; })
@@ -253,45 +253,45 @@ ChartThree = (function() {
         if (self.opts.isIframe) {
             pymChild.sendHeight();
         }
-    }
+    };
 
     ChartThree.prototype.getTooltip = function(d) {
       var self = this;
       return self.tooltip
         .replace("{ lifesalary }", Number((d.lifesalary/1000000).toFixed(1)))
         .replace("{ mer/mindre }", function(s) {
-          if (Number(d.lifesalary_vs_baseline) > 1) { return "mer" } else { return "mindre"}
+          if (Number(d.lifesalary_vs_baseline) > 1) { return "mer"; } else { return "mindre"; }
         })
         .replace("{ lifesalary_vs_baseline }", function(s) {
-          if (d.lifesalary_vs_baseline >= 1) { return (100 * Number(d.lifesalary_vs_baseline) - 100).toFixed(1) } 
-          else { return Math.abs(100 - Number(d.lifesalary_vs_baseline)*100).toFixed(1) }
+          if (d.lifesalary_vs_baseline >= 1) { return (100 * Number(d.lifesalary_vs_baseline) - 100).toFixed(1); } 
+          else { return Math.abs(100 - Number(d.lifesalary_vs_baseline)*100).toFixed(1); }
         })
         .replace("{baseline}", d.baseline)
         .replace("{ income_range_kr }", d.income_range_kr)
         .replace("{ income_range_perc }", Number(d.income_range_perc).toFixed(1));
-    }
+    };
 
     ChartThree.prototype.applyHighlight = function(group) {
       if (group && group != self.group) { self.group = group; }
       d3.selectAll("#chart-three .element").style("fill", "#383f82"); 
       d3.selectAll("#chart-three ." + self.group).style("fill", "#c13d8c").moveToFront();  
-    }
+    };
 
     ChartThree.prototype.on_resize = function(w) {
       var size = 10 - w/200;
       d3.selectAll("#chart-three .salarytext").style("font-size", size + "px");
-    }
+    };
 
     // Transitions only
     ChartThree.prototype.update = function(data) {
         var self = this;
         self.data = data;
-    }
+    };
     ChartThree.prototype.resize = function() {
         var self = this;
         self.svg.remove();
         self.drawChart();
         self.update(self.data);
-    }
+    };
     return ChartThree;
 })();
