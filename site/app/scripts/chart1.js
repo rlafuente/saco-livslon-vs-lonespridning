@@ -164,8 +164,8 @@ ChartOne = (function() {
       .style("stroke", "#383f82")
       .style("fill", "none");
     // Axis labels
-    self.svg.append("text")
-      .text("Yrkesgrupp")
+    self.svg.append("text") 
+      .text("Utbildningsgrupp") // This should be fetched from copy-general.csv
       .attr("class", "axis legend")
       .style("background", "white")
       .style("text-transform", "uppercase")
