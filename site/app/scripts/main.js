@@ -11,24 +11,24 @@ var locale = d3.locale({
   "shortDays": ["må", "ti", "ons", "to", "fre", "lö", "sö"],
   "months": ["januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", "oktober", "november", "december"],
   "shortMonths": ["jan", "feb", "mars", "apr", "maj", "jun", "jul", "aug", "sept", "okt", "nov", "dec"]
-})
+});
 var formatMillionSEK = function(d) {
 	return locale.numberFormat(".2s")(d)
 		.replace('k', ' tKr')
 		.replace('M', ' Mkr'); 
-}
+};
 var formatInSentence = function(d) {
 	return locale.numberFormat(".3s")(d)
 		.replace('k', '&nbsp;000 kronor')
 		.replace('M', '&nbsp;miljoner kronor'); 
-}
+};
 var formatPercent = function(d) {
   return locale.numberFormat("%")(d);
-}
+};
 var formatPercentInSentence = function(d) {
   return locale.numberFormat("%")(d)
     .replace('%', ' procent');
-}
+};
 
 // Read a page's GET URL variables and return them as an associative array.
 function getUrlVars()
@@ -57,10 +57,10 @@ function setTextBlocks(group) {
     success: function(data) {
       // dropdown options
       csv = $.csv.toObjects(data);
-      $('[value="education"]').text(csv[0]['education']);
-      $('[value="humanities"]').text(csv[0]['humanities']);
-      $('[value="healthcare"]').text(csv[0]['healthcare']);
-      $('[value="social"]').text(csv[0]['social']);
+      $('[value="education"]').text(csv[0].education);
+      $('[value="humanities"]').text(csv[0].humanities);
+      $('[value="healthcare"]').text(csv[0].healthcare);
+      $('[value="social"]').text(csv[0].social);
 
       var title = csv[0][group];
       var text1 = csv[1][group];
@@ -78,7 +78,6 @@ function setTextBlocks(group) {
     }
   });
 }
-
 function setChartTooltips() {
   $.ajax({
     type: "GET",
@@ -87,17 +86,17 @@ function setChartTooltips() {
     success: function(data) {
       // dropdown options
       csv = $.csv.toObjects(data);
-      $("#main-title").text(csv[0]['text']);
-      $("#intro-text").html(csv[1]['text']);
-      chart_one.tooltip = csv[2]['text'];
-      chart_two.tooltip = csv[3]['text'];
-      chart_three.tooltip = csv[4]['text'];
-      chart_one.title = csv[11]['text'];
-      $("#chart-one-title").text(csv[11]['text']);
-      chart_two.title = csv[12]['text'];
-      $("#chart-two-title").text(csv[12]['text']);
-      chart_three.title = csv[13]['text'];
-      $("#chart-three-title").text(csv[13]['text']);
+      $("#main-title").text(csv[0].text);
+      $("#intro-text").html(csv[1].text);
+      chart_one.tooltip = csv[2].text;
+      chart_two.tooltip = csv[3].text;
+      chart_three.tooltip = csv[4].text;
+      chart_one.title = csv[11].text;
+      $("#chart-one-title").text(csv[11].text);
+      chart_two.title = csv[12].text;
+      $("#chart-two-title").text(csv[12].text);
+      chart_three.title = csv[13].text;
+      $("#chart-three-title").text(csv[13].text);
     },
     error: function(xhr, ajaxOptions, thrownError) {
       alert("Status: " + xhr.status + "     Error: " + thrownError);

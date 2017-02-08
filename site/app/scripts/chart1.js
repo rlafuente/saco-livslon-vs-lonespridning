@@ -51,15 +51,12 @@ ChartOne = (function() {
     // Margin value to make room for the axes
     var xAxisMargin = 30;
     var yAxisMargin = 35;
-    var barPadding = .1;
+    var barPadding = 0.1;
     // Set up scales
     var x = d3.scale.ordinal()
-          // .rangeRoundBands([0, self.width], .1);
           .rangeRoundBands([0, self.width - yAxisMargin], barPadding);
     var y = d3.scale.linear()
           .range([xAxisMargin, self.height]);
-          // .range([self.height-xAxisMargin, xAxisMargin*2]);
-          // .range([0, self.height]);
     var yAxisScale = d3.scale.linear()
           .range([xAxisMargin, self.height]);
 
@@ -75,12 +72,11 @@ ChartOne = (function() {
     // Get the data to draw from
     d3.csv(self.data, function (error, data) {
       // Init data and domains
-      data = data.sort(function(a, b){ return d3.ascending(parseInt(a.baseline_diff), parseInt(b.baseline_diff));});
-      var maxvalue = d3.max(data, function(d) { return parseInt(d.baseline_diff); });
-      var minvalue = d3.min(data, function(d) { return parseInt(d.baseline_diff); });
+      data = data.sort(function(a, b){ return d3.ascending(parseFloat(a.lifesalary_vs_baseline), parseFloat(b.lifesalary_vs_baseline));});
+      var y_maxvalue = d3.max(data, function(d) { return parseFloat(d.lifesalary_vs_baseline); });
+      var y_minvalue = d3.min(data, function(d) { return parseFloat(d.lifesalary_vs_baseline); });
       x.domain(data.map(function(d) { return d.profession_label; }));
-      y.domain([maxvalue, minvalue]);
-      yAxisScale.domain([maxvalue, minvalue]);
+      y.domain([y_minvalue, y_maxvalue]);
 
       // Draw!
       // Start by creating groups for the bars and associated objects
@@ -94,16 +90,8 @@ ChartOne = (function() {
       bar.append("rect")
         .attr("name", function(d) { return d.profession_label; })
         .attr("class", function(d) { return "bar element " + d.group; })
-        .attr("y", function(d) { if (d.baseline_diff < 0) {
-          return y(0); 
-        } else {
-          return y(parseInt(d.baseline_diff));
-        }})
-        .attr("height", function(d) { if (d.baseline_diff < 0) {
-          return y(parseInt(d.baseline_diff)) - y(0); 
-        } else {
-          return y(0) - y(parseInt(d.baseline_diff));
-        }})
+        .attr("y", function(d) { return self.height - y(parseFloat(d.lifesalary_vs_baseline)); })
+        .attr("height", function(d) { console.log(d.lifesalary_vs_baseline); return y(parseFloat(d.lifesalary_vs_baseline)); })
         .attr("fill", "#008ea1")
         .attr("width", x.rangeBand());
       // Mouseover overlay
@@ -118,7 +106,8 @@ ChartOne = (function() {
           self.applyHighlight();
           d3.select('#chart-one [name="' + d.profession_label + '"]').attr("fill", "#008ea1");
           $('#chart-one-title').text(d.profession_label);
-          $('#chart-one-subtitle').html(self.getTooltip(d))})
+          $('#chart-one-subtitle').html(self.getTooltip(d));
+        })
         .on('mouseout', function(d) {
           self.applyHighlight();
           $('#chart-one-title').text(self.title);
@@ -145,27 +134,28 @@ ChartOne = (function() {
     });
     
     // Vertical axis
+    yAxisScale.domain([y_maxvalue, y_minvalue]);
     var yAxis = d3.svg.axis() 
       .scale(yAxisScale)
       .ticks(9)
-      .tickFormat(function(d) { return d/1000000; })
+      //.tickFormat(function(d) { return d/1000000; })
       .orient("left");
     self.svg.append("g")
       .attr("class", "axis")
-      .attr("transform", "translate(" + yAxisMargin + ", " + -xAxisMargin + ")")
+      .attr("transform", "translate(" + yAxisMargin + ", " + (-xAxisMargin) + ")")
       .call(yAxis);
     // Axis line
     self.svg.append("line")
       .attr("x1", yAxisMargin)
-      .attr("y1", y(0) - xAxisMargin)
+      .attr("y1", self.height - xAxisMargin)
       .attr("x2", self.width)
-      .attr("y2", y(0) - xAxisMargin)
+      .attr("y2", self.height - xAxisMargin)
       .style("stroke-width", 1)
       .style("stroke", "#383f82")
       .style("fill", "none");
     // Axis labels
     self.svg.append("text") 
-      .text("Utbildningsgrupp") // This should be fetched from copy-general.csv
+      .text("Utbildning") // This should be fetched from copy-general.csv
       .attr("class", "axis legend")
       .style("background", "white")
       .style("text-transform", "uppercase")
@@ -183,7 +173,7 @@ ChartOne = (function() {
       pymChild.sendHeight();
     }
   });
-  }
+  };
 
   ChartOne.prototype.on_resize = function(w) {
     //var size = Math.max(16, Math.min(8, 12 - w/50));
@@ -191,7 +181,7 @@ ChartOne = (function() {
     d3.selectAll(".bartext").style("font-size", size + "px");
 
     if (w < 600) { $(".bartext").hide(); } else { $(".bartext").show(); }
-  }
+  };
 
   ChartOne.prototype.getTooltip = function(d) {
     var self = this;
@@ -199,10 +189,10 @@ ChartOne = (function() {
     .replace("{ lifesalary }", Number((d.lifesalary/1000000).toFixed(1)))
     .replace("{ baseline_diff }", Number((Math.abs(d.baseline_diff)/1000000).toFixed(1)))
     .replace("{mer/mindre}", function(s) {
-      if (d.baseline_diff > 0) { return "mer" } else { return "mindre"}
+      if (d.baseline_diff > 0) { return "mer"; } else { return "mindre"; }
     })
     .replace("{ baseline }", d.baseline);
-  }
+  };
 
 
   ChartOne.prototype.applyHighlight = function(group) {
@@ -211,19 +201,19 @@ ChartOne = (function() {
     $("#chart-one ." + self.group).attr("fill", "#c13d8c"); 
     $("#chart-one .bartext").attr("opacity", "0"); 
     $("#chart-one .bartext." + self.group).attr("opacity", "1"); 
-  }
+  };
   
   // Transitions only
   ChartOne.prototype.update = function(data) {
     var self = this;
     self.data = data;
-  }
+  };
   ChartOne.prototype.resize = function() {
     var self = this;
     self.svg.remove();
     self.drawChart();
     self.update(self.data);
-  }
+  };
   return ChartOne;
 })();
 

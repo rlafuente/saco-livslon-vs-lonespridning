@@ -169,7 +169,7 @@ ChartTwo = (function() {
             .style('visibility', 'hidden');
 
           self.svg.append("text")
-            .text("Utbildningsgrupp") // This should be fetched from copy-general.csv
+            .text("Utbildning") // This should be fetched from copy-general.csv
             .attr("class", "axis legend")
             .style("background", "white")
             .style("text-transform", "uppercase")
