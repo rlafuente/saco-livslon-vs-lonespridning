@@ -49,7 +49,7 @@ ChartOne = (function() {
     self.height = h = w * 0.5;
     var fontSize = m.bottom * 0.7 + "px";
     // Margin value to make room for the axes
-    var xAxisMargin = 30;
+    var xAxisMargin = 50;
     var yAxisMargin = 35;
     var barPadding = 0.1;
     // Set up scales
@@ -76,7 +76,7 @@ ChartOne = (function() {
       var y_maxvalue = d3.max(data, function(d) { return parseFloat(d.lifesalary_vs_baseline); });
       var y_minvalue = d3.min(data, function(d) { return parseFloat(d.lifesalary_vs_baseline); });
       x.domain(data.map(function(d) { return d.profession_label; }));
-      y.domain([y_minvalue, y_maxvalue]);
+      y.domain([y_maxvalue, y_minvalue]);
 
       // Draw!
       // Start by creating groups for the bars and associated objects
@@ -90,8 +90,22 @@ ChartOne = (function() {
       bar.append("rect")
         .attr("name", function(d) { return d.profession_label; })
         .attr("class", function(d) { return "bar element " + d.group; })
-        .attr("y", function(d) { return self.height - y(parseFloat(d.lifesalary_vs_baseline)); })
-        .attr("height", function(d) { console.log(d.lifesalary_vs_baseline); return y(parseFloat(d.lifesalary_vs_baseline)); })
+
+        .attr("y", function(d) { 
+          if (d.lifesalary_vs_baseline < 1) {
+            return y(1); 
+          } else {
+            return y(parseFloat(d.lifesalary_vs_baseline));
+        }})
+        .attr("height", function(d) { if (d.lifesalary_vs_baseline < 1) {
+            return y(parseFloat(d.lifesalary_vs_baseline)) - y(1); 
+          } else {
+            return y(1) - y(parseFloat(d.lifesalary_vs_baseline));
+          }})
+
+
+        //.attr("y", function(d) { return self.height - y(parseFloat(d.lifesalary_vs_baseline)); })
+        //.attr("height", function(d) { return y(parseFloat(d.lifesalary_vs_baseline)); })
         .attr("fill", "#008ea1")
         .attr("width", x.rangeBand());
       // Mouseover overlay
@@ -138,18 +152,23 @@ ChartOne = (function() {
     var yAxis = d3.svg.axis() 
       .scale(yAxisScale)
       .ticks(9)
-      //.tickFormat(function(d) { return d/1000000; })
+      .tickFormat(function(d) { 
+        var pcvalue = parseFloat(d-1).toFixed(2)*100;
+        if (d > 1) { return '+' + pcvalue + "%"; }
+        else if (d < 1) { return "-" + pcvalue + "%"; }
+        else if (d === 0) { return ""; }
+      })
       .orient("left");
     self.svg.append("g")
       .attr("class", "axis")
-      .attr("transform", "translate(" + yAxisMargin + ", " + (-xAxisMargin) + ")")
+      .attr("transform", "translate(" + yAxisMargin*1.4 + ", " + (-xAxisMargin) + ")")
       .call(yAxis);
     // Axis line
     self.svg.append("line")
       .attr("x1", yAxisMargin)
-      .attr("y1", self.height - xAxisMargin)
+      .attr("y1", y(1) - xAxisMargin)
       .attr("x2", self.width)
-      .attr("y2", self.height - xAxisMargin)
+      .attr("y2", y(1) - xAxisMargin)
       .style("stroke-width", 1)
       .style("stroke", "#383f82")
       .style("fill", "none");
