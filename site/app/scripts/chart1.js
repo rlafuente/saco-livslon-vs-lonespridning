@@ -197,9 +197,9 @@ ChartOne = (function() {
     var self = this;
     return self.tooltip
     .replace("{ lifesalary }", Number((d.lifesalary/1000000).toFixed(1)))
-    .replace("{ baseline_diff }", Number((Math.abs(d.baseline_diff)/1000000).toFixed(1)))
+    .replace("{ lifesalary_vs_baseline }", Number((Math.abs(1 - d.lifesalary_vs_baseline) * 100).toFixed(0)))
     .replace("{mer/mindre}", function(s) {
-      if (d.baseline_diff > 0) { return "mer" } else { return "mindre"}
+      if (d.lifesalary_vs_baseline > 1) { return "mer" } else { return "mindre"}
     })
     .replace("{ baseline }", d.baseline);
   }
