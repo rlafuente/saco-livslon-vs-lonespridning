@@ -54,7 +54,7 @@ ChartThree = (function() {
 
         // margin value to make room for the axes
         var xAxisMargin = 50;
-        var yAxisMargin = 50;
+        var yAxisMargin = 60;
 
         // Create SVG container
         self.svg = self.chartContainer.append('svg')
@@ -101,7 +101,6 @@ ChartThree = (function() {
           var y_minvalue = d3.min(data, function(d) { return parseFloat(d.lifesalary_vs_baseline); });
           var y_maxvalue = d3.max(data, function(d) { return parseFloat(d.lifesalary_vs_baseline); });
           y.domain([y_minvalue, y_maxvalue]);
-          yAxisScale.domain([y_minvalue, y_maxvalue]);
  
           // Sort data so that touch events follow proper order
           data.sort(function(a,b) { return a.income_range_perc - b.income_range_perc; });
@@ -168,10 +167,17 @@ ChartThree = (function() {
 
 
         // Vertical axis
+        yAxisScale.domain([y_minvalue, y_maxvalue]);
         var yAxis = d3.svg.axis() 
           .scale(yAxisScale)
           .ticks(5)
-          .tickFormat(function(d) { return d; })
+          .tickFormat(function(d) { 
+            var pcvalue = parseFloat(d-1).toFixed(2)*100;
+            if (d > 1) { return '+' + pcvalue + "%"; }
+            else if (d < 1) { return pcvalue + "%"; }
+            else if (d === 0) { return ""; }
+          })
+          // .tickFormat(function(d) { return d; })
           .orient("left");
         self.svg.append("g")
           .attr("class", "axis")
@@ -182,7 +188,7 @@ ChartThree = (function() {
         // Vertical axis
         var xAxis = d3.svg.axis() 
           .scale(xAxisScale)
-          .ticks(8)
+          .ticks(9)
           .tickFormat(d3.format(".1f"))
           .orient("bottom");
         self.svg.append("g")
