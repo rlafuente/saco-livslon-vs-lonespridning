@@ -50,7 +50,7 @@ ChartOne = (function() {
     var fontSize = m.bottom * 0.7 + "px";
     // Margin value to make room for the axes
     var xAxisMargin = 50;
-    var yAxisMargin = 35;
+    var yAxisMargin = 60;
     var barPadding = 0.1;
     // Set up scales
     var x = d3.scale.ordinal()
@@ -155,13 +155,13 @@ ChartOne = (function() {
       .tickFormat(function(d) { 
         var pcvalue = parseFloat(d-1).toFixed(2)*100;
         if (d > 1) { return '+' + pcvalue + "%"; }
-        else if (d < 1) { return "-" + pcvalue + "%"; }
+        else if (d < 1) { return pcvalue + "%"; }
         else if (d === 0) { return ""; }
       })
       .orient("left");
     self.svg.append("g")
       .attr("class", "axis")
-      .attr("transform", "translate(" + yAxisMargin*1.4 + ", " + (-xAxisMargin) + ")")
+      .attr("transform", "translate(" + yAxisMargin + ", " + (-xAxisMargin) + ")")
       .call(yAxis);
     // Axis line
     self.svg.append("line")
