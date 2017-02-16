@@ -91,6 +91,10 @@ function setChartTooltips() {
       chart_one.tooltip = csv[2].text;
       chart_two.tooltip = csv[3].text;
       chart_three.tooltip = csv[4].text;
+
+      chart_one.set_legend(csv[6].text, csv[5].text);
+      chart_two.set_legend(csv[8].text, csv[7].text);
+
       chart_one.title = csv[11].text;
       $("#chart-one-title").text(csv[11].text);
       chart_two.title = csv[12].text;

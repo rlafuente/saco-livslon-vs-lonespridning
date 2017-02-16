@@ -169,15 +169,15 @@ ChartTwo = (function() {
             .style('visibility', 'hidden');
 
           self.svg.append("text")
-            .text("Utbildning") // This should be fetched from copy-general.csv
-            .attr("class", "axis legend")
+            .text("")
+            .attr("class", "axis legend legend-x")
             .style("background", "white")
             .style("text-transform", "uppercase")
             .attr("transform", "translate(" + yAxisMargin*1.4 + "," + (self.height-xAxisMargin/3) + ")")
             .style("text-anchor", "start");
           self.svg.append("text")
-            .text("Månadslön 2014 (tkr)")
-            .attr("class", "axis legend")
+            .text("")
+            .attr("class", "axis legend legend-y")
             .attr("transform", "translate(" + yAxisMargin/4 + "," + (self.height-xAxisMargin) + ") rotate(-90)")
             .style("text-anchor", "start")
             .style("background-color", "white");
@@ -198,6 +198,11 @@ ChartTwo = (function() {
       .replace("{ P90 }", d.P90)
       .replace("{ income_range_kr }", d.income_range_kr)
       .replace("{ income_range_perc }", Number(d.income_range_perc).toFixed(1));
+    };
+
+    ChartTwo.prototype.set_legend = function(lx, ly) {
+      $("#chart-two .legend-x").text(lx);
+      $("#chart-two .legend-y").text(ly);
     };
 
     ChartTwo.prototype.applyHighlight = function(group) {
