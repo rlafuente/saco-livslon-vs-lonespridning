@@ -181,7 +181,7 @@ ChartOne = (function() {
       .attr("transform", "translate(" + yAxisMargin*1.4 + "," + (self.height-xAxisMargin/3) + ")")
       .style("text-anchor", "start");
     self.svg.append("text")
-      .text()
+      .text("")
       .attr("class", "axis legend legend-y")
       .attr("transform", "translate(" + yAxisMargin/4 + "," + (self.height-xAxisMargin) + ") rotate(-90)")
       .style("text-anchor", "start")
