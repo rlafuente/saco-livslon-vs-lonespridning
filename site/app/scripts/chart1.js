@@ -208,9 +208,10 @@ ChartOne = (function() {
     .replace("{ lifesalary }", Number((d.lifesalary/1000000).toFixed(1)))
     .replace("{ lifesalary_vs_baseline }", Number((Math.abs(1 - d.lifesalary_vs_baseline) * 100).toFixed(0)))
     .replace("{mer/mindre}", function(s) {
-      if (d.lifesalary_vs_baseline > 1) { return "mer"; } else { return "mindre"; }
+      if (d.baseline_diff < 0) { return "mindre"; } else { return "mer"; }
     })
-    .replace("{ baseline }", d.baseline);
+    .replace("{ baseline }", d.baseline)
+    .replace("{ baseline_diff }", Number((d.baseline_diff.replace("-", "")/1000000).toFixed(1)));
   };
 
   ChartOne.prototype.set_legend = function(lx, ly) {
