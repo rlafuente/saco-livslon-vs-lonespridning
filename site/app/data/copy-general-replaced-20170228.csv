@@ -1,20 +1,14 @@
 block,text,comment
 TITLE,Livslön och lönespridning - så hänger det ihop,
 INTRO,<p>Sacos studier om akademikernas livslön visar att det lönar sig allt sämre att läsa på högskolan. Nära hälften av de undersökta utbildningarna är rena förlustaffärer. Dessa utbildningar har gemensamt att de leder till yrken där möjligheterna att göra lönekarriär är mycket små. Det finns nämligen ett samband mellan den förväntade livslönen i ett visst yrke och möjligheterna att göra lönekarriär (lönespridningen) i samma yrke.</p><p>Låt oss visa detta med ett konkret exempel. Börja med att välja en referensgrupp att utgå ifrån.</p>,
-CHART1_TOOLTIP,Livslönen för en person med den här utbildningen är { lifesalary } miljoner kronor <strong>vilket är cirka { lifesalary_vs_baseline } procent {mer/mindre}</strong> än genomsnittet för en { baseline }.,"Round the salary to millions + one decimal
-{mer/mindre} means ""more/less"". If baselineDiff > 0 print ""mer"" else, ""mindre""."
+CHART1_TOOLTIP,Livslönen för en person med den här utbildningen är { lifesalary } miljoner kronor <strong>vilket är cirka { baseline_diff } miljoner kronor {mer/mindre}</strong> än genomsnittet för en { baseline }.,"Round the salary to millions + one decimal {mer/mindre} means ""more/less"". If baselineDiff > 0 print ""mer"" else, ""mindre""."
 CHART2_TOOLTIP,"10 procent tjänar mindre än { P10 } kronor, 10 procent tjänar mer än { P90 } kr. Lönespridningen, d.v.s. kvoten mellan dessa värden, är { income_range_perc }. Lönespannet, d.v.s. skillnaden mellan 90:e och 10:e percentilen är { income_range_kr } kr. Pricken i stapeln anger medellönen.",
-CHART3_TOOLTIP,"Lönespridning: { income_range_perc }. Skillnaden mellan 90:e och 10:e percentilen är { income_range_kr } kr.<br/>
-Livslön (netto): { lifesalary } Mkr, vilket är { lifesalary_vs_baseline } procent { mer/mindre } än genomsnittet för en {baseline}.","income_range: Round to one decimal
-lifesalary_vs_baseline: 
-1.051 => +5,1%
-0,983 => -1,7%"
+CHART3_TOOLTIP,"Lönespridning: { income_range_perc }. Skillnaden mellan 90:e och 10:e percentilen är { income_range_kr } kr.<br/> Livslön (netto): { lifesalary } Mkr, vilket är { lifesalary_vs_baseline } procent { mer/mindre } än genomsnittet för en {baseline}.","income_range: Round to one decimal lifesalary_vs_baseline: 1.051 => +5,1% 0,983 => -1,7%"
 CHART1_Y_AXIS,Livslön jfr med icke-akademiker,Round the salary to millions + one decimal
 CHART1_X_AXIS,Utbildningsgrupp,
 CHART2_Y_AXIS,Månadslön 2014 (tkr),
 CHART2_X_AXIS,Utbildningsgrupp,
-CHART3_Y_AXIS,Livslön jämfört med gymnasieutbildad,"1.051 => +5,1%
-0,983 => -1,7%"""
+CHART3_Y_AXIS,Livslön jämfört med gymnasieutbildad,"1.051 => +5,1% 0,983 => -1,7%"""
 CHART3_X_AXIS,Lönespridning (P90/P10),
 CHART1_TITLE,Livslöner för olika utbildningar,
 CHART2_TITLE,Lönespridning i olika yrken,
