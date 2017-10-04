@@ -1,10 +1,10 @@
 // generated on 2016-05-10 using generator-gulp-webapp 1.0.3
-import gulp from 'gulp';
-import gulpLoadPlugins from 'gulp-load-plugins';
-import browserSync from 'browser-sync';
-import del from 'del';
-import {stream as wiredep} from 'wiredep';
-import ghPages from 'gulp-gh-pages';
+var gulp = require('gulp');
+var gulpLoadPlugins = require('gulp-load-plugins');
+var browserSync = require('browser-sync');
+var del = require('del');
+var stream = require('wiredep');
+var ghPages = require('gulp-gh-pages');
 var mainBowerFiles = require('gulp-main-bower-files');
 
 
@@ -45,14 +45,10 @@ gulp.task('lint', lint('app/scripts/**/*.js'));
 gulp.task('lint:test', lint('test/spec/**/*.js', testLintOptions));
 
 gulp.task('html', ['styles'], () => {
-  const assets = $.useref.assets({searchPath: ['.tmp', 'app', '.']});
-
   return gulp.src('app/*.html')
-    .pipe(assets)
     .pipe($.if('*.js', $.uglify().on('error', function(e){ console.log(e); })    ))
     .pipe($.if('*.css', $.minifyCss({compatibility: '*'})))
-    .pipe(assets.restore())
-    .pipe($.useref())
+    .pipe($.useref({ searchPath: ['.tmp', 'app', '.'] }))
     .pipe($.if('*.html', $.minifyHtml({conditionals: true, loose: true})))
     .pipe(gulp.dest('dist'));
 });
