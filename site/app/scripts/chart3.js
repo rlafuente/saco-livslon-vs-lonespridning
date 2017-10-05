@@ -46,7 +46,7 @@ ChartThree = (function() {
             top: containerWidth * 0.1,
             right: containerWidth * 0.1,
             bottom: containerWidth * 0.1,
-            left: containerWidth * 0.1 
+            left: containerWidth * 0.1
         };
         self.width = w = containerWidth - m.left - m.right;
         self.height = h = w * 0.5;
@@ -94,14 +94,16 @@ ChartThree = (function() {
               .range([self.height-circleRadius-glowRadius-xAxisMargin, circleRadius+glowRadius]);
 
         d3.csv(self.data, function (error, data) {
-          var x_minvalue = d3.min(data, function(d) { return parseFloat(d.income_range_perc); });
+          //var x_minvalue = d3.min(data, function(d) { return parseFloat(d.income_range_perc); });
+          // Client has desired the axis to start at 1
+          var x_minvalue = 1;
           var x_maxvalue = d3.max(data, function(d) { return parseFloat(d.income_range_perc); });
           x.domain([x_minvalue, x_maxvalue]);
           xAxisScale.domain([x_minvalue, x_maxvalue]);
           var y_minvalue = d3.min(data, function(d) { return parseFloat(d.lifesalary_vs_baseline); });
           var y_maxvalue = d3.max(data, function(d) { return parseFloat(d.lifesalary_vs_baseline); });
           y.domain([y_minvalue, y_maxvalue]);
- 
+
           // Sort data so that touch events follow proper order
           data.sort(function(a,b) { return a.income_range_perc - b.income_range_perc; });
 
@@ -168,10 +170,10 @@ ChartThree = (function() {
 
         // Vertical axis
         yAxisScale.domain([y_minvalue, y_maxvalue]);
-        var yAxis = d3.svg.axis() 
+        var yAxis = d3.svg.axis()
           .scale(yAxisScale)
           .ticks(5)
-          .tickFormat(function(d) { 
+          .tickFormat(function(d) {
             var pcvalue = parseFloat(d-1).toFixed(2)*100;
             if (d > 1) { return '+' + pcvalue + "%"; }
             else if (d < 1) { return pcvalue + "%"; }
@@ -186,7 +188,7 @@ ChartThree = (function() {
           .call(yAxis);
 
         // Vertical axis
-        var xAxis = d3.svg.axis() 
+        var xAxis = d3.svg.axis()
           .scale(xAxisScale)
           .ticks(9)
           .tickFormat(d3.format(".1f"))
@@ -269,7 +271,7 @@ ChartThree = (function() {
           if (Number(d.lifesalary_vs_baseline) > 1) { return "mer"; } else { return "mindre"; }
         })
         .replace("{ lifesalary_vs_baseline }", function(s) {
-          if (d.lifesalary_vs_baseline >= 1) { return (100 * Number(d.lifesalary_vs_baseline) - 100).toFixed(1); } 
+          if (d.lifesalary_vs_baseline >= 1) { return (100 * Number(d.lifesalary_vs_baseline) - 100).toFixed(1); }
           else { return Math.abs(100 - Number(d.lifesalary_vs_baseline)*100).toFixed(1); }
         })
         .replace("{baseline}", d.baseline)
@@ -279,8 +281,8 @@ ChartThree = (function() {
 
     ChartThree.prototype.applyHighlight = function(group) {
       if (group && group != self.group) { self.group = group; }
-      d3.selectAll("#chart-three .element").style("fill", "#383f82"); 
-      d3.selectAll("#chart-three ." + self.group).style("fill", "#c13d8c").moveToFront();  
+      d3.selectAll("#chart-three .element").style("fill", "#383f82");
+      d3.selectAll("#chart-three ." + self.group).style("fill", "#c13d8c").moveToFront();
     };
 
     ChartThree.prototype.on_resize = function(w) {
